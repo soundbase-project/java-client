@@ -1,14 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.soundbase.Container"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #343a40;">
+         <children>
+            <VBox prefHeight="512.0" prefWidth="199.0" style="-fx-background-color: #343a40;">
+               <children>
+                  <AnchorPane prefHeight="139.0" prefWidth="215.0" style="-fx-background-color: #343a40;">
+                     <children>
+                        <ImageView fitHeight="82.0" fitWidth="253.0" layoutX="7.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../logo/logo-white.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="597.0" prefWidth="199.0" style="-fx-background-color: #343a40;">
+                     <content>
+                        <VBox prefHeight="588.0" prefWidth="260.0" style="-fx-background-color: #343a40;">
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Icon content="DASHBOARD" prefWidth="30.0" style="-fx-background-color: #6c757d;" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6c757d;" text="My stats">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Icon content="MUSIC_NOTE" prefWidth="30.0" style="-fx-background-color: #6c757d;" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6c757d;" text="My tracks">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Icon content="GRAPHIC_EQ" prefWidth="30.0" style="-fx-background-color: #6c757d;" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6c757d;" text="My Samples">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Icon content="ARROW_UPWARD" prefWidth="30.0" style="-fx-background-color: #6c757d;" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6c757d;" text="Upload">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Icon content="SETTINGS" prefWidth="30.0" style="-fx-background-color: #6c757d;" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6c757d;" text="Settings">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Icon content="EMPTY" prefWidth="30.0" style="-fx-background-color: #6c757d;" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #6c757d;" text="Plugin_1">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="720.0" prefWidth="1020.0" />
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

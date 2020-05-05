@@ -35,6 +35,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>12.0.2</version>
         </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.gluonhq/charm-glisten &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.gluonhq</groupId>-->
+<!--            <artifactId>charm-glisten</artifactId>-->
+<!--            <version>6.0.4</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>com.soundbase</groupId>
             <artifactId>CORE</artifactId>

@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+
 
 /**
  * JavaFX App
@@ -29,7 +32,8 @@ public class App extends Application {
         }
 
         stage.setTitle("SoundHive");
-
+        Image icon = new Image(getClass().getResourceAsStream("/drawable/logo-icon.png"));
+        stage.getIcons().add(icon);
         stage.show();
     }
 

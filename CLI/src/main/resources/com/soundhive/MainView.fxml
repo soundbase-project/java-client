@@ -41,7 +41,7 @@
                                        <image>
                                           <Image url="@../../drawable/dashboard.png" />
                                        </image></ImageView>
-                                    <JFXButton prefHeight="41.0" prefWidth="157.0" text="My stats" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                                    <JFXButton disable="true" prefHeight="41.0" prefWidth="157.0" text="My stats" textFill="WHITE" HBox.hgrow="ALWAYS" />
 
                                  </children>
                               </HBox>
@@ -51,7 +51,7 @@
                                        <image>
                                           <Image url="@../../drawable/tracks.png" />
                                        </image></ImageView>
-                                    <JFXButton prefHeight="41.0" prefWidth="157.0" text="My tracks" textFill="WHITE" />
+                                    <JFXButton disable="true" prefHeight="41.0" prefWidth="157.0" text="My tracks" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <HBox>
@@ -60,7 +60,7 @@
                                        <image>
                                           <Image url="@../../drawable/sample.png" />
                                        </image></ImageView>
-                                    <JFXButton prefHeight="41.0" prefWidth="157.0" text="My samples" textFill="WHITE" />
+                                    <JFXButton disable="true" prefHeight="41.0" prefWidth="157.0" text="My samples" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <HBox>
@@ -69,7 +69,7 @@
                                        <image>
                                           <Image url="@../../drawable/upload.png" />
                                        </image></ImageView>
-                                    <JFXButton prefHeight="41.0" prefWidth="157.0" text="Upload" textFill="WHITE" />
+                                    <JFXButton disable="true" prefHeight="41.0" prefWidth="157.0" text="Upload" textFill="WHITE" />
                                  </children>
                               </HBox>
                               <HBox>
@@ -81,7 +81,7 @@
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin></ImageView>
-                                    <JFXButton prefHeight="41.0" prefWidth="157.0" text="Settings" textFill="WHITE" />
+                                    <JFXButton disable="true" prefHeight="41.0" prefWidth="157.0" text="Settings" textFill="WHITE" />
                                  </children>
                               </HBox>
                            </children>

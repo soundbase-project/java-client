@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import kong.unirest.Unirest;
 
 /**
  * JavaFX App
@@ -17,8 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(final Stage stage) {
-//        this.router = new Router(stage);
-//        router.<MainController>goTo("Main", controller -> controller.setRouter(router));
+        Unirest.config().defaultBaseUrl("http://localhost:3000/");
+
         final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MainView.fxml"));
         final Parent view;
         try {
@@ -28,6 +29,7 @@ public class App extends Application {
             e.printStackTrace();
         }
 
+        //stage.setResizable(false);
         stage.setTitle("SoundHive");
 
         stage.show();

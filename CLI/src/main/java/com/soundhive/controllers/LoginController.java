@@ -1,18 +1,17 @@
 package com.soundhive.controllers;
 
-import com.jfoenix.controls.JFXSnackbar;
 import com.soundhive.Router;
 import com.soundhive.authentication.LoginService;
+import com.soundhive.authentication.SessionHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import kong.unirest.json.JSONObject;
 
-public class LoginController {
+public class LoginController  implements InterfaceController{
     private Router router;
+    private SessionHandler session;
 
     @FXML private TextField tfUsername;
     @FXML private TextField tfPassword;
@@ -27,35 +26,6 @@ public class LoginController {
     public void initialize() {
         pbConnecting.setVisible(false);
 
-        this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty());
-        loginService.setOnSucceeded(e -> {
-
-            JSONObject user = (JSONObject) e.getSource().getValue();
-
-            loginService.reset();
-
-            if (user.has("access_token")) {
-                router.<StatsController>goTo("Stats", controller -> controller.setRouter(router));
-//                JFXSnackbar bar = new JFXSnackbar();
-//                bar.enqueue(new JFXSnackbar.SnackbarEvent("Notification Msg"))
-                System.out.println("Connected");
-                System.out.println("Could not connect.");
-            }
-            else if (user.has("statusCode")) {
-                System.out.println(user.getInt("statusCode") + " " + user.getString("message"));
-                pbConnecting.setVisible(false);
-                btLogin.setVisible(true);
-
-            }
-            else {
-                System.out.println(user.toString());
-            }
-
-        });
-        this.loginService.setOnFailed(e -> {
-            e.getSource().getException().printStackTrace();
-            loginService.reset();
-        });
     }
 
     public void setRouter(Router router) {
@@ -75,4 +45,41 @@ public class LoginController {
         System.out.println("Key pressed: " + event.getCode().getName());
     }
 
+    @Override
+    public void setContext(Router router, SessionHandler session) {
+
+        this.router = router;
+        this.session = session;
+        setLoginService();
+    }
+
+    private void setLoginService() {
+        this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), session);
+
+        loginService.setOnSucceeded(e -> {
+            SessionHandler.LoginStatus status = (SessionHandler.LoginStatus) e.getSource().getValue();
+            switch (status) {
+                case WRONG_PASSWORD:
+                    System.out.println("wrong password.");
+                    pbConnecting.setVisible(false);
+                    btLogin.setVisible(true);
+                    break;
+                case CONNECTION_ERROR:
+                    System.out.println("Connexion problem.");
+                    pbConnecting.setVisible(false);
+                    btLogin.setVisible(true);
+                    break;
+                case SUCCESS:
+                    System.out.println("Connected");
+                    session.updateWitness();
+                    router.goTo("Stats", controller -> controller.setContext(router, session));
+                    break;
+            }
+            loginService.reset();
+        });
+        this.loginService.setOnFailed(e -> {
+            e.getSource().getException().printStackTrace();
+            loginService.reset();
+        });
+    }
 }

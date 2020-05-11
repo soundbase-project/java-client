@@ -1,5 +1,6 @@
 package com.soundhive;
 
+import com.soundhive.controllers.InterfaceController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
@@ -20,13 +21,13 @@ public class Router {
 
 
 
-    public <T> void goTo(final String viewName, final Consumer<T> controllerConsumer) {
+    public void goTo(final String viewName, final Consumer<InterfaceController> controllerConsumer) {
         final var view = loadView(viewName, controllerConsumer);
 
         anchorPane.getChildren().setAll(view);
     }
 
-    private <T> Parent loadView(final String viewName, final Consumer<T> controllerConsumer) {
+    private Parent loadView(final String viewName, final Consumer<InterfaceController> controllerConsumer) {
         final var viewPath = String.format("/com/soundhive/%sView.fxml", viewName);
 
         try {

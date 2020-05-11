@@ -12,13 +12,9 @@ import kong.unirest.Unirest;
  */
 public class App extends Application {
 
-    private Router router;
-
-
-
     @Override
     public void start(final Stage stage) {
-        Unirest.config().defaultBaseUrl("http://localhost:3000/");
+        Unirest.config().defaultBaseUrl(Globals.API__URL_BASE);
 
         final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MainView.fxml"));
         final Parent view;

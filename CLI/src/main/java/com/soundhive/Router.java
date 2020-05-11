@@ -1,40 +1,33 @@
 package com.soundhive;
 
+import com.soundhive.controllers.InterfaceController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.util.function.Consumer;
 
 public class Router {
-//    private final Stage stage;
 
     private final AnchorPane anchorPane;
 
-//    Router(final Stage stage) {
-//        this.stage = stage;
-//    }
+
 
     public Router(final AnchorPane anchorPane) {
         this.anchorPane = anchorPane;
     }
 
-//    public void goTo(final String viewName) {
-//        goTo(viewName, __ -> {});
-//    }
 
-    public <T> void goTo(final String viewName, final Consumer<T> controllerConsumer) {
+
+    public void goTo(final String viewName, final Consumer<InterfaceController> controllerConsumer) {
         final var view = loadView(viewName, controllerConsumer);
 
         anchorPane.getChildren().setAll(view);
-        System.out.println(view);
     }
 
-    private <T> Parent loadView(final String viewName, final Consumer<T> controllerConsumer) {
+    private Parent loadView(final String viewName, final Consumer<InterfaceController> controllerConsumer) {
         final var viewPath = String.format("/com/soundhive/%sView.fxml", viewName);
 
         try {

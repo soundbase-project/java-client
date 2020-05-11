@@ -1,16 +1,23 @@
 package com.soundhive.controllers;
 
 import com.soundhive.Router;
+import com.soundhive.authentication.SessionHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class MainController {
     //create service var
 
     private Router router;
+    private SessionHandler session;
 
-//    @FXML
-//    private Button btStats;
+    @FXML
+    private Label lbSession;
+
+    @FXML
+    private ImageView ivSession;
 
     @FXML
     private AnchorPane appContent;
@@ -18,10 +25,8 @@ public class MainController {
     @FXML
     public void initialize() {
         this.router = new Router(appContent);
-        router.<LoginController>goTo("Login", controller -> controller.setRouter(router));
-//        btStats.setOnMouseClicked(event -> {
-//            System.out.println("clicked");
-//        });
+        this.session = new SessionHandler(lbSession.textProperty());
+        router.goTo("Login", controller -> controller.setContext(router, session));
     }
 
     public void setRouter(final Router router) {

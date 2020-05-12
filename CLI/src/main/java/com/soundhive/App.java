@@ -28,11 +28,12 @@ public class App extends Application {
             e.printStackTrace();
         }
 
-        //stage.setResizable(false);
+
         stage.setTitle("SoundHive");
         Image icon = new Image(getClass().getResourceAsStream("/drawable/logo-icon.png"));
         stage.getIcons().add(icon);
         stage.show();
+
     }
 
 

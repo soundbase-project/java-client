@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(final Stage stage) {
-        Unirest.config().defaultBaseUrl(Globals.API__URL_BASE);
+        Unirest.config().defaultBaseUrl(Globals.API_URL_BASE);
 
         final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MainView.fxml"));
         final Parent view;

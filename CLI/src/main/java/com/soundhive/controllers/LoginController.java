@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class LoginController implements InterfaceController {
+public class LoginController implements IUiController {
     private Router router;
     private SessionHandler session;
 
@@ -35,7 +35,6 @@ public class LoginController implements InterfaceController {
     @FXML
     public void initialize() {
         pbConnecting.setVisible(false);
-
     }
 
 
@@ -55,7 +54,7 @@ public class LoginController implements InterfaceController {
     @FXML
     public void keyPressed(final KeyEvent event) {
         System.out.println("Key pressed: " + event.getCode().getName());
-    }
+    } // TODO : login on RETURN pressed
 
     @Override
     public void setContext(Router router, SessionHandler session) {
@@ -78,7 +77,7 @@ public class LoginController implements InterfaceController {
                 case UNAUTHORIZED:
 
                     JFXSnackbar bar = new JFXSnackbar(frame);
-                    bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("Token didnt work")));
+                    bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("Token didnt work"))); //TODO : does it really work ?
 
                     setLoginService();
                     break;
@@ -138,4 +137,6 @@ public class LoginController implements InterfaceController {
             loginService.reset();
         });
     }
+
+
 }

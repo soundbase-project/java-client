@@ -1,11 +1,7 @@
 package com.soundhive.authentication;
 
 import com.soundhive.Globals;
-import com.soundhive.controllers.StatsController;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -46,8 +42,10 @@ public class SessionHandler {
                 }
                 return LoginStatus.SUCCESS;
             case 401:
+                this.resetSessionValues();
                 return LoginStatus.UNAUTHORIZED;
             default:
+                this.resetSessionValues();
                 System.out.println(res.getStatus());
                 return LoginStatus.CONNECTION_ERROR;
         }
@@ -143,11 +141,17 @@ public class SessionHandler {
     }
 
 
-    private void resetValues() {
+    private void resetSessionValues() {
         this.token = "";
         this.email = "";
         this.username = "";
         this.name = "";
     }
+
+
+    public boolean isConnected() {
+        return !(this.token == null  || this.token.isBlank());
+    }
+
 
 }

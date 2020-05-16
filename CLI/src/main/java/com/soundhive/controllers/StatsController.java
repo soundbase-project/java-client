@@ -4,7 +4,7 @@ import com.soundhive.Router;
 import com.soundhive.authentication.SessionHandler;
 import javafx.fxml.FXML;
 
-public class StatsController implements InterfaceController{
+public class StatsController implements IUiController {
     private Router router;
     private  SessionHandler session;
 

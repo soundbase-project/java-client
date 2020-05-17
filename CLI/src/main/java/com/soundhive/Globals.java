@@ -6,4 +6,5 @@ public class Globals {
     public static final String TOKEN_DIR = "./auth/token";
 
     public static final String UI_PLUGINS_DIR = "./UIPlugins";
+
 }

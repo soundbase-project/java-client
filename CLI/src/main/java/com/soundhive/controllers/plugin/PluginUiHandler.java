@@ -1,7 +1,6 @@
 package com.soundhive.controllers.plugin;
 
 import com.soundhive.Globals;
-import com.soundhive.plugin.PluginHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class PluginUiHandler {
 
     private PluginUIContainer loadPlugin(File path) throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException{
         final URL[] urls = new URL[] {new URL("file:///" + path.getAbsolutePath())};
-        final URLClassLoader child = new URLClassLoader(urls, PluginHandler.class.getClassLoader());
+        final URLClassLoader child = new URLClassLoader(urls, PluginUiHandler.class.getClassLoader());
 
         final Class<?> plugin = Class.forName("TestController", true, child);
 

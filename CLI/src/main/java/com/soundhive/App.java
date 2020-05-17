@@ -23,7 +23,9 @@ public class App extends Application {
         final Parent view;
         try {
             view = loader.load();
-            stage.setScene(new Scene(view));
+            Scene scene = new Scene(view);
+            //scene.getStylesheets().add(getClass().getResource("com/soundhive/style/style.css").toString());
+            stage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,7 +35,6 @@ public class App extends Application {
         Image icon = new Image(getClass().getResourceAsStream("/drawable/logo-icon.png"));
         stage.getIcons().add(icon);
         stage.show();
-
     }
 
 

@@ -5,8 +5,6 @@ import com.soundhive.controllers.plugin.IPluginUiController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import java.awt.*;
-import java.net.URL;
 
 public class TestController implements IPluginUiController {
     private Router router;

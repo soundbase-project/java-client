@@ -13,4 +13,6 @@ public interface IPluginUiController extends IUiController {
 
     String getPluginName();
 
+    void initialize();
+
 }

@@ -1,15 +1,21 @@
 package com.soundhive.controllers.plugin;
 
+import javafx.fxml.FXMLLoader;
+
 import java.net.URL;
 import java.net.URLClassLoader;
 
 public class PluginUIContainer {
     private final IPluginUiController plugin;
     private final URLClassLoader classLoader;
+    private final FXMLLoader view;
 
     public PluginUIContainer(IPluginUiController plugin, URLClassLoader classLoader) {
         this.plugin = plugin;
         this.classLoader = classLoader;
+        view = new FXMLLoader(classLoader.getResource(plugin.getViewName()));
+        view.setController(plugin);
+
     }
 
     public String getName(){
@@ -17,8 +23,8 @@ public class PluginUIContainer {
 
     }
 
-    public URL getView() {
-        return classLoader.getResource(plugin.getViewName());
+    public FXMLLoader getView() {
+        return this.view;
     }
 
     public IPluginUiController getPlugin() {

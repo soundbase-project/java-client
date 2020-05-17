@@ -1,6 +1,8 @@
 package com.soundhive.controllers;
 
-import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import com.soundhive.Router;
 import com.soundhive.authentication.LoginService;
 import com.soundhive.authentication.LoginWithTokenService;
@@ -16,9 +18,9 @@ public class LoginController implements IUiController {
 
 
     @FXML
-    private TextField tfUsername;
+    private JFXTextField tfUsername;
     @FXML
-    private TextField tfPassword;
+    private JFXPasswordField tfPassword;
     @FXML
     private Button btLogin;
     @FXML
@@ -35,13 +37,23 @@ public class LoginController implements IUiController {
     @FXML
     public void initialize() {
         pbConnecting.setVisible(false);
+        RequiredFieldValidator validator = new RequiredFieldValidator();
+        validator.setMessage("Input required");
+        tfUsername.setValidators(validator);
+        tfUsername.focusedProperty().addListener((o,oldVal,newVal)->{
+            if(!newVal) tfUsername.validate();
+        });
+        tfPassword.setValidators(validator);
+        tfPassword.focusedProperty().addListener((o,oldVal,newVal)->{
+            if(!newVal) tfPassword.validate();
+        });
     }
 
 
     @FXML
     public void login() {
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
-            System.out.println("one field is empty.");
+            this.router.issueMessage("one field is empty.");
         } else {
             btLogin.setVisible(false);
             pbConnecting.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
@@ -69,24 +81,23 @@ public class LoginController implements IUiController {
         }
     }
 
+
+    //TODO: refactor to reduce reused code.
     private void setLoginWithTokenService() {
         this.loginWithTokenService = new LoginWithTokenService(session);
         loginWithTokenService.setOnSucceeded(e -> {
             SessionHandler.LoginStatus status = (SessionHandler.LoginStatus) e.getSource().getValue();
             switch (status) {
                 case UNAUTHORIZED:
-
-                    JFXSnackbar bar = new JFXSnackbar(frame);
-                    bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("Token didnt work"))); //TODO : does it really work ?
-
+                    this.router.issueMessage("Could not connect using saved token.");
                     setLoginService();
                     break;
                 case CONNECTION_ERROR:
-                    System.out.println("Unknown error.");
+                    this.router.issueMessage("Unable to connect the server.");
                     setLoginService();
                     break;
                 case SUCCESS:
-                    System.out.println("Login controller passed.");
+                    this.router.issueMessage(String.format("Logged in as %s", session.getUsername()));
                     session.updateWitness();
                     router.goTo("Stats", controller -> controller.setContext(router, session));
                     break;
@@ -107,24 +118,21 @@ public class LoginController implements IUiController {
             SessionHandler.LoginStatus status = (SessionHandler.LoginStatus) e.getSource().getValue();
             switch (status) {
                 case UNAUTHORIZED:
+                    this.router.issueMessage("Wrong password or username.");
 
-                    System.out.println("wrong password.");
-
-                    JFXSnackbar bar = new JFXSnackbar(frame);
-                    bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("Wrong password or username.")));
 
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
 
                 case CONNECTION_ERROR:
-                    System.out.println("Unknown error");
+                    this.router.issueMessage("Unable to connect the server.");
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
 
                 case SUCCESS:
-                    System.out.println("Connected");
+                    this.router.issueMessage(String.format("Logged in as %s", "not implemented"));
 
                     session.updateWitness();
                     router.goTo("Stats", controller -> controller.setContext(router, session));

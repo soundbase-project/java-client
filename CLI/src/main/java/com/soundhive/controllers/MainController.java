@@ -1,20 +1,17 @@
 package com.soundhive.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSnackbar;
 import com.soundhive.Router;
 import com.soundhive.authentication.SessionHandler;
-import com.soundhive.controllers.plugin.IPluginUiController;
 import com.soundhive.controllers.plugin.PluginUIContainer;
 import com.soundhive.controllers.plugin.PluginUiHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class MainController {
     private SessionHandler session;
 
     @FXML
-    private JFXListView<JFXButton> lvPluginNavBar;
+    private JFXListView<HBox> lvPluginNavBar;
 
     @FXML
     private StackPane mainContainer;
@@ -81,11 +78,8 @@ public class MainController {
             router.goTo(target, c -> c.setContext(router, session));
         }
         else {
-            JFXDialog dialog = new JFXDialog();
-            dialog.setContent(new Label("You have to be connected."));
-            dialog.show(mainContainer);
-            JFXSnackbar bar = new JFXSnackbar(mainContainer);
-            bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("fuck this shit")));
+            router.issueMessage("You have to be connected.");
+
         }
     }
 
@@ -96,20 +90,33 @@ public class MainController {
             List<PluginUIContainer> plugins = handler.loadPlugins();
             for (PluginUIContainer plugin :
                     plugins) {
+
                 JFXButton button = new JFXButton();
+                setButtonStyle(button);
                 button.setText(plugin.getName());
                 button.setOnAction(e -> {
-                    System.out.println("button clicked.");
-                    router.goTo(plugin, c -> c.setContext(router, session));
+                    router.goTo(plugin.getView(), c -> c.setContext(router, session));
                 });
-                this.lvPluginNavBar.getItems().add(button);
+                HBox buttonPane = new HBox(button);
+                buttonPane.setStyle("-fx-background-color: #343a40");
+
+                this.lvPluginNavBar.getItems().add(buttonPane);
+                this.lvPluginNavBar.setStyle("-fx-background-color: #343a40");
             }
         } catch (Exception e){
             e.printStackTrace();
             JFXSnackbar bar = new JFXSnackbar(mainContainer);
             bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("Unable to load plugins")));
-
         }
+    }
+
+
+    private void setButtonStyle(JFXButton button) {
+        button.setTextFill(Color.WHITE);
+        button.setStyle("-fx-background-color: #343a40");
+        button.setMaxHeight(Double.MAX_VALUE);
+        button.setMaxWidth(Double.MAX_VALUE);
+
 
     }
 

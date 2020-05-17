@@ -19,7 +19,6 @@ public class SessionHandler {
     private String name;
     private String username;
     private String email;
-    private boolean isActive;
 
     private final StringProperty lbSession;
 
@@ -36,7 +35,8 @@ public class SessionHandler {
 
         switch (res.getStatus()) {
             case 201:
-                bindJSONObjectToAttributes(res.getBody().getObject());
+                //bindJSONObjectToAttributes(res.getBody().getObject());
+                this.token = res.getBody().getObject().getString("access_token");
                 if (stayConnected){
                     saveToken();
                 }
@@ -56,23 +56,20 @@ public class SessionHandler {
     }
 
     private void saveToken() {
+        File target = new File(Globals.TOKEN_DIR);
         try {
-            if (new File(Globals.TOKEN_DIR).getParentFile().mkdirs()) {
-                if (new File(Globals.TOKEN_DIR).createNewFile()){
-                    System.out.println("Token file was created.");
+            if (target.getParentFile().mkdirs()) {
+                if (!(target.exists() || new File(Globals.TOKEN_DIR).createNewFile())){
+                    System.err.println("Could not create token file.");
                 }
             }
             FileWriter w = new FileWriter(Globals.TOKEN_DIR);
             w.write(this.token);
             w.close();
-            System.out.println("Token Written into file");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     public boolean checkForToken() {
@@ -83,7 +80,7 @@ public class SessionHandler {
         if (!new File(Globals.TOKEN_DIR).exists()) {
             return null;
         }
-        StringBuilder foundToken = new StringBuilder("");
+        StringBuilder foundToken = new StringBuilder();
         try {
             File myObj = new File(Globals.TOKEN_DIR);
             Scanner myReader = new Scanner(myObj);
@@ -99,7 +96,7 @@ public class SessionHandler {
         return  foundToken.toString();
     }
 
-    public LoginStatus loginWithToken () {
+    public LoginStatus openSessionWithToken() {
         final String foundToken = loadToken();
         if (foundToken == null|| foundToken.isBlank()){
             return LoginStatus.UNAUTHORIZED;
@@ -112,11 +109,10 @@ public class SessionHandler {
 
         switch (res.getStatus()){
             case 200:
-                this.username = res.getBody().getObject().getString("username");
-                System.out.println("Connected with Token");
+                //this.username = res.getBody().getObject().getString("username");
+                this.token = foundToken;
                 return LoginStatus.SUCCESS;
             case 401:
-                System.out.println("Invalid Token");
                 deleteToken();
                 return LoginStatus.UNAUTHORIZED;
             default:
@@ -137,7 +133,6 @@ public class SessionHandler {
         this.name = user.getString("name");
         this.token = user.getString("access_token");
         this.email = user.getString("email");
-        this.isActive = user.getBoolean("isActive");
     }
 
 
@@ -151,6 +146,10 @@ public class SessionHandler {
 
     public boolean isConnected() {
         return !(this.token == null  || this.token.isBlank());
+    }
+
+    public String getUsername(){
+        return this.username;
     }
 
 

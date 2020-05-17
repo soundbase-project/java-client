@@ -12,6 +12,6 @@ public class LoginWithTokenTask extends Task<LoginStatus> {
     }
     @Override
     protected LoginStatus call() {
-        return session.loginWithToken();
+        return session.openSessionWithToken();
     }
 }

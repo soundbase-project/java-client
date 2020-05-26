@@ -7,6 +7,7 @@ import com.soundhive.Router;
 import com.soundhive.authentication.LoginService;
 import com.soundhive.authentication.LoginWithTokenService;
 import com.soundhive.authentication.SessionHandler;
+import com.soundhive.response.Response;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -86,13 +87,13 @@ public class LoginController implements IUiController {
     private void setLoginWithTokenService() {
         this.loginWithTokenService = new LoginWithTokenService(session);
         loginWithTokenService.setOnSucceeded(e -> {
-            SessionHandler.LoginStatus status = (SessionHandler.LoginStatus) e.getSource().getValue();
-            switch (status) {
-                case UNAUTHORIZED:
+            Response<Void> status = (Response<Void>) e.getSource().getValue();
+            switch (status.getStatus()) {
+                case UNAUTHENTICATED:
                     this.router.issueMessage("Could not connect using saved token.");
                     setLoginService();
                     break;
-                case CONNECTION_ERROR:
+                case ERROR:
                     this.router.issueMessage("Unable to connect the server.");
                     setLoginService();
                     break;
@@ -115,9 +116,9 @@ public class LoginController implements IUiController {
         this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), cbStayConnected.selectedProperty(), session);
 
         loginService.setOnSucceeded(e -> {
-            SessionHandler.LoginStatus status = (SessionHandler.LoginStatus) e.getSource().getValue();
-            switch (status) {
-                case UNAUTHORIZED:
+            Response<Void> response = (Response<Void>) e.getSource().getValue();
+            switch (response.getStatus()) {
+                case UNAUTHENTICATED:
                     this.router.issueMessage("Wrong password or username.");
 
 
@@ -125,7 +126,7 @@ public class LoginController implements IUiController {
                     btLogin.setVisible(true);
                     break;
 
-                case CONNECTION_ERROR:
+                case ERROR:
                     this.router.issueMessage("Unable to connect the server.");
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);

@@ -1,5 +1,6 @@
 package com.soundhive.authentication;
 
+import com.soundhive.response.Response;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.concurrent.Service;
@@ -7,7 +8,7 @@ import javafx.concurrent.Task;
 import kong.unirest.json.JSONObject;
 
 
-public class LoginService extends Service<SessionHandler.LoginStatus> {
+public class LoginService extends Service<Response<Void>> {
 
     private final StringProperty usernameProperty;
     private final StringProperty passwordProperty;
@@ -21,7 +22,10 @@ public class LoginService extends Service<SessionHandler.LoginStatus> {
         this.session = session;
     }
 
-    protected Task<SessionHandler.LoginStatus> createTask() {
-        return new LoginTask(usernameProperty.getValueSafe(), passwordProperty.getValueSafe(), this.stayConnected.getValue(), this.session);
+    protected Task<Response<Void>> createTask() {
+        return new LoginTask(usernameProperty.getValueSafe(),
+                passwordProperty.getValueSafe(),
+                this.stayConnected.getValue(),
+                this.session);
     }
 }

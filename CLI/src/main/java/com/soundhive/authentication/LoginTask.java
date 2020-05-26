@@ -1,10 +1,11 @@
 package com.soundhive.authentication;
 
+import com.soundhive.response.Response;
 import javafx.concurrent.Task;
 
 
 
-public class LoginTask extends Task<SessionHandler.LoginStatus> {
+public class LoginTask extends Task<Response<Void>> {
 
     private final String username;
     private final String password;
@@ -19,7 +20,7 @@ public class LoginTask extends Task<SessionHandler.LoginStatus> {
         this.session = session;
     }
 
-    protected SessionHandler.LoginStatus call() {
+    protected Response<Void> call() {
         return this.session.openSession(username, password, stayConnected);
     }
 }

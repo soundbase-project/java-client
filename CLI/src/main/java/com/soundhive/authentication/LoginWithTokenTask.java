@@ -1,9 +1,9 @@
 package com.soundhive.authentication;
 
-import com.soundhive.authentication.SessionHandler.LoginStatus;
+import com.soundhive.response.Response;
 import javafx.concurrent.Task;
 
-public class LoginWithTokenTask extends Task<LoginStatus> {
+public class LoginWithTokenTask extends Task<Response<Void>> {
 
     private SessionHandler session;
 
@@ -11,7 +11,7 @@ public class LoginWithTokenTask extends Task<LoginStatus> {
         this.session = session;
     }
     @Override
-    protected LoginStatus call() {
-        return session.openSessionWithToken();
+    protected Response<Void> call() {
+        return session.loadUserProfile();
     }
 }

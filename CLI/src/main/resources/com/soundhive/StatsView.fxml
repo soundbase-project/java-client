@@ -10,13 +10,13 @@
    <children>
       <AreaChart fx:id="acStats" layoutX="286.0" layoutY="14.0" prefHeight="521.0" prefWidth="780.0" style="-fx-background-color: #343a40;">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="yAxis" side="LEFT" />
         </yAxis>
       </AreaChart>
-      <JFXComboBox focusColor="WHITE" layoutX="46.0" layoutY="38.0" prefHeight="28.0" prefWidth="206.0" />
+      <JFXComboBox fx:id="cbSpan" focusColor="WHITE" layoutX="46.0" layoutY="38.0" prefHeight="28.0" prefWidth="206.0" />
       <Label layoutX="46.0" layoutY="134.0" text="300" textFill="#321fae">
          <font>
             <Font name="System Bold" size="36.0" />

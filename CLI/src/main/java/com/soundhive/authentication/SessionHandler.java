@@ -1,6 +1,7 @@
 package com.soundhive.authentication;
 
 import com.soundhive.Globals;
+import com.soundhive.response.Response;
 import javafx.beans.property.StringProperty;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -10,10 +11,12 @@ import kong.unirest.json.JSONObject;
 import java.io.*;
 import java.util.Scanner;
 
+import com.soundhive.response.Response.Status;
+
 public class SessionHandler {
-    public enum LoginStatus{
-        UNAUTHORIZED, CONNECTION_ERROR, SUCCESS
-    }
+//    public enum LoginStatus{
+//        UNAUTHORIZED, CONNECTION_ERROR, SUCCESS
+//    }
 
     private String token;
     private String name;
@@ -26,7 +29,7 @@ public class SessionHandler {
         this.lbSession = lbSession;
     }
 
-    public LoginStatus openSession(final String username,final String password, final boolean stayConnected) {
+    public Response<Void> openSession(final String username, final String password, final boolean stayConnected) {
         HttpResponse<JsonNode> res = Unirest.post("auth/login")
                 .header("accept", "application/json")
                 .field("username", username)
@@ -35,19 +38,22 @@ public class SessionHandler {
 
         switch (res.getStatus()) {
             case 201:
-                //bindJSONObjectToAttributes(res.getBody().getObject());
                 this.token = res.getBody().getObject().getString("access_token");
+                var userProfileReq = this.loadUserProfile();
+                if (userProfileReq.getStatus() != Status.SUCCESS){
+                    return new Response<>(Response.Status.ERROR);
+                }
                 if (stayConnected){
                     saveToken();
                 }
-                return LoginStatus.SUCCESS;
+                return new Response<>(Response.Status.SUCCESS);
             case 401:
                 this.resetSessionValues();
-                return LoginStatus.UNAUTHORIZED;
+                return new Response<>(Status.UNAUTHENTICATED);
             default:
                 this.resetSessionValues();
                 System.out.println(res.getStatus());
-                return LoginStatus.CONNECTION_ERROR;
+                return new Response<>(Status.ERROR);
         }
     }
 
@@ -96,10 +102,10 @@ public class SessionHandler {
         return  foundToken.toString();
     }
 
-    public LoginStatus openSessionWithToken() {
+    public Response<Void> loadUserProfile() {
         final String foundToken = loadToken();
-        if (foundToken == null|| foundToken.isBlank()){
-            return LoginStatus.UNAUTHORIZED;
+        if (this.token != null && this.token.isBlank()){
+            return new Response<>(Status.UNAUTHENTICATED );
         }
         HttpResponse<JsonNode> res = Unirest.get("profile")
                 .header("accept", "application/json")
@@ -109,16 +115,14 @@ public class SessionHandler {
 
         switch (res.getStatus()){
             case 200:
-                //this.username = res.getBody().getObject().getString("username");
+                this.bindJSONObjectToAttributes(res.getBody().getObject());
                 this.token = foundToken;
-                return LoginStatus.SUCCESS;
+                return new Response<>(Status.SUCCESS);
             case 401:
-                deleteToken();
-                return LoginStatus.UNAUTHORIZED;
+                return new Response<>(Status.UNAUTHENTICATED);
             default:
-                System.out.println(res.getStatusText());
                 deleteToken();
-                return LoginStatus.CONNECTION_ERROR;
+                return new Response<>(Status.ERROR);
         }
     }
 
@@ -131,7 +135,6 @@ public class SessionHandler {
     private void bindJSONObjectToAttributes(JSONObject user) {
         this.username = user.getString("username");
         this.name = user.getString("name");
-        this.token = user.getString("access_token");
         this.email = user.getString("email");
     }
 
@@ -152,5 +155,15 @@ public class SessionHandler {
         return this.username;
     }
 
+    public String getToken() {
+        return token;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

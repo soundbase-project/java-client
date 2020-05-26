@@ -1,11 +1,12 @@
 package com.soundhive.authentication;
 
+import com.soundhive.response.Response;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 import java.util.ServiceConfigurationError;
 
-public class LoginWithTokenService extends Service<SessionHandler.LoginStatus> {
+public class LoginWithTokenService extends Service<Response<Void>> {
     final SessionHandler session;
 
     public LoginWithTokenService(SessionHandler session) {
@@ -13,7 +14,7 @@ public class LoginWithTokenService extends Service<SessionHandler.LoginStatus> {
     }
 
     @Override
-    protected Task<SessionHandler.LoginStatus> createTask() {
+    protected Task<Response<Void>> createTask() {
         return new LoginWithTokenTask(session);
     }
 }

@@ -6,9 +6,8 @@ import com.soundhive.authentication.SessionHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class UploadController implements IUiController {
-    private Router router;
-    private SessionHandler session;
+public class UploadController extends Controller {
+
 
     @FXML
     private JFXTextField tfNbTracks;
@@ -22,9 +21,8 @@ public class UploadController implements IUiController {
     }
 
     @Override
-    public void setContext(Router router, SessionHandler session) {
-        this.router = router;
-        this.session = session;
+    protected void start() {
+
     }
 
     private void purifyNumberField(JFXTextField field) {

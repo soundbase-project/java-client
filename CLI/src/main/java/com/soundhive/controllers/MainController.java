@@ -41,7 +41,7 @@ public class MainController {
         this.session = new SessionHandler(lbSession.textProperty());
         loadUIPlugins();
 
-        router.goTo("Login", controller -> controller.setContext(router, session));
+        router.goTo("Login", controller -> controller.setContextAndStart(router, session));
     }
 
     public void setRouter(final Router router) {
@@ -75,7 +75,7 @@ public class MainController {
 
     private void tryGoingTo(String target) {
         if (session.isConnected()) {
-            router.goTo(target, c -> c.setContext(router, session));
+            router.goTo(target, c -> c.setContextAndStart(router, session));
         }
         else {
             router.issueMessage("You have to be connected.");
@@ -95,7 +95,7 @@ public class MainController {
                 setButtonStyle(button);
                 button.setText(plugin.getName());
                 button.setOnAction(e -> {
-                    router.goTo(plugin.getView(), c -> c.setContext(router, session));
+                    router.goTo(plugin.getView(), c -> c.setContextAndStart(router, session));
                 });
                 HBox buttonPane = new HBox(button);
                 buttonPane.setStyle("-fx-background-color: #343a40");

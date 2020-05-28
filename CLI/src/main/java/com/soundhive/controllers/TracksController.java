@@ -3,9 +3,9 @@ package com.soundhive.controllers;
 import com.soundhive.Router;
 import com.soundhive.authentication.SessionHandler;
 
-public class TracksController implements IUiController {
+public class TracksController extends Controller{
     @Override
-    public void setContext(Router router, SessionHandler session) {
+    protected void start() {
 
     }
 }

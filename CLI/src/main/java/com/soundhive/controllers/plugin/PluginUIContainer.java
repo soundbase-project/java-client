@@ -6,11 +6,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 public class PluginUIContainer {
-    private final IPluginUiController plugin;
+    private final PluginController plugin;
     private final URLClassLoader classLoader;
     private final FXMLLoader view;
 
-    public PluginUIContainer(IPluginUiController plugin, URLClassLoader classLoader) {
+    public PluginUIContainer(PluginController plugin, URLClassLoader classLoader) {
         this.plugin = plugin;
         this.classLoader = classLoader;
         view = new FXMLLoader(classLoader.getResource(plugin.getViewName()));
@@ -27,7 +27,7 @@ public class PluginUIContainer {
         return this.view;
     }
 
-    public IPluginUiController getPlugin() {
+    public PluginController getPlugin() {
         return this.plugin;
     }
 

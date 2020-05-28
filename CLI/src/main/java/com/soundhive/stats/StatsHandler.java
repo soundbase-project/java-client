@@ -44,7 +44,6 @@ public class StatsHandler {
 
     private final SessionHandler session;
 
-    //private Stats stats;
 
     private final Scope scope;
 
@@ -84,6 +83,7 @@ public class StatsHandler {
                 System.err.println("Bad request : " + request);
                 return  new Response<>(Response.Status.ERROR);
             default:
+                System.out.println("Error : " + res.getStatusText());
                 return  new Response<>(Response.Status.ERROR);
 
 

@@ -34,7 +34,7 @@ public class StatsService extends Service<Response<Stats>> {
 
     StatsHandler.Scope scope;
 
-    public StatsService(final SessionHandler session, ObjectProperty<SpanOption> cbSpan, StatsHandler.Scope scope) {
+    public StatsService(final SessionHandler session,final  ObjectProperty<SpanOption> cbSpan,final  StatsHandler.Scope scope) {
         this.cbSpan = cbSpan;
         this.session = session;
         this.scope = scope;
@@ -43,25 +43,25 @@ public class StatsService extends Service<Response<Stats>> {
     protected Task<Response<Stats>> createTask() {
         SpanOption chosen = cbSpan.getValue();
         StatsHandler stats = null;
-
         switch (chosen) {
             case LAST_YEAR:
-                stats = new StatsHandler(session, StatsHandler.Timespan.MONTH, 12, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 12, scope);
                 break;
             case LAST_6_MONTHS:
-                stats = new StatsHandler(session, StatsHandler.Timespan.MONTH, 6, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 6, scope);
                 break;
             case LAST_TWO_MONTHS:
-                stats = new StatsHandler(session, StatsHandler.Timespan.WEEK, 9, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.WEEK, 9, scope);
                 break;
             case LAST_WEEK:
-                stats = new StatsHandler(session, StatsHandler.Timespan.DAY, 7, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.DAY, 7, scope);
                 break;
             case LAST_48_HOURS:
-                stats = new StatsHandler(session, StatsHandler.Timespan.HOUR, 48, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 48, scope);
                 break;
             case LAST_DAY:
-                stats = new StatsHandler(session, StatsHandler.Timespan.HOUR, 24, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 24, scope);
+
                 break;
         }
 

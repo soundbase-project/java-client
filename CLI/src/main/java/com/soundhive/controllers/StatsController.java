@@ -3,6 +3,7 @@ package com.soundhive.controllers;
 import com.jfoenix.controls.JFXComboBox;
 import com.soundhive.Router;
 import com.soundhive.authentication.SessionHandler;
+import com.soundhive.response.Response;
 import com.soundhive.stats.Keyframe;
 import com.soundhive.stats.Stats;
 import com.soundhive.stats.StatsHandler;
@@ -15,9 +16,7 @@ import javafx.scene.chart.XYChart;
 
 import java.util.List;
 
-public class StatsController implements IUiController {
-    private Router router;
-    private SessionHandler session;
+public class StatsController extends  Controller{
     private StatsService statsService;
 
     @FXML
@@ -34,15 +33,15 @@ public class StatsController implements IUiController {
 
     @FXML
     public void initialize() {
-        populateSpans();
-        populateChart();
+
+
     }
 
 
     @Override
-    public void setContext(Router router, SessionHandler session) {
-        this.router = router;
-        this.session = session;
+    protected void start() {
+        populateSpans();
+        populateChart();
     }
 
     private void populateSpans() {
@@ -52,11 +51,18 @@ public class StatsController implements IUiController {
     }
 
     private void populateChart() {
-        statsService = new StatsService(this.session, this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
+        System.out.println(this.getSession());
+        statsService = new StatsService(this.getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
         this.acStats.setTitle("Views from last week");
         statsService.setOnSucceeded(e -> {
-            Stats stats = (Stats) e.getSource().getValue();
-            this.acStats.getData().add(generateListenSeries(stats.getKeyframes()));
+            Response<Stats> stats = (Response<Stats>) e.getSource().getValue();
+            if (stats.getStatus() == Response.Status.SUCCESS){
+                this.acStats.getData().add(generateListenSeries(stats.getContent().getKeyframes()));
+            }
+            else {
+                System.err.println("Couldn't fetch stats : " +  stats.getStatus().toString());
+            }
+
         });
         statsService.setOnFailed(e -> {
             e.getSource().getException().printStackTrace();

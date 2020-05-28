@@ -1,8 +1,7 @@
 package com.soundhive;
 
 import com.jfoenix.controls.JFXSnackbar;
-import com.soundhive.controllers.IUiController;
-import com.soundhive.controllers.plugin.PluginUIContainer;
+import com.soundhive.controllers.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -22,19 +21,19 @@ public class Router {
     }
 
 
-    public void goTo(final String viewName, final Consumer<IUiController> controllerConsumer) {
+    public void goTo(final String viewName, final Consumer<Controller> controllerConsumer) {
         final var viewPath = String.format("/com/soundhive/%sView.fxml", viewName);
         final var fxmlLoader = new FXMLLoader(this.getClass().getResource(viewPath));
         goTo(fxmlLoader, controllerConsumer);
     }
 
-    public void goTo(FXMLLoader viewLoader, final Consumer<IUiController> controllerConsumer) {
+    public void goTo(FXMLLoader viewLoader, final Consumer<Controller> controllerConsumer) {
         final var view = loadView(viewLoader, controllerConsumer);
 
         anchorPane.getChildren().setAll(view);
     }
 
-    private Parent loadView(final FXMLLoader fxmlLoader, final Consumer<IUiController> controllerConsumer) {
+    private Parent loadView(final FXMLLoader fxmlLoader, final Consumer<Controller> controllerConsumer) {
 
 
         try {
@@ -48,17 +47,6 @@ public class Router {
         }
     }
 
-//    private Parent loadView(PluginUIContainer plugin, final Consumer<IUiController> controllerConsumer) {
-//        try {
-//            final var fxmlLoader = plugin.getView();
-//            //fxmlLoader.setController(plugin.getPlugin());
-//            controllerConsumer.accept(fxmlLoader.getController());
-//            return fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new IllegalStateException(String.format("Unable to load view: %s", plugin.getView()), e);
-//        }
-//    }
 
     public void issueMessage(String message){
         JFXSnackbar bar = new JFXSnackbar(this.anchorPane);

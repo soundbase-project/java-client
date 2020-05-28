@@ -1,15 +1,10 @@
 import com.jfoenix.controls.JFXButton;
-import com.soundhive.Router;
-import com.soundhive.authentication.SessionHandler;
-import com.soundhive.controllers.plugin.IPluginUiController;
+import com.soundhive.controllers.plugin.PluginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 
-public class TestController implements IPluginUiController {
-    private Router router;
-    private SessionHandler session;
-
+public class TestController extends PluginController {
     @FXML
     Label label;
 
@@ -30,15 +25,15 @@ public class TestController implements IPluginUiController {
         });
 
     }
+
     @Override
-    public void setContext(Router router, SessionHandler session) {
-        this.router = router;
-        this.session = session;
+    protected void start() {
+
     }
 
     @Override
     public String getViewName() {
-            return "TestView.fxml";
+        return "TestView.fxml";
     }
 
     @Override

@@ -45,6 +45,6 @@ public class PluginUiHandler {
 
         final Class<?> plugin = Class.forName("TestController", true, child);
 
-        return new PluginUIContainer((IPluginUiController) plugin.getConstructor().newInstance(), child);
+        return new PluginUIContainer((PluginController) plugin.getConstructor().newInstance(), child);
     }
 }

@@ -49,16 +49,19 @@ public class StatsController extends  Controller{
     }
 
     private void populateChart() {
-        System.out.println(this.getSession());
-        statsService = new StatsService(this.getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
+        System.out.println(getContext().getSession());
+        statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
         this.acStats.setTitle("Views from last week");
         statsService.setOnSucceeded(e -> {
             Response<Stats> stats = (Response<Stats>) e.getSource().getValue();
             if (stats.getStatus() == Response.Status.SUCCESS){
                 this.acStats.getData().add(generateListenSeries(stats.getContent().getKeyframes()));
             }
-            else {
-                System.err.println("Couldn't fetch stats : " +  stats.getStatus().toString());
+            else { //TODO: add exception based error management
+                if (getContext().Verbose()) {
+                    System.err.println("Couldn't fetch stats : " +  stats.getStatus().toString());
+                }
+
             }
 
         });

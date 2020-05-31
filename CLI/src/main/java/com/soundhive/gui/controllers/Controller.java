@@ -1,24 +1,17 @@
 package com.soundhive.gui.controllers;
 
-import com.soundhive.gui.Router;
-import com.soundhive.core.authentication.SessionHandler;
+import com.soundhive.gui.Context;
 
 public abstract class Controller {
-    private SessionHandler session;
-    private Router router;
+    private Context context;
 
-    public void setContextAndStart(Router router, SessionHandler session){
-        this.router = router;
-        this.session = session;
+    public void setContextAndStart(Context context){
+        this.context = context;
         start();
     }
 
-    protected Router getRouter() {
-        return router;
-    }
-
-    protected SessionHandler getSession() {
-        return session;
+    protected Context getContext(){
+        return this.context;
     }
 
     protected abstract void start();

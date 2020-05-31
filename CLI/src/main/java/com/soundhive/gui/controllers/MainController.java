@@ -2,24 +2,27 @@ package com.soundhive.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSnackbar;
+import com.soundhive.core.conf.ConfigFileException;
+import com.soundhive.core.conf.MissingParamException;
+import com.soundhive.gui.Context;
 import com.soundhive.gui.Router;
 import com.soundhive.core.authentication.SessionHandler;
 import com.soundhive.gui.controllers.plugin.PluginUIContainer;
 import com.soundhive.gui.controllers.plugin.PluginUiHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.List;
 
 public class MainController {
     //create service var
 
-    private Router router;
-    private SessionHandler session;
+    private Context context;
 
     @FXML
     private JFXListView<HBox> lvPluginNavBar;
@@ -37,16 +40,62 @@ public class MainController {
     @FXML private VBox vbNavMenu;
 
     @FXML public void initialize() {
-        this.router = new Router(appContent, mainContainer);
-        this.session = new SessionHandler();
-        loadUIPlugins();
+        initContext();
 
-        router.goTo("Login", controller -> controller.setContextAndStart(router, session));
+        try {
+            loadUIPlugins();
+        } catch (MissingParamException e) {
+            this.context.getRouter().issueDialog("Impossible to load plugins : \n" + e.getMessage());
+            if (context.Verbose()) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) { //TODO : centralize exceptions
+            this.context.getRouter().issueDialog("Impossible to load plugin for unknown reasons.");
+            if (context.Verbose()) {
+                e.printStackTrace();
+            }
+        }
+
+
+        context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
     }
 
-    public void setRouter(final Router router) {
-        this.router = router;
+    private void initContext(){
+        try {
+            this.context = new Context(new Router(this.appContent, this.mainContainer));
+        }
+        catch (ConfigFileException | MissingParamException e) {
+            issueNotWorkingNotice(e.getMessage());
+        }
     }
+
+    private void issueNotWorkingNotice(String message) {
+
+        Label secondLabel = new Label(message);
+        JFXButton button = new JFXButton("Exit");
+        VBox box = new VBox();
+
+        button.setOnAction(e -> {
+            System.exit(-1);
+        });
+
+        box.getChildren().setAll(secondLabel, button);
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(box);
+
+        Scene secondScene = new Scene(secondaryLayout, 300, 150);
+
+        // New window (Stage)
+        Stage newWindow = new Stage();
+        newWindow.setTitle("ERROR");
+        newWindow.setScene(secondScene);
+
+
+        newWindow.show();
+
+    }
+
+
 
     @FXML
     private void navToStats() {
@@ -73,40 +122,41 @@ public class MainController {
         tryGoingTo("Settings");
     }
 
-    private void tryGoingTo(String target) {
-        if (session.isConnected()) {
-            router.goTo(target, c -> c.setContextAndStart(router, session));
-        }
-        else {
-            router.issueMessage("You have to be connected.");
+    private void tryGoingTo(String target) { //TODO : uncomment
+        //if (session.isConnected()) {
+            context.getRouter().goTo(target, c -> c.setContextAndStart(this.context));
+        //}
+        //else {
+        //    router.issueMessage("You have to be connected.");
 
-        }
+        //}
     }
 
-    private void loadUIPlugins() {
-        PluginUiHandler handler = new PluginUiHandler();
 
-        try {
-            List<PluginUIContainer> plugins = handler.loadPlugins();
-            for (PluginUIContainer plugin :
-                    plugins) {
 
-                JFXButton button = new JFXButton();
-                setButtonStyle(button);
-                button.setText(plugin.getName());
-                button.setOnAction(e -> {
-                    router.goTo(plugin.getView(), c -> c.setContextAndStart(router, session));
-                });
-                HBox buttonPane = new HBox(button);
-                buttonPane.setStyle("-fx-background-color: #343a40");
+    private void loadUIPlugins() throws Exception{
+        String uiPluginDir = context.getConf().getParam("ui_plugin_dir");
+        PluginUiHandler handler = new PluginUiHandler(uiPluginDir);
 
-                this.lvPluginNavBar.getItems().add(buttonPane);
-                this.lvPluginNavBar.setStyle("-fx-background-color: #343a40");
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            this.router.issueMessage("Unable to load plugins");
+
+
+        List<PluginUIContainer> plugins = handler.loadPlugins();
+        for (PluginUIContainer plugin :
+                plugins) {
+
+            JFXButton button = new JFXButton();
+            setButtonStyle(button);
+            button.setText(plugin.getName());
+            button.setOnAction(e -> {
+                context.getRouter().goTo(plugin.getView(), c -> c.setContextAndStart(context));
+            });
+            HBox buttonPane = new HBox(button);
+            buttonPane.setStyle("-fx-background-color: #343a40");
+
+            this.lvPluginNavBar.getItems().add(buttonPane);
+            this.lvPluginNavBar.setStyle("-fx-background-color: #343a40");
         }
+
     }
 
 
@@ -118,5 +168,4 @@ public class MainController {
 
 
     }
-
 }

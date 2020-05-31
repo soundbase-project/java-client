@@ -1,6 +1,6 @@
 package com.soundhive.core.authentication;
 
-import com.soundhive.core.Globals;
+import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.response.Response;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -20,9 +20,12 @@ public class SessionHandler {
     private String username;
     private String email;
 
+    private final String tokenDir;
 
-    public SessionHandler() {
-        Unirest.config().defaultBaseUrl(Globals.API_URL_BASE); // TODO : move this out of here
+
+    public SessionHandler(String tokenDir, String apiUrl) {
+        this.tokenDir = tokenDir;
+
     }
 
     public Response<Void> openSession(final String username, final String password, final boolean stayConnected) {
@@ -55,14 +58,14 @@ public class SessionHandler {
 
 
     private void saveToken() {
-        File target = new File(Globals.TOKEN_DIR);
+        File target = new File(tokenDir);
         try {
             if (target.getParentFile().mkdirs()) {
-                if (!(target.exists() || new File(Globals.TOKEN_DIR).createNewFile())){
+                if (!(target.exists() || new File(tokenDir).createNewFile())){
                     System.err.println("Could not create token file.");
                 }
             }
-            FileWriter w = new FileWriter(Globals.TOKEN_DIR);
+            FileWriter w = new FileWriter(tokenDir);
             w.write(this.token);
             w.close();
 
@@ -72,16 +75,16 @@ public class SessionHandler {
     }
 
     public boolean checkForToken() {
-        return new File(Globals.TOKEN_DIR).exists();
+        return new File(tokenDir).exists();
     }
 
     private String loadToken () {
-        if (!new File(Globals.TOKEN_DIR).exists()) {
+        if (!new File(tokenDir).exists()) {
             return null;
         }
         StringBuilder foundToken = new StringBuilder();
         try {
-            File myObj = new File(Globals.TOKEN_DIR);
+            File myObj = new File(tokenDir);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -120,7 +123,7 @@ public class SessionHandler {
     }
 
     private void deleteToken(){
-        if (new File(Globals.TOKEN_DIR).delete()){
+        if (new File(tokenDir).delete()){
             System.out.println("Token file deleted.");
         }
     }

@@ -67,6 +67,7 @@ public class StatsHandler {
                 .header("accept", "application/json")
                 .header("authorization", "Bearer " + session.getToken())
                 .asJson();
+
         switch (res.getStatus()) {
             case 200:
                 Stats stats;

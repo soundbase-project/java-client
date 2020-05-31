@@ -1,7 +1,5 @@
 package com.soundhive.gui.controllers.plugin;
 
-import com.soundhive.core.Globals;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -12,13 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PluginUiHandler {
+    private final String uiPluginDir;
+    public PluginUiHandler(final String uiPluginDir) {
+        this.uiPluginDir = uiPluginDir;
+    }
 
     private File[] getPluginsDirectory() throws IOException {
-        File pluginDir = new File(Globals.UI_PLUGINS_DIR);
+        File pluginDir = new File(this.uiPluginDir);
         if (!(pluginDir.exists() || pluginDir.mkdirs())) {
             throw new IOException("Unable to access or create Plugins directory.");
         }
-        return new File(Globals.UI_PLUGINS_DIR).listFiles((f, n) -> n.endsWith(".jar"));
+        return new File(this.uiPluginDir).listFiles((f, n) -> n.endsWith(".jar"));
     }
 
     public List<PluginUIContainer> loadPlugins() throws Exception{

@@ -136,3 +136,9 @@ buildNumber.properties
 .flattened-pom.xml
 
 # End of https://www.gitignore.io/api/java,linux,maven,intellij+iml
+
+### Runtime generated content ###
+UIPlugins
+auth
+conf
+

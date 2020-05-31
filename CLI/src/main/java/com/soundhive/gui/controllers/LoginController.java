@@ -50,7 +50,7 @@ public class LoginController extends Controller {
     @FXML
     public void login() {
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
-            this.getRouter().issueMessage("one field is empty.");
+            getContext().getRouter().issueMessage("one field is empty.");
         } else {
             btLogin.setVisible(false);
             pbConnecting.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
@@ -68,7 +68,7 @@ public class LoginController extends Controller {
     @Override
     protected void start() {
 
-        if (this.getSession().checkForToken()) {
+        if (getContext().getSession().checkForToken()) {
             setLoginWithTokenService();
             loginWithTokenService.start();
         } else {
@@ -79,42 +79,42 @@ public class LoginController extends Controller {
 
     //TODO: refactor to reduce reused code.
     private void setLoginWithTokenService() {
-        this.loginWithTokenService = new LoginWithTokenService(this.getSession());
+        this.loginWithTokenService = new LoginWithTokenService(getContext().getSession());
         loginWithTokenService.setOnSucceeded(e -> {
             Response<Void> status = (Response<Void>) e.getSource().getValue();
             switch (status.getStatus()) {
                 case UNAUTHENTICATED:
-                    this.getRouter().issueMessage("Could not connect using saved token.");
+                    getContext().getRouter().issueMessage("Could not connect using saved token.");
                     setLoginService();
                     break;
                 case CONNEXION_FAILED:
-                    this.getRouter().issueDialog("Unable to connect the server.");
+                    getContext().getRouter().issueDialog("Unable to connect the server.");
                     setLoginService();
                     break;
                 case SUCCESS:
-                    this.getRouter().issueMessage(String.format("Logged in as %s", getSession().getUsername()));
+                    getContext().getRouter().issueMessage(String.format("Logged in as %s", getContext().getSession().getUsername()));
                     //getSession().updateWitness(); TODO : find a new way to update this
-                    getRouter().goTo("Stats", controller -> controller.setContextAndStart(getRouter(), getSession()));
+                    getContext().getRouter().goTo("Stats", controller -> controller.setContextAndStart(getContext()));
                     break;
             }
             loginWithTokenService.reset();
         });
         this.loginWithTokenService.setOnFailed(e -> {
             e.getSource().getException().printStackTrace();
-            this.getRouter().issueDialog("Unable to connect the server.");
+            getContext().getRouter().issueDialog("Unable to connect the server.");
             loginWithTokenService.reset();
         });
     }
 
     private void setLoginService() {
 
-        this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), cbStayConnected.selectedProperty(), getSession());
+        this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), cbStayConnected.selectedProperty(), getContext().getSession());
 
         loginService.setOnSucceeded(e -> {
             Response<Void> response = (Response<Void>) e.getSource().getValue();
             switch (response.getStatus()) {
                 case UNAUTHENTICATED:
-                    this.getRouter().issueMessage("Wrong password or username.");
+                    getContext().getRouter().issueMessage("Wrong password or username.");
 
 
                     pbConnecting.setVisible(false);
@@ -122,16 +122,16 @@ public class LoginController extends Controller {
                     break;
 
                 case UNKNOWN_ERROR:
-                    this.getRouter().issueMessage("Unable to connect the server.");
+                    getContext().getRouter().issueMessage("Unable to connect the server.");
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
 
                 case SUCCESS:
-                    this.getRouter().issueMessage(String.format("Logged in as %s", "not implemented"));
+                    getContext().getRouter().issueMessage(String.format("Logged in as %s", "not implemented"));
 
                     //getSession().updateWitness(); //TODO : display user
-                    getRouter().goTo("Stats", controller -> controller.setContextAndStart(getRouter(), getSession()));
+                    getContext().getRouter().goTo("Stats", controller -> controller.setContextAndStart(getContext()));
                     break;
             }
             loginService.reset();

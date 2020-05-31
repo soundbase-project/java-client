@@ -37,7 +37,7 @@ public class MainController {
     @FXML private VBox vbNavMenu;
 
     @FXML public void initialize() {
-        this.router = new Router(appContent);
+        this.router = new Router(appContent, mainContainer);
         this.session = new SessionHandler();
         loadUIPlugins();
 
@@ -105,8 +105,7 @@ public class MainController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            JFXSnackbar bar = new JFXSnackbar(mainContainer);
-            bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label("Unable to load plugins")));
+            this.router.issueMessage("Unable to load plugins");
         }
     }
 

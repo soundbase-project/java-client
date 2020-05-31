@@ -87,8 +87,8 @@ public class LoginController extends Controller {
                     this.getRouter().issueMessage("Could not connect using saved token.");
                     setLoginService();
                     break;
-                case UNKNOWN_ERROR:
-                    this.getRouter().issueMessage("Unable to connect the server.");
+                case CONNEXION_FAILED:
+                    this.getRouter().issueDialog("Unable to connect the server.");
                     setLoginService();
                     break;
                 case SUCCESS:
@@ -101,6 +101,7 @@ public class LoginController extends Controller {
         });
         this.loginWithTokenService.setOnFailed(e -> {
             e.getSource().getException().printStackTrace();
+            this.getRouter().issueDialog("Unable to connect the server.");
             loginWithTokenService.reset();
         });
     }

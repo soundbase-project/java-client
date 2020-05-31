@@ -34,7 +34,8 @@
                         <arg>-Xlint:all</arg>
                         <arg>-Xlint:-processing</arg>
                         <arg>-Xlint:-serial</arg>
-                        <arg>-Werror</arg>
+                        <arg>-Xlint:-requires-transitive-automatic</arg>
+<!--                        <arg>-Werror</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>

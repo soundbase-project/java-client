@@ -1,5 +1,5 @@
 import com.jfoenix.controls.JFXButton;
-import com.soundhive.controllers.plugin.PluginController;
+import com.soundhive.gui.controllers.plugin.PluginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -23,7 +23,6 @@ public class TestController extends PluginController {
         button.setOnAction(e -> {
             System.out.println("you clicked the plugin button LOL");
         });
-
     }
 
     @Override

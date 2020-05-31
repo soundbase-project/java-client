@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="627.0" prefWidth="1080.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.controllers.StatsController">
+   <children>
+      <AreaChart fx:id="acStats" layoutX="286.0" layoutY="14.0" prefHeight="521.0" prefWidth="780.0" style="-fx-background-color: #343a40;">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" side="LEFT" />
+        </yAxis>
+      </AreaChart>
+      <JFXComboBox fx:id="cbSpan" focusColor="WHITE" layoutX="46.0" layoutY="38.0" prefHeight="28.0" prefWidth="206.0" />
+      <Label layoutX="46.0" layoutY="134.0" text="300" textFill="#321fae">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="47.0" layoutY="238.0" text="300" textFill="#321fae">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="332.0" text="300" textFill="#321fae">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="437.0" text="300" textFill="#321fae">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="544.0" text="300" textFill="#321fae">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="566.0" layoutY="544.0" text="300" textFill="#321fae">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="92.0" text="Plays" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="196.0" text="Skillset Notices" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="293.0" text="New Followers" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="395.0" text="Scans" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="123.0" layoutY="549.0" text="Total published tracks" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="639.0" layoutY="549.0" text="Total Followers" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

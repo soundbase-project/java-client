@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTreeView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.controllers.TracksController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Tracks" textFill="WHITE">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="540.0" layoutY="14.0" text="Albums" textFill="WHITE">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <JFXTreeView fx:id="tvTracks" layoutX="58.0" layoutY="71.0" prefHeight="497.0" prefWidth="303.0" style="-fx-background-color: #343a40;" />
+      <JFXTreeView fx:id="tvAlbums" layoutX="540.0" layoutY="71.0" prefHeight="497.0" prefWidth="303.0" style="-fx-background-color: #343a40;" />
+   </children>
+</AnchorPane>

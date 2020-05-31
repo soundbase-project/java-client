@@ -11,5 +11,12 @@
 
     <artifactId>CORE</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.7.02</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,10 +1,10 @@
-module com.soundhive {
+module CLI {
     requires javafx.controls;
     requires javafx.fxml;
-    requires unirest.java;
     requires com.jfoenix;
+    requires CORE;
 
-    opens com.soundhive to javafx.fxml;
-    exports com.soundhive;
-    exports com.soundhive.controllers;
+    opens com.soundhive.gui to javafx.fxml;
+    exports com.soundhive.gui;
+    exports com.soundhive.gui.controllers;
 }

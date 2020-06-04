@@ -1,4 +1,4 @@
-package com.soundhive.gui.controllers.plugin;
+package com.soundhive.gui.plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class PluginUiHandler {
         final URL[] urls = new URL[] {new URL("file:///" + path.getAbsolutePath())};
         final URLClassLoader child = new URLClassLoader(urls, PluginUiHandler.class.getClassLoader());
 
-        final Class<?> plugin = Class.forName("TestController", true, child);
+        final Class<?> plugin = Class.forName("Controller", true, child);
 
         return new PluginUIContainer((PluginController) plugin.getConstructor().newInstance(), child);
     }

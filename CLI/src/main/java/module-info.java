@@ -7,4 +7,5 @@ module CLI {
     opens com.soundhive.gui to javafx.fxml;
     exports com.soundhive.gui;
     exports com.soundhive.gui.controllers;
+    exports com.soundhive.gui.plugin;
 }

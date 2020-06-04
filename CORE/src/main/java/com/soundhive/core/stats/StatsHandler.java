@@ -63,10 +63,16 @@ public class StatsHandler {
     //localhost:3000/users/:username/stats/last/:nb/day
     public Response<Stats> queryStats() {
         String request = String.format("%s/%s/stats/last/%d/%s", this.scope.toString(), session.getUsername(), this.nbSpan , this.span.toString());
-        HttpResponse<JsonNode> res = Unirest.get(request)
-                .header("accept", "application/json")
-                .header("authorization", "Bearer " + session.getToken())
-                .asJson();
+        HttpResponse<JsonNode> res;
+        try {
+             res = Unirest.get(request)
+                    .header("accept", "application/json")
+                    .header("authorization", "Bearer " + session.getToken())
+                    .asJson();
+
+        } catch (Exception e) {
+            return new Response<>(Response.Status.CONNEXION_FAILED, e.getMessage());
+        }
 
         switch (res.getStatus()) {
             case 200:
@@ -75,16 +81,11 @@ public class StatsHandler {
                     stats = new Stats(res.getBody().getObject());
                 }
                 catch (JSONException e) {
-                    e.printStackTrace();
-                    return new Response<>(Response.Status.UNKNOWN_ERROR);
+                    return new Response<>(Response.Status.UNKNOWN_ERROR,e.getMessage());
                 }
-                return new Response<>(stats , Response.Status.SUCCESS);
-            case 400:
-                System.err.println("Bad request : " + request);
-                return  new Response<>(Response.Status.UNKNOWN_ERROR);
+                return new Response<>(stats , Response.Status.SUCCESS, res.getStatusText());
             default:
-                System.out.println("Error : " + res.getStatusText());
-                return  new Response<>(Response.Status.UNKNOWN_ERROR);
+                return  new Response<>(Response.Status.UNKNOWN_ERROR, res.getStatusText());
 
 
         }

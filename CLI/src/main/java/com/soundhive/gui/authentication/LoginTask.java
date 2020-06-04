@@ -22,6 +22,12 @@ public class LoginTask extends Task<Response<Void>> {
     }
 
     protected Response<Void> call() {
-        return this.session.openSession(username, password, stayConnected);
+        if (session.checkForToken()) {
+            return this.session.loadUserProfile();
+        }
+        else {
+            return this.session.openSession(username, password, stayConnected);
+        }
+
     }
 }

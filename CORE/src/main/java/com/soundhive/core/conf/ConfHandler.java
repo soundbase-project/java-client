@@ -36,13 +36,10 @@ public class ConfHandler {
             char[] buffer = new char[500];
             if (reader.read(buffer) > 0){
                 String rawConf = new String(buffer).trim();
-                System.out.println(rawConf);
                 String[] entries = rawConf.split(";");
                 for (String entry:
                         entries) {
-                    System.out.println(entry);
                     String[] keyValue = entry.split("=");
-                    System.out.println(keyValue[0] + " - " + keyValue[1]);
                     parameters.put(keyValue[0].trim(), keyValue[1].trim());
                 }
             }

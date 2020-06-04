@@ -1,9 +1,14 @@
 package com.soundhive.gui;
 
 import com.soundhive.core.authentication.SessionHandler;
+import com.soundhive.core.authentication.UserProfileConsumer;
 import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.conf.ConfigFileException;
 import com.soundhive.core.conf.MissingParamException;
+import com.soundhive.gui.plugin.PluginUIContainer;
+
+import java.io.Flushable;
+import java.util.List;
 
 public class Context {
     private boolean verbose;
@@ -11,8 +16,14 @@ public class Context {
     private final Router router;
     private final ConfHandler conf;
 
-    public Context( Router router)  throws ConfigFileException, MissingParamException{
+    private List<PluginUIContainer> plugins;
+
+    private final UserProfileConsumer profileLoader;
+
+    public Context(final Router router, final UserProfileConsumer profileLoader)  throws ConfigFileException, MissingParamException{
         this.conf = new ConfHandler();
+        this.profileLoader = profileLoader;
+
         this.router = router;
         initSession();
 
@@ -25,7 +36,7 @@ public class Context {
         String tokenDirectory = conf.getParam("token_directory");
 
 
-        this.session = new SessionHandler(apiBaseUrl, tokenDirectory);
+        this.session = new SessionHandler(tokenDirectory, this.profileLoader);
     }
 
     private void initVerbose() {
@@ -51,5 +62,13 @@ public class Context {
 
     public boolean Verbose() {
         return verbose;
+    }
+
+    public List<PluginUIContainer> getPlugins() {
+        return plugins;
+    }
+
+    public void setPlugins(final List<PluginUIContainer> plugins) {
+        this.plugins = plugins;
     }
 }

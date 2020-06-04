@@ -1,23 +1,23 @@
 import com.jfoenix.controls.JFXButton;
-import com.soundhive.gui.controllers.plugin.PluginController;
+import com.soundhive.gui.plugin.PluginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 
-public class TestController extends PluginController {
+public class Controller extends PluginController {
     @FXML
     Label label;
 
     @FXML
     JFXButton button;
 
-    public TestController() {
+    public Controller() {
         System.out.println("went through controller");
 
     }
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         System.out.println("this is a test plugin");
         label.setText("This is SPARTAAAAAAAAAAAAAAAAA");
         button.setOnAction(e -> {

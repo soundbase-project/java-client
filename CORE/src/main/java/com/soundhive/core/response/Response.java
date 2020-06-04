@@ -13,16 +13,19 @@ public class Response<T> {
     }
 
     private final Status status;
+    private final String message;
     private final T content;
 
-    public Response(T content, Status status) {
+    public Response(final T content,final  Status status, final String message) {
         this.content = content;
         this.status = status;
+        this.message = message;
     }
 
-    public Response(Status status) {
+    public Response(Status status, String message) {
         this.status = status;
         this.content = null;
+        this.message = message;
     }
 
     public Status getStatus() {
@@ -31,5 +34,9 @@ public class Response<T> {
 
     public T getContent() {
         return content;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

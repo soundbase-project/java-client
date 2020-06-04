@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class Router {
             return view;
         } catch (IOException e) {
             e.printStackTrace();
-            this.issueDialog("Could not load requested view, an error occured.");
+            this.issueDialog("Could not load requested view, an error occurred.");
             throw new IllegalStateException("Unable to load view : ", e);
         }
     }
@@ -55,7 +56,9 @@ public class Router {
 
     public void issueMessage(String message){
         JFXSnackbar bar = new JFXSnackbar(this.dialogContainer);
-        bar.enqueue(new JFXSnackbar.SnackbarEvent(new Label(message)));
+        Label lab = new Label(message);
+        lab.setTextFill(Paint.valueOf("white"));
+        bar.enqueue(new JFXSnackbar.SnackbarEvent(lab));
     }
 
     public void issueDialog(String message){

@@ -6,9 +6,8 @@ import com.soundhive.core.conf.ConfigFileException;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.Context;
 import com.soundhive.gui.Router;
-import com.soundhive.core.authentication.SessionHandler;
-import com.soundhive.gui.controllers.plugin.PluginUIContainer;
-import com.soundhive.gui.controllers.plugin.PluginUiHandler;
+import com.soundhive.gui.plugin.PluginUIContainer;
+import com.soundhive.gui.plugin.PluginUiHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -43,13 +42,13 @@ public class MainController {
         initContext();
 
         try {
-            loadUIPlugins();
+            this.context.setPlugins(loadUIPlugins());
         } catch (MissingParamException e) {
             this.context.getRouter().issueDialog("Impossible to load plugins : \n" + e.getMessage());
             if (context.Verbose()) {
                 e.printStackTrace();
             }
-        } catch (Exception e) { //TODO : centralize exceptions
+        } catch (Exception e) {
             this.context.getRouter().issueDialog("Impossible to load plugin for unknown reasons.");
             if (context.Verbose()) {
                 e.printStackTrace();
@@ -62,7 +61,7 @@ public class MainController {
 
     private void initContext(){
         try {
-            this.context = new Context(new Router(this.appContent, this.mainContainer));
+            this.context = new Context(new Router(this.appContent, this.mainContainer), username -> this.lbSession.setText(username));
         }
         catch (ConfigFileException | MissingParamException e) {
             issueNotWorkingNotice(e.getMessage());
@@ -123,18 +122,18 @@ public class MainController {
     }
 
     private void tryGoingTo(String target) { //TODO : uncomment
-        //if (session.isConnected()) {
+        if (context.getSession().isConnected()) {
             context.getRouter().goTo(target, c -> c.setContextAndStart(this.context));
-        //}
-        //else {
-        //    router.issueMessage("You have to be connected.");
+        }
+        else {
+            context.getRouter().issueMessage("You have to be connected.");
 
-        //}
+        }
     }
 
 
 
-    private void loadUIPlugins() throws Exception{
+    private List<PluginUIContainer> loadUIPlugins() throws Exception{
         String uiPluginDir = context.getConf().getParam("ui_plugin_dir");
         PluginUiHandler handler = new PluginUiHandler(uiPluginDir);
 
@@ -156,7 +155,7 @@ public class MainController {
             this.lvPluginNavBar.getItems().add(buttonPane);
             this.lvPluginNavBar.setStyle("-fx-background-color: #343a40");
         }
-
+        return plugins;
     }
 
 

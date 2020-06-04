@@ -1,4 +1,4 @@
-package com.soundhive.gui.controllers.plugin;
+package com.soundhive.gui.plugin;
 
 import javafx.fxml.FXMLLoader;
 

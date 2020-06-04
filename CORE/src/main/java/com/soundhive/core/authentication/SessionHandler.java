@@ -22,9 +22,12 @@ public class SessionHandler {
 
     private final String tokenDir;
 
+    private final UserProfileConsumer profileLoader;
 
-    public SessionHandler(String tokenDir, String apiUrl) {
+    public SessionHandler(final String tokenDir,final  UserProfileConsumer profileLoader) {
         this.tokenDir = tokenDir;
+        this.profileLoader = profileLoader;
+        this.token = loadToken();
 
     }
 
@@ -40,22 +43,26 @@ public class SessionHandler {
                 this.token = res.getBody().getObject().getString("access_token");
                 var userProfileReq = this.loadUserProfile();
                 if (userProfileReq.getStatus() != Status.SUCCESS){
-                    return new Response<>(Response.Status.UNKNOWN_ERROR);
+                    return new Response<>(Response.Status.UNKNOWN_ERROR, res.getStatusText());
                 }
                 if (stayConnected){
                     saveToken();
                 }
-                return new Response<>(Response.Status.SUCCESS);
+                return new Response<>(Response.Status.SUCCESS, res.getStatusText());
             case 401:
                 this.resetSessionValues();
-                return new Response<>(Status.UNAUTHENTICATED);
+                return new Response<>(Status.UNAUTHENTICATED, res.getStatusText());
             default:
                 this.resetSessionValues();
                 System.out.println(res.getStatus());
-                return new Response<>(Status.UNKNOWN_ERROR);
+                return new Response<>(Status.UNKNOWN_ERROR, res.getStatusText());
         }
     }
 
+
+    public boolean checkForToken() {
+        return new File(tokenDir).exists();
+    }
 
     private void saveToken() {
         File target = new File(tokenDir);
@@ -74,9 +81,7 @@ public class SessionHandler {
         }
     }
 
-    public boolean checkForToken() {
-        return new File(tokenDir).exists();
-    }
+
 
     private String loadToken () {
         if (!new File(tokenDir).exists()) {
@@ -99,26 +104,31 @@ public class SessionHandler {
     }
 
     public Response<Void> loadUserProfile() {
-        final String foundToken = loadToken();
-        if (this.token != null && this.token.isBlank()){
-            return new Response<>(Status.UNAUTHENTICATED );
+        if (this.token == null || this.token.isBlank()){
+            return new Response<>(Status.UNAUTHENTICATED , "No usable token to request profile.");
         }
-        HttpResponse<JsonNode> res = Unirest.get("profile")
-                .header("accept", "application/json")
-                .header("authorization", "Bearer " + foundToken)
-                .asJson();
+        HttpResponse<JsonNode> res;
+        try {
+            res = Unirest.get("profile")
+                    .header("accept", "application/json")
+                    .header("authorization", "Bearer " + this.token)
+                    .asJson();
+        }
+        catch (Exception e) {
+            return new Response<>(Status.CONNEXION_FAILED, e.getMessage());
+        }
+
 
 
         switch (res.getStatus()){
             case 200:
                 this.bindJSONObjectToAttributes(res.getBody().getObject());
-                this.token = foundToken;
-                return new Response<>(Status.SUCCESS);
+                return new Response<>(Status.SUCCESS, res.getStatusText());
             case 401:
-                return new Response<>(Status.UNAUTHENTICATED);
+                return new Response<>(Status.UNAUTHENTICATED, res.getStatusText());
             default:
                 deleteToken();
-                return new Response<>(Status.UNKNOWN_ERROR);
+                return new Response<>(Status.UNKNOWN_ERROR, res.getStatusText());
         }
     }
 
@@ -161,5 +171,9 @@ public class SessionHandler {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setUserInfos(){
+        this.profileLoader.accept(this.username);
     }
 }

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXScrollPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.controllers.SettingsController">
+<AnchorPane prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.controllers.SettingsController">
    <children>
-      <JFXScrollPane layoutX="559.0" layoutY="71.0" prefHeight="517.0" prefWidth="507.0" />
       <Label layoutX="557.0" layoutY="8.0" text="Plugins" textFill="WHITE">
          <font>
             <Font size="40.0" />
@@ -24,5 +22,6 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
+      <JFXListView fx:id="lvPlugins" layoutX="557.0" layoutY="66.0" prefHeight="524.0" prefWidth="507.0" />
    </children>
 </AnchorPane>

@@ -54,14 +54,23 @@ public class StatsController extends  Controller{
         this.acStats.setTitle("Views from last week");
         statsService.setOnSucceeded(e -> {
             Response<Stats> stats = (Response<Stats>) e.getSource().getValue();
-            if (stats.getStatus() == Response.Status.SUCCESS){
-                this.acStats.getData().add(generateListenSeries(stats.getContent().getKeyframes()));
-            }
-            else { //TODO: add exception based error management
-                if (getContext().Verbose()) {
-                    System.err.println("Couldn't fetch stats : " +  stats.getStatus().toString());
-                }
+            switch (stats.getStatus()) {
+                case SUCCESS:
+                    this.acStats.getData().add(generateListenSeries(stats.getContent().getKeyframes()));
 
+                case UNAUTHENTICATED:
+                    getContext().getRouter().issueDialog("You were disconnected from your session. Please log in again.");
+                    getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
+
+                case CONNEXION_FAILED:
+                    getContext().getRouter().issueDialog("The server is unreachable. Please check your internet connexion.");
+                    getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
+
+                case UNKNOWN_ERROR:
+                    getContext().getRouter().issueDialog("An error occurred.");
+            }
+            if (getContext().Verbose()) {
+                System.out.println(stats.getMessage());
             }
 
         });

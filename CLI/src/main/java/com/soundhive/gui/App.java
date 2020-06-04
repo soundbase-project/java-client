@@ -31,7 +31,6 @@ public class App extends Application {
             e.printStackTrace();
         }
 
-
         stage.setTitle("SoundHive");
         Image icon = new Image(getClass().getResourceAsStream("/drawable/logo-icon.png"));
         stage.getIcons().add(icon);

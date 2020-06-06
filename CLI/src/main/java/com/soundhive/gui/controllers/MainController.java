@@ -16,7 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.List;
+import java.util.*;
 
 public class MainController {
     //create service var
@@ -40,20 +40,8 @@ public class MainController {
 
     @FXML public void initialize() {
         initContext();
+        displayPlugins();
 
-        try {
-            this.context.setPlugins(loadUIPlugins());
-        } catch (MissingParamException e) {
-            this.context.getRouter().issueDialog("Impossible to load plugins : \n" + e.getMessage());
-            if (context.Verbose()) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            this.context.getRouter().issueDialog("Impossible to load plugin for unknown reasons.");
-            if (context.Verbose()) {
-                e.printStackTrace();
-            }
-        }
 
 
         context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
@@ -65,6 +53,20 @@ public class MainController {
         }
         catch (ConfigFileException | MissingParamException e) {
             issueNotWorkingNotice(e.getMessage());
+        }
+
+        try {
+            this.loadUIPlugins();
+        } catch (MissingParamException e) {
+            this.context.getRouter().issueDialog("Impossible to load plugins : \n" + e.getMessage());
+            if (context.Verbose()) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            this.context.getRouter().issueDialog("Impossible to load plugin for unknown reasons.");
+            if (context.Verbose()) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -121,7 +123,7 @@ public class MainController {
         tryGoingTo("Settings");
     }
 
-    private void tryGoingTo(String target) { //TODO : uncomment
+    private void tryGoingTo(String target) {
         if (context.getSession().isConnected()) {
             context.getRouter().goTo(target, c -> c.setContextAndStart(this.context));
         }
@@ -131,21 +133,16 @@ public class MainController {
         }
     }
 
+    private  void displayPlugins() {
+        List<PluginUIContainer> plugins = context.getPlugins();
 
-
-    private List<PluginUIContainer> loadUIPlugins() throws Exception{
-        String uiPluginDir = context.getConf().getParam("ui_plugin_dir");
-        PluginUiHandler handler = new PluginUiHandler(uiPluginDir);
-
-
-
-        List<PluginUIContainer> plugins = handler.loadPlugins();
         for (PluginUIContainer plugin :
                 plugins) {
 
+
             JFXButton button = new JFXButton();
             setButtonStyle(button);
-            button.setText(plugin.getName());
+            button.setText(plugin.getPlugin().getName());
             button.setOnAction(e -> {
                 context.getRouter().goTo(plugin.getView(), c -> c.setContextAndStart(context));
             });
@@ -155,7 +152,32 @@ public class MainController {
             this.lvPluginNavBar.getItems().add(buttonPane);
             this.lvPluginNavBar.setStyle("-fx-background-color: #343a40");
         }
-        return plugins;
+    }
+
+    private void loadUIPlugins() throws Exception {
+        String uiPluginDir = context.getConf().getParam("ui_plugin_dir");
+        PluginUiHandler handler = new PluginUiHandler(uiPluginDir);
+
+        List<PluginUIContainer> plugins = handler.loadPlugins(false); //TODO set real value of verbose
+
+        Set<String> names = new HashSet<>();
+
+        for (PluginUIContainer plugin :
+                plugins) {
+            if (names.contains(plugin.getPlugin().getName())) {
+                if (!plugin.delete()){
+                    if (context.Verbose()) {
+                        System.out.println("Could not delete duplicate plugin : " + plugin.getPlugin().getName());
+                    }
+                    context.getRouter().issueMessage("Duplicate plugin : " + plugin.getPlugin().getName());
+                }
+                continue;
+            }
+            this.context.setPlugin(plugin);
+
+            names.add(plugin.getPlugin().getName());
+        }
+
     }
 
 

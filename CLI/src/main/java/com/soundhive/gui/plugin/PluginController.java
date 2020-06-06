@@ -6,7 +6,7 @@ public abstract class PluginController extends Controller {
 
     public abstract String getViewName();
 
-    public abstract String getPluginName();
+    public abstract String getName();
 
 
 

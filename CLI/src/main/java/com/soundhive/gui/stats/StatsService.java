@@ -5,6 +5,7 @@ import com.soundhive.core.response.Response;
 import com.soundhive.core.stats.Stats;
 import com.soundhive.core.stats.StatsHandler;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -34,9 +35,11 @@ public class StatsService extends Service<Response<Stats>> {
 
     private final ObjectProperty<SpanOption> cbSpan;
 
+
+
     StatsHandler.Scope scope;
 
-    public StatsService(final SessionHandler session,final  ObjectProperty<SpanOption> cbSpan,final  StatsHandler.Scope scope) {
+    public StatsService(final SessionHandler session, final ObjectProperty<SpanOption> cbSpan, final StatsHandler.Scope scope) {
         this.cbSpan = cbSpan;
         this.session = session;
         this.scope = scope;
@@ -63,7 +66,6 @@ public class StatsService extends Service<Response<Stats>> {
                 break;
             case LAST_DAY:
                 stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 24, scope);
-
                 break;
         }
 

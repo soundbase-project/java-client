@@ -1,6 +1,5 @@
 package com.soundhive.core.authentication;
 
-import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.response.Response;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -115,7 +114,7 @@ public class SessionHandler {
                     .asJson();
         }
         catch (Exception e) {
-            return new Response<>(Status.CONNEXION_FAILED, e.getMessage());
+            return new Response<>(Status.CONNECTION_FAILED, e.getMessage());
         }
 
 

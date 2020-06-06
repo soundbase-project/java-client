@@ -39,7 +39,9 @@ public class StatsController extends  Controller{
     @Override
     protected void start() {
         populateSpans();
-        populateChart();
+
+        setStatsService();
+        statsService.start();
     }
 
     private void populateSpans() {
@@ -48,10 +50,9 @@ public class StatsController extends  Controller{
 
     }
 
-    private void populateChart() {
-        System.out.println(getContext().getSession());
+
+    private void setStatsService() {
         statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
-        this.acStats.setTitle("Views from last week");
         statsService.setOnSucceeded(e -> {
             Response<Stats> stats = (Response<Stats>) e.getSource().getValue();
             switch (stats.getStatus()) {
@@ -60,27 +61,28 @@ public class StatsController extends  Controller{
 
                 case UNAUTHENTICATED:
                     getContext().getRouter().issueDialog("You were disconnected from your session. Please log in again.");
-                    getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
+                    //getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
 
-                case CONNEXION_FAILED:
+                case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("The server is unreachable. Please check your internet connexion.");
-                    getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
+                    //getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
 
                 case UNKNOWN_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
             }
             if (getContext().Verbose()) {
-                System.out.println(stats.getMessage());
+                System.out.println("Stats request : " + stats.getMessage());
             }
-
+            statsService.reset();
         });
         statsService.setOnFailed(e -> {
-            e.getSource().getException().printStackTrace();
-
+            if (getContext().Verbose()) {
+                e.getSource().getException().printStackTrace();
+            }
+            statsService.reset();
         });
-        statsService.start();
-
     }
+
 
     XYChart.Series<String, Number> generateListenSeries(List<Keyframe> keyframes){
         XYChart.Series<String, Number> listenSeries = new XYChart.Series<>();

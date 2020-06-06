@@ -25,7 +25,7 @@ public class App extends Application {
         try {
             view = loader.load();
             Scene scene = new Scene(view);
-            //scene.getStylesheets().add(getClass().getResource("com/soundhive/style/style.css").toString());
+            scene.getStylesheets().add(getClass().getResource("/com/soundhive/gui/style/style.css").toString());
             stage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,24 +2,21 @@ package com.soundhive.gui.plugin;
 
 import javafx.fxml.FXMLLoader;
 
+import java.io.File;
 import java.net.URLClassLoader;
 
 public class PluginUIContainer {
     private final PluginController plugin;
-    private final URLClassLoader classLoader;
     private final FXMLLoader view;
 
-    public PluginUIContainer(PluginController plugin, URLClassLoader classLoader) {
+    private final File jarArchive;
+
+    public PluginUIContainer(PluginController plugin, URLClassLoader classLoader, File jarArchive) {
         this.plugin = plugin;
-        this.classLoader = classLoader;
+
         view = new FXMLLoader(classLoader.getResource(plugin.getViewName()));
         view.setController(plugin);
-
-    }
-
-    public String getName(){
-        return this.plugin.getPluginName();
-
+        this.jarArchive = jarArchive;
     }
 
     public FXMLLoader getView() {
@@ -28,6 +25,10 @@ public class PluginUIContainer {
 
     public PluginController getPlugin() {
         return this.plugin;
+    }
+
+    public boolean delete() {
+        return this.jarArchive.delete();
     }
 
 }

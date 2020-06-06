@@ -6,10 +6,8 @@ public class Response<T> {
     public enum Status {
         SUCCESS,
         UNAUTHENTICATED,
-        CONNEXION_FAILED,
+        CONNECTION_FAILED,
         UNKNOWN_ERROR,
-
-
     }
 
     private final Status status;

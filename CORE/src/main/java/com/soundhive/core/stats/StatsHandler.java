@@ -71,7 +71,7 @@ public class StatsHandler {
                     .asJson();
 
         } catch (Exception e) {
-            return new Response<>(Response.Status.CONNEXION_FAILED, e.getMessage());
+            return new Response<>(Response.Status.CONNECTION_FAILED, e.getMessage());
         }
 
         switch (res.getStatus()) {

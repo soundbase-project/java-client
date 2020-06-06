@@ -17,11 +17,11 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <JFXButton layoutX="913.0" layoutY="15.0" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #444a50;" text="Add new plugin" textFill="WHITE">
+      <JFXButton layoutX="904.0" layoutY="14.0" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #444a50;" text="Add new plugin" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXListView fx:id="lvPlugins" layoutX="557.0" layoutY="66.0" prefHeight="524.0" prefWidth="507.0" />
+      <JFXListView fx:id="lvPlugins" layoutX="557.0" layoutY="66.0" prefHeight="520.0" prefWidth="500.0" style="-fx-background-color: #343a40;" />
    </children>
 </AnchorPane>

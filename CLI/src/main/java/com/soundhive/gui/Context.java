@@ -8,6 +8,7 @@ import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
 
 import java.io.Flushable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Context {
@@ -21,6 +22,7 @@ public class Context {
     private final UserProfileConsumer profileLoader;
 
     public Context(final Router router, final UserProfileConsumer profileLoader)  throws ConfigFileException, MissingParamException{
+        this.plugins = new ArrayList<>();
         this.conf = new ConfHandler();
         this.profileLoader = profileLoader;
 
@@ -32,7 +34,6 @@ public class Context {
     }
 
     private void initSession() throws MissingParamException{
-        String apiBaseUrl = conf.getParam("api_base_url");
         String tokenDirectory = conf.getParam("token_directory");
 
 
@@ -68,7 +69,12 @@ public class Context {
         return plugins;
     }
 
-    public void setPlugins(final List<PluginUIContainer> plugins) {
-        this.plugins = plugins;
+    public void setPlugin(final PluginUIContainer plugin) {
+        this.plugins.add(plugin);
+    }
+
+    public void deletePlugin(final PluginUIContainer plugin) {
+        plugin.delete();
+        this.plugins.remove(plugin);
     }
 }

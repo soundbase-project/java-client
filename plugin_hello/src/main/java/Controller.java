@@ -36,8 +36,8 @@ public class Controller extends PluginController {
     }
 
     @Override
-    public String getPluginName() {
-        return "The funny plugin";
+    public String getName() {
+        return "The weird plugin";
     }
 
 //    public FXMLLoader getFxml() {

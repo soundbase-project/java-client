@@ -55,7 +55,7 @@ public class LoginController extends Controller {
     @FXML
     public void login() {
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
-            getContext().getRouter().issueMessage("one field is empty.");
+            getContext().getRouter().issueMessage("One field is empty.");
         } else {
             btLogin.setVisible(false);
             pbConnecting.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
@@ -92,7 +92,7 @@ public class LoginController extends Controller {
                     getContext().getSession().setUserInfos();
                     getContext().getRouter().goTo("Stats", controller -> controller.setContextAndStart(getContext()));
                     break;
-                case CONNEXION_FAILED:
+                case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("Server unreachable. Please check your internet connection.");
                 case UNAUTHENTICATED:
                     if (autoLogin){
@@ -105,20 +105,18 @@ public class LoginController extends Controller {
                     btLogin.setVisible(true);
                     break;
                 case UNKNOWN_ERROR:
-                    getContext().getRouter().issueMessage("Unable to connect the server.");
+                    getContext().getRouter().issueDialog("Unable to connect the server.");
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
             }
             if (getContext().Verbose()) {
-                System.out.println(response.getMessage());
+                System.out.println("login request : " + response.getMessage());
             }
             loginService.reset();
 
             //next login service will be called by user so all messages need to be activated
-            if (autoLogin) {
-                setLoginService(false);
-            }
+
         });
         this.loginService.setOnFailed(e -> {
             if (getContext().Verbose()) {
@@ -127,6 +125,10 @@ public class LoginController extends Controller {
             getContext().getRouter().issueDialog("An error occurred.");
             loginService.reset();
         });
+
+        if (autoLogin) {
+            setLoginService(false);
+        }
     }
 
 

@@ -70,15 +70,11 @@ public class StatsController extends  Controller{
                 case UNKNOWN_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
             }
-            if (getContext().Verbose()) {
-                System.out.println("Stats request : " + stats.getMessage());
-            }
+            getContext().log("Stats request : " + stats.getMessage());
             statsService.reset();
         });
         statsService.setOnFailed(e -> {
-            if (getContext().Verbose()) {
-                e.getSource().getException().printStackTrace();
-            }
+            getContext().logException(e.getSource().getException());
             statsService.reset();
         });
     }

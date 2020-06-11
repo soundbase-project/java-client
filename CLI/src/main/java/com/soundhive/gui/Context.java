@@ -7,7 +7,6 @@ import com.soundhive.core.conf.ConfigFileException;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
 
-import java.io.Flushable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,5 +75,17 @@ public class Context {
     public void deletePlugin(final PluginUIContainer plugin) {
         plugin.delete();
         this.plugins.remove(plugin);
+    }
+
+    public void log(final String message) {
+        if (this.Verbose()) {
+            System.out.println(message);
+        }
+    }
+
+    public void logException(final Throwable e) {
+        if (this.Verbose()) {
+            e.printStackTrace();
+        }
     }
 }

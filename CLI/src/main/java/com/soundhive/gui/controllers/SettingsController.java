@@ -44,9 +44,7 @@ public class SettingsController extends Controller {
                 lvPlugins.getItems().add(view);
 
             } catch (IOException e) {
-                if (getContext().Verbose()) {
-                    e.printStackTrace();
-                }
+                getContext().logException(e);
                 getContext().getRouter().issueDialog("Error in plugin : " + container.getPlugin().getName());
                 throw new IllegalStateException("Unable to load view : ", e);
             }

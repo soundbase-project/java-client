@@ -59,14 +59,10 @@ public class MainController {
             this.loadUIPlugins();
         } catch (MissingParamException e) {
             this.context.getRouter().issueDialog("Impossible to load plugins : \n" + e.getMessage());
-            if (context.Verbose()) {
-                e.printStackTrace();
-            }
+            this.context.logException(e);
         } catch (Exception e) {
             this.context.getRouter().issueDialog("Impossible to load plugin for unknown reasons.");
-            if (context.Verbose()) {
-                e.printStackTrace();
-            }
+            this.context.logException(e);
         }
     }
 
@@ -166,9 +162,7 @@ public class MainController {
                 plugins) {
             if (names.contains(plugin.getPlugin().getName())) {
                 if (!plugin.delete()){
-                    if (context.Verbose()) {
-                        System.out.println("Could not delete duplicate plugin : " + plugin.getPlugin().getName());
-                    }
+                    context.log("Could not delete duplicate plugin : " + plugin.getPlugin().getName());
                     context.getRouter().issueMessage("Duplicate plugin : " + plugin.getPlugin().getName());
                 }
                 continue;

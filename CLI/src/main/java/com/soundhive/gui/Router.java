@@ -9,8 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;
 
@@ -18,11 +21,12 @@ public class Router {
 
     private final AnchorPane appContent;
     private final StackPane dialogContainer;
+    private final Stage stage;
 
-
-    public Router(final AnchorPane appContent, final StackPane dialogContainer) {
+    public Router(final AnchorPane appContent, final StackPane dialogContainer, final Stage stage) {
         this.appContent = appContent;
-        this.dialogContainer =dialogContainer;
+        this.dialogContainer = dialogContainer;
+        this.stage = stage;
     }
 
 
@@ -66,5 +70,13 @@ public class Router {
         dialog.setContent(new Label(message));
         dialog.show(this.dialogContainer);
     }
+
+    public File issueFileDialog() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        return fileChooser.showOpenDialog(stage);
+    }
+
+
 
 }

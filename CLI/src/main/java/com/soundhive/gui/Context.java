@@ -6,30 +6,28 @@ import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.conf.ConfigFileException;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
+import com.soundhive.gui.plugin.PluginUiHandler;
 
-import java.io.Flushable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Context {
     private boolean verbose;
     private SessionHandler session;
     private final Router router;
     private final ConfHandler conf;
-
-    private List<PluginUIContainer> plugins;
+    //TODO : refactor pluginhandler to hold them plugins
+    private final PluginUiHandler pluginHandler;
 
     private final UserProfileConsumer profileLoader;
 
-    public Context(final Router router, final UserProfileConsumer profileLoader)  throws ConfigFileException, MissingParamException{
-        this.plugins = new ArrayList<>();
+    public Context(final Router router, final UserProfileConsumer profileLoader, final Consumer<List<PluginUIContainer>> pluginsConsumer)  throws  Exception {
         this.conf = new ConfHandler();
         this.profileLoader = profileLoader;
-
         this.router = router;
         initSession();
-
         initVerbose();
+        this.pluginHandler = new PluginUiHandler(this.getConf().getParam("plugin_ui_dir"), verbose, pluginsConsumer);
 
     }
 
@@ -65,16 +63,11 @@ public class Context {
         return verbose;
     }
 
-    public List<PluginUIContainer> getPlugins() {
-        return plugins;
+    public PluginUiHandler getPluginHandler() {
+        return this.pluginHandler;
     }
 
-    public void setPlugin(final PluginUIContainer plugin) {
-        this.plugins.add(plugin);
-    }
 
-    public void deletePlugin(final PluginUIContainer plugin) {
-        plugin.delete();
-        this.plugins.remove(plugin);
-    }
+
+
 }

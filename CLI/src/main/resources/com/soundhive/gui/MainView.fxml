@@ -93,7 +93,7 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <JFXListView fx:id="lvPluginNavBar" style="-fx-background-color: #343a40;" />
+                              <JFXListView fx:id="lvPluginNavBar" style="-fx-background-color: #343a40;" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" />
                            </children>
                            <padding>
                               <Insets top="50.0" />

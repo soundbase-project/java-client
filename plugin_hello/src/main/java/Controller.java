@@ -37,7 +37,7 @@ public class Controller extends PluginController {
 
     @Override
     public String getName() {
-        return "The weird plugin";
+        return "second run time plugin";
     }
 
 //    public FXMLLoader getFxml() {

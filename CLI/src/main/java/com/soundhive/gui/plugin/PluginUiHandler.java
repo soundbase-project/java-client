@@ -1,5 +1,7 @@
 package com.soundhive.gui.plugin;
 
+import com.soundhive.core.generic.Generic;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -7,15 +9,22 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class PluginUiHandler {
+
+public class PluginUiHandler{
     private final String uiPluginDir;
-    public PluginUiHandler(final String uiPluginDir) {
+    private final List<PluginUIContainer> plugins;
+    Consumer<List<PluginUIContainer>> navBarUpdate;
+    private final boolean verbose;
+
+    public PluginUiHandler(final String uiPluginDir, boolean verbose, Consumer<List<PluginUIContainer>> navBarUpdate)throws Exception {
+        this.verbose = verbose;
         this.uiPluginDir = uiPluginDir;
+        this.plugins = new ArrayList<>();
+        this.navBarUpdate = navBarUpdate;
+        loadPlugins();
     }
 
     private File[] getPluginsDirectory() throws IOException {
@@ -26,48 +35,69 @@ public class PluginUiHandler {
         return new File(this.uiPluginDir).listFiles((f, n) -> n.endsWith(".jar"));
     }
 
-    public List<PluginUIContainer> loadPlugins(boolean verbose) throws Exception{
+    private void loadPlugins() throws Exception{
         final File[] pluginsDirectory = getPluginsDirectory();
-        List<PluginUIContainer> plugins = new ArrayList<>();
+
         for (File pluginPath :
                 pluginsDirectory) {
             PluginUIContainer pluginInstance = loadPlugin(pluginPath);
-            if (checkForMethods(pluginInstance.getPlugin(),"start", verbose)
-                    && checkForMethods(pluginInstance.getPlugin(),"getViewName", verbose)
-                    && checkForMethods(pluginInstance.getPlugin(),"getName", verbose)) {
-                plugins.add(pluginInstance);
-            }
-            else {
-                if (verbose) {
-                    System.err.println("Could not load plugin : " + pluginPath);
-                }
-            }
-
+            this.plugins.add(pluginInstance);
         }
-        return plugins;
     }
 
 
-    private PluginUIContainer loadPlugin(File path) throws Exception{
+    private PluginUIContainer loadPlugin(File path) throws MalformedURLException , ClassNotFoundException,
+            NoSuchMethodException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
         final URL[] urls = new URL[] {new URL("file:///" + path.getAbsolutePath())};
         final URLClassLoader child = new URLClassLoader(urls, PluginUiHandler.class.getClassLoader());
 
         final Class<?> plugin = Class.forName("Controller", true, child);
 
-        return new PluginUIContainer((PluginController) plugin.getConstructor().newInstance(), child, path);
+        PluginController castedPlugin = (PluginController) plugin.getConstructor().newInstance();
+        boolean isValid = checkForMethods(castedPlugin, path);
+
+        return new PluginUIContainer(castedPlugin, child, path, isValid);
     }
 
-    private boolean checkForMethods(PluginController controller, String methodName, boolean verbose, Class<?>... parameterTypes) throws NoSuchElementException, SecurityException {
+
+    private boolean checkForMethods(PluginController controller, File pluginPath) {
+        return (checkForMethod(controller,"start", pluginPath)
+                && checkForMethod(controller,"getViewName", pluginPath)
+                && checkForMethod(controller,"getName", pluginPath));
+    }
+
+    public void HotLoadPlugin(File file) throws IOException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException, InvocationTargetException, ClassNotFoundException{
+        File dest = new File(this.uiPluginDir + '/' + file.getName());
+        Generic.copyFileUsingStream(file, dest);
+        this.plugins.add(loadPlugin(dest));
+        navBarUpdate.accept(this.plugins);
+    }
+
+    private boolean checkForMethod(PluginController controller, String methodName,File pluginPath , Class<?>... parameterTypes) throws SecurityException {
         Method method = null;
         try {
             method = controller.getClass().getDeclaredMethod(methodName, parameterTypes);
 
         } catch (NoSuchMethodException | SecurityException e) {
             if (verbose) {
+                System.out.println(String.format("Error on plugin \"%s\" : method \"%s\" is missing.\n\n",
+                        pluginPath.getName(), methodName ));
                 e.printStackTrace();
             }
-
         }
         return method != null;
     }
+
+    public List<PluginUIContainer> getPlugins() {
+        return this.plugins;
+    }
+
+
+    public void deletePlugin(final PluginUIContainer plugin) {
+        plugin.delete();
+        this.plugins.remove(plugin);
+    }
+
 }

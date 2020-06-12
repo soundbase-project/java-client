@@ -23,8 +23,10 @@ public class MainController {
 
     private Context context;
 
+    private Stage stageRef;
+
     @FXML
-    private JFXListView<HBox> lvPluginNavBar;
+    private JFXListView<AnchorPane> lvPluginNavBar;
 
     @FXML
     private StackPane mainContainer;
@@ -40,7 +42,8 @@ public class MainController {
 
     @FXML public void initialize() {
         initContext();
-        displayPlugins();
+
+        displayPlugins(context.getPluginHandler().getPlugins());
 
 
 
@@ -48,22 +51,17 @@ public class MainController {
     }
 
     private void initContext(){
+
         try {
-            this.context = new Context(new Router(this.appContent, this.mainContainer), username -> this.lbSession.setText(username));
+            this.context = new Context(new Router(this.appContent, this.mainContainer, this.stageRef), username -> this.lbSession.setText(username),plugins -> displayPlugins(plugins) );
         }
         catch (ConfigFileException | MissingParamException e) {
             issueNotWorkingNotice(e.getMessage());
         }
-
-        try {
-            this.loadUIPlugins();
-        } catch (MissingParamException e) {
-            this.context.getRouter().issueDialog("Impossible to load plugins : \n" + e.getMessage());
-            this.context.logException(e);
-        } catch (Exception e) {
-            this.context.getRouter().issueDialog("Impossible to load plugin for unknown reasons.");
-            this.context.logException(e);
+        catch ( Exception e ) {
+            issueNotWorkingNotice("Unable to load plugins.");
         }
+
     }
 
     private void issueNotWorkingNotice(String message) {
@@ -129,58 +127,38 @@ public class MainController {
         }
     }
 
-    private  void displayPlugins() {
-        List<PluginUIContainer> plugins = context.getPlugins();
-
+    private  void displayPlugins(List<PluginUIContainer> plugins) {
         for (PluginUIContainer plugin :
                 plugins) {
-
+            if (!plugin.isValid()) {
+                continue;
+            }
 
             JFXButton button = new JFXButton();
+
+
+
             setButtonStyle(button);
             button.setText(plugin.getPlugin().getName());
             button.setOnAction(e -> {
                 context.getRouter().goTo(plugin.getView(), c -> c.setContextAndStart(context));
             });
-            HBox buttonPane = new HBox(button);
-            buttonPane.setStyle("-fx-background-color: #343a40");
+            AnchorPane pane = new AnchorPane(button);
+            //buttonPane.setStyle("-fx-background-color: #343a40");
 
-            this.lvPluginNavBar.getItems().add(buttonPane);
+            this.lvPluginNavBar.getItems().add(pane);
             this.lvPluginNavBar.setStyle("-fx-background-color: #343a40");
         }
     }
 
-    private void loadUIPlugins() throws Exception {
-        String uiPluginDir = context.getConf().getParam("ui_plugin_dir");
-        PluginUiHandler handler = new PluginUiHandler(uiPluginDir);
 
-        List<PluginUIContainer> plugins = handler.loadPlugins(false); //TODO set real value of verbose
-
-        Set<String> names = new HashSet<>();
-
-        for (PluginUIContainer plugin :
-                plugins) {
-            if (names.contains(plugin.getPlugin().getName())) {
-                if (!plugin.delete()){
-                    context.log("Could not delete duplicate plugin : " + plugin.getPlugin().getName());
-                    context.getRouter().issueMessage("Duplicate plugin : " + plugin.getPlugin().getName());
-                }
-                continue;
-            }
-            this.context.setPlugin(plugin);
-
-            names.add(plugin.getPlugin().getName());
-        }
-
+    public void setStage(Stage stage) {
+        this.stageRef = stage;
     }
-
 
     private void setButtonStyle(JFXButton button) {
         button.setTextFill(Color.WHITE);
-        button.setStyle("-fx-background-color: #343a40");
-        button.setMaxHeight(Double.MAX_VALUE);
-        button.setMaxWidth(Double.MAX_VALUE);
-
+        button.setStyle("-fx-background-color: #343a40;");
 
     }
 }

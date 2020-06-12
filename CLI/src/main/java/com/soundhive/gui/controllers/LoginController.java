@@ -110,18 +110,14 @@ public class LoginController extends Controller {
                     btLogin.setVisible(true);
                     break;
             }
-            if (getContext().Verbose()) {
-                System.out.println("login request : " + response.getMessage());
-            }
+            getContext().log("login request : " + response.getMessage());
             loginService.reset();
 
             //next login service will be called by user so all messages need to be activated
 
         });
         this.loginService.setOnFailed(e -> {
-            if (getContext().Verbose()) {
-                e.getSource().getException().printStackTrace();
-            }
+            getContext().logException(e.getSource().getException());
             getContext().getRouter().issueDialog("An error occurred.");
             loginService.reset();
         });

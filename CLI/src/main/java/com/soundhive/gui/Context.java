@@ -68,6 +68,16 @@ public class Context {
     }
 
 
+    public void log(final String message) {
+        if (this.Verbose()) {
+            System.out.println(message);
+        }
+    }
 
+    public void logException(final Throwable e) {
+        if (this.Verbose()) {
+            e.printStackTrace();
+        }
+    }
 
 }

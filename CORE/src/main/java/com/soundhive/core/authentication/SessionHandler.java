@@ -3,10 +3,13 @@ package com.soundhive.core.authentication;
 import com.soundhive.core.response.Response;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
+import kong.unirest.JsonObjectMapper;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.soundhive.core.response.Response.Status;
@@ -31,31 +34,24 @@ public class SessionHandler {
     }
 
     public Response<Void> openSession(final String username, final String password, final boolean stayConnected) {
-        HttpResponse<JsonNode> res = Unirest.post("auth/login")
-                .header("accept", "application/json")
-                .field("username", username)
-                .field("password", password)
-                .asJson();
+        Response<Void> res =  Response.postResponse("auth/login",
+                "",
+                new HashMap<>() {
+                    {
+                        put("username", username);
+                        put("password", password);
+                    }
+                },
+                jsonToken -> {
+                    this.token = jsonToken.getObject().getString("access_token");
+                });
 
-        switch (res.getStatus()) {
-            case 201:
-                this.token = res.getBody().getObject().getString("access_token");
-                var userProfileReq = this.loadUserProfile();
-                if (userProfileReq.getStatus() != Status.SUCCESS){
-                    return new Response<>(Response.Status.UNKNOWN_ERROR, res.getStatusText());
-                }
-                if (stayConnected){
-                    saveToken();
-                }
-                return new Response<>(Response.Status.SUCCESS, res.getStatusText());
-            case 401:
-                this.resetSessionValues();
-                return new Response<>(Status.UNAUTHENTICATED, res.getStatusText());
-            default:
-                this.resetSessionValues();
-                System.out.println(res.getStatus());
-                return new Response<>(Status.UNKNOWN_ERROR, res.getStatusText());
+
+        if (res.getStatus() == Status.SUCCESS) {
+            var userProfileReq = this.loadUserProfile();
         }
+        return res;
+
     }
 
 
@@ -106,29 +102,13 @@ public class SessionHandler {
         if (this.token == null || this.token.isBlank()){
             return new Response<>(Status.UNAUTHENTICATED , "No usable token to request profile.");
         }
-        HttpResponse<JsonNode> res;
-        try {
-            res = Unirest.get("profile")
-                    .header("accept", "application/json")
-                    .header("authorization", "Bearer " + this.token)
-                    .asJson();
-        }
-        catch (Exception e) {
-            return new Response<>(Status.CONNECTION_FAILED, e.getMessage());
-        }
 
-
-
-        switch (res.getStatus()){
-            case 200:
-                this.bindJSONObjectToAttributes(res.getBody().getObject());
-                return new Response<>(Status.SUCCESS, res.getStatusText());
-            case 401:
-                return new Response<>(Status.UNAUTHENTICATED, res.getStatusText());
-            default:
-                deleteToken();
-                return new Response<>(Status.UNKNOWN_ERROR, res.getStatusText());
-        }
+        return Response.queryResponse("profile",
+                this.token,
+                userData -> {
+                    this.bindJSONObjectToAttributes(userData);
+                    return null;
+                });
     }
 
     private void deleteToken(){
@@ -137,7 +117,8 @@ public class SessionHandler {
         }
     }
 
-    private void bindJSONObjectToAttributes(JSONObject user) {
+    private void bindJSONObjectToAttributes(JsonNode res) {
+        JSONObject user = res.getObject();
         this.username = user.getString("username");
         this.name = user.getString("name");
         this.email = user.getString("email");

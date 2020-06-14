@@ -8,7 +8,7 @@ import javafx.scene.paint.Paint;
 
 import java.util.function.Consumer;
 
-public class PluginListViewController {
+public class PluginListItemController {
     private PluginUIContainer plugin;
 
     @FXML
@@ -36,7 +36,7 @@ public class PluginListViewController {
         this.pluginConsumer = pluginConsumer;
     }
 
-    private void start() {
+    private void start() { // TODO :
         try {
             this.lbPluginName.setText(this.plugin.getPlugin().getName());
         } catch (AbstractMethodError e) {

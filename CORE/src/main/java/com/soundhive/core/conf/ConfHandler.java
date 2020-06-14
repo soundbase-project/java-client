@@ -46,7 +46,6 @@ public class ConfHandler {
             reader.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
             throw new ConfigFileException("Something went wrong with the Config file.", e);
         }
         catch (ArrayIndexOutOfBoundsException e) {

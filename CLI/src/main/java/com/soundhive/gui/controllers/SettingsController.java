@@ -4,7 +4,7 @@ package com.soundhive.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.soundhive.gui.plugin.PluginUIContainer;
-import com.soundhive.gui.settings.PluginListViewController;
+import com.soundhive.gui.settings.PluginListItemController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -29,9 +29,7 @@ public class SettingsController extends Controller {
                 getContext().getPluginHandler().HotLoadPlugin(source);
             } catch (IOException e) {
                 getContext().getRouter().issueDialog("Could not load plugin file.");
-                if (getContext().Verbose()) {
-                    e.printStackTrace();
-                }
+                getContext().logException(e);
             }
              catch (IllegalAccessException
                      | InstantiationException
@@ -39,9 +37,7 @@ public class SettingsController extends Controller {
                      | ClassNotFoundException
                      | InvocationTargetException e) {
                  getContext().getRouter().issueDialog("Something went wrong with the ");
-                 if (getContext().Verbose()) {
-                     e.printStackTrace();
-                 }
+                 getContext().logException(e);
              }
         });
     }
@@ -63,7 +59,7 @@ public class SettingsController extends Controller {
                 final AnchorPane view = fxmlLoader.load();
 
                 //acquire controller instance and set its plugin
-                PluginListViewController controller =  fxmlLoader.getController();
+                PluginListItemController controller =  fxmlLoader.getController();
                 controller.setPluginAndVerboseAndStart(container, getContext().Verbose());
                 controller.setDeleteEvent(plugin -> {
                     getContext().getPluginHandler().deletePlugin(plugin);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="450.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.tracks.TrackListItemController">
+   <children>
+      <ImageView fx:id="ivArt" fitHeight="80.0" fitWidth="80.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lbTitle" layoutX="133.0" layoutY="25.0" prefHeight="80.0" prefWidth="194.0" text="Error" textFill="WHITE" />
+      <Label layoutX="327.0" layoutY="25.0" minHeight="80.0" prefHeight="80.0" prefWidth="121.0" text="ERROR" textFill="#2b03dd">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

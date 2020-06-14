@@ -54,21 +54,24 @@ public class StatsController extends  Controller{
     private void setStatsService() {
         statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
         statsService.setOnSucceeded(e -> {
+
             Response<Stats> stats = (Response<Stats>) e.getSource().getValue();
             switch (stats.getStatus()) {
                 case SUCCESS:
                     this.acStats.getData().add(generateListenSeries(stats.getContent().getKeyframes()));
+                    break;
 
                 case UNAUTHENTICATED:
                     getContext().getRouter().issueDialog("You were disconnected from your session. Please log in again.");
-                    //getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
+                    break;
 
                 case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("The server is unreachable. Please check your internet connexion.");
-                    //getContext().getRouter().goTo("Login", controller -> controller.setContextAndStart(getContext()));
+                    break;
 
                 case UNKNOWN_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
+                    break;
             }
             getContext().log("Stats request : " + stats.getMessage());
             statsService.reset();

@@ -42,7 +42,7 @@ public class Router {
         appContent.getChildren().setAll(view);
     }
 
-    private Parent loadView(final FXMLLoader fxmlLoader, final Consumer<Controller> controllerConsumer)  {
+    private Parent loadView(final FXMLLoader fxmlLoader, final Consumer<Controller> controllerConsumer)  { //TODO : manage exception
 
 
         try {

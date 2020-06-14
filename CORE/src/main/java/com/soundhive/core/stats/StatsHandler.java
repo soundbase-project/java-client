@@ -62,32 +62,10 @@ public class StatsHandler {
 
     //localhost:3000/users/:username/stats/last/:nb/day
     public Response<Stats> queryStats() {
-        String request = String.format("%s/%s/stats/last/%d/%s", this.scope.toString(), session.getUsername(), this.nbSpan , this.span.toString());
-        HttpResponse<JsonNode> res;
-        try {
-             res = Unirest.get(request)
-                    .header("accept", "application/json")
-                    .header("authorization", "Bearer " + session.getToken())
-                    .asJson();
+        String request = String.format("%s/%s/stats/last/%d/%s", this.scope.toString(), session.getUsername(), this.nbSpan, this.span.toString());
 
-        } catch (Exception e) {
-            return new Response<>(Response.Status.CONNECTION_FAILED, e.getMessage());
-        }
-
-        switch (res.getStatus()) {
-            case 200:
-                Stats stats;
-                try {
-                    stats = new Stats(res.getBody().getObject());
-                }
-                catch (JSONException e) {
-                    return new Response<>(Response.Status.UNKNOWN_ERROR,e.getMessage());
-                }
-                return new Response<>(stats , Response.Status.SUCCESS, res.getStatusText());
-            default:
-                return  new Response<>(Response.Status.UNKNOWN_ERROR, res.getStatusText());
-
-
-        }
+        return Response.queryResponse(request,
+                session.getToken(),
+                Stats::new);
     }
 }

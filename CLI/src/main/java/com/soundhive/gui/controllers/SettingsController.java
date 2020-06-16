@@ -72,7 +72,6 @@ public class SettingsController extends Controller {
             } catch (IOException e) {
                 getContext().logException(e);
                 getContext().getRouter().issueDialog("Error in plugin : " + container.getPlugin().getName());
-                throw new IllegalStateException("Unable to load view : ", e);
             }
         }
     }

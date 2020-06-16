@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="450.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.settings.PluginListItemController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.settings.PluginListItemController">
    <children>
       <Label fx:id="lbPluginName" layoutX="14.0" prefHeight="50.0" prefWidth="363.0" text="Undefined" textFill="WHITE" />
       <JFXButton fx:id="btDelete" layoutX="378.0" layoutY="11.0" mnemonicParsing="false" text="Delete" textFill="WHITE">

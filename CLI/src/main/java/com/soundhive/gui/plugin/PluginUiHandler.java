@@ -17,10 +17,15 @@ public class PluginUiHandler{
     private final String uiPluginDir;
     private final List<PluginUIContainer> plugins;
     Consumer<List<PluginUIContainer>> navBarUpdate;
-    private final boolean verbose;
+    final Consumer<String> messageLogger;
+    final Consumer<Exception> exceptionLogger;
 
-    public PluginUiHandler(final String uiPluginDir, boolean verbose, Consumer<List<PluginUIContainer>> navBarUpdate)throws Exception {
-        this.verbose = verbose;
+    public PluginUiHandler(final String uiPluginDir,
+                           final Consumer<String> messageLogger,
+                           final Consumer<Exception> exceptionLogger,
+                           final Consumer<List<PluginUIContainer>> navBarUpdate)throws Exception {
+        this.exceptionLogger = exceptionLogger;
+        this.messageLogger = messageLogger;
         this.uiPluginDir = uiPluginDir;
         this.plugins = new ArrayList<>();
         this.navBarUpdate = navBarUpdate;
@@ -81,11 +86,11 @@ public class PluginUiHandler{
             method = controller.getClass().getDeclaredMethod(methodName, parameterTypes);
 
         } catch (NoSuchMethodException | SecurityException e) {
-            if (verbose) {
-                System.out.println(String.format("Error on plugin \"%s\" : method \"%s\" is missing.\n\n",
-                        pluginPath.getName(), methodName ));
-                e.printStackTrace();
-            }
+
+            this.messageLogger.accept(String.format("Error on plugin \"%s\" : method \"%s\" is missing.\n\n",
+                    pluginPath.getName(), methodName ));
+            this.exceptionLogger.accept(e);
+
         }
         return method != null;
     }

@@ -45,7 +45,7 @@ public class Context {
     private void initVerbose() {
         // verbose is an optional parameter
         try {
-            switch (conf.getParam("verbose")) {
+            switch (conf.getParam("verbose").toLowerCase()) {
                 case "quiet":
                     this.verbose = VerboseLevel.QUIET;
                     break;
@@ -54,6 +54,7 @@ public class Context {
                     break;
                 case "hard":
                     this.verbose = VerboseLevel.HARD;
+                    break;
                 default:
                     this.router.issueDialog("Given verbose level is incorrect. Please set verbose as \"quiet\", \"soft\", or \"hard\".");
             }

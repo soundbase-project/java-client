@@ -15,7 +15,7 @@ public class TracksTask extends Task<Response<List<Album>>> {
     }
 
     @Override
-    protected Response<List<Album>> call() throws Exception {
+    protected Response<List<Album>> call() {
         return new TracksHandler(session).queryAlbums();
     }
 }

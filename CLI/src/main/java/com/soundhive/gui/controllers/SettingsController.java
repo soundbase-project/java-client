@@ -16,10 +16,10 @@ import java.lang.reflect.InvocationTargetException;
 
 public class SettingsController extends Controller {
     @FXML
-    JFXListView<Pane> lvPlugins;
+    private JFXListView<Pane> lvPlugins;
 
     @FXML
-    JFXButton btLoadPlugin;
+    private JFXButton btLoadPlugin;
 
     @FXML
     private void  initialize(){
@@ -60,14 +60,14 @@ public class SettingsController extends Controller {
 
                 //acquire controller instance and set its plugin
                 PluginListItemController controller =  fxmlLoader.getController();
-                controller.setPluginAndVerboseAndStart(container, getContext().Verbose());
+                controller.setPluginAndLoggerAndStart(container, getContext()::log, getContext()::logException);
                 controller.setDeleteEvent(plugin -> {
                     getContext().getPluginHandler().deletePlugin(plugin);
                     populatePlugins();
                 });
 
                 //ad to list view
-                lvPlugins.getItems().add(view);
+                this.lvPlugins.getItems().add(view);
 
             } catch (IOException e) {
                 getContext().logException(e);

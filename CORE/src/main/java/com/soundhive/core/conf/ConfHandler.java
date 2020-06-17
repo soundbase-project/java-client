@@ -5,7 +5,7 @@ import kong.unirest.Unirest;
 import java.io.*;
 import java.util.Dictionary;
 import java.util.Hashtable;
-
+//TODO add comments
 public class ConfHandler {
     Dictionary<String, String> parameters;
 
@@ -61,7 +61,7 @@ public class ConfHandler {
         writer.write("api_base_url=http://localhost:3000/;" +
                 "token_directory=./auth/token;" +
                 "ui_plugin_dir=./UIPlugins;" +
-                "verbose=false;");
+                "verbose=soft;");
         writer.close();
     }
 

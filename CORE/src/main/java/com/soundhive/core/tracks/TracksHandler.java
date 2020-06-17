@@ -18,7 +18,7 @@ public class TracksHandler {
     }
 
     private Response<List<Track>> queryTracks(Album album) {
-        String request = String.format("albums/%s/tracks", album);
+        String request = String.format("albums/%s/tracks", album.getID());
         return Response.queryResponse(request,
                 session.getToken(),
                 node -> {
@@ -37,7 +37,7 @@ public class TracksHandler {
         return Response.queryResponse(request,
                 session.getToken(),
                 node -> {
-                    List<Album> list = new ArrayList<>();
+                    List<Album> albums = new ArrayList<>();
                     JSONArray array = node.getArray();
                     int length = array.length();
 
@@ -45,13 +45,12 @@ public class TracksHandler {
                         Album album = new Album(array.getJSONObject(i));
                         Response<List<Track>> tracks = queryTracks(album);
                         if ( tracks.getStatus() != SUCCESS) {
-                            throw new InternalRequestError(tracks);
+                            throw new InternalRequestError( tracks.getException(), tracks);
                         }
                         album.setTracks(tracks.getContent());
-                        list.add(album);
+                        albums.add(album);
                     }
-
-                    return list;
+                    return albums;
                 });
     }
 

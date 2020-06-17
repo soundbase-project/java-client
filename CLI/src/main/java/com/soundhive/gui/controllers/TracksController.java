@@ -1,9 +1,9 @@
 package com.soundhive.gui.controllers;
 
+import com.soundhive.core.generic.Generic;
 import com.soundhive.core.response.Response;
-import com.soundhive.core.stats.Stats;
-import com.soundhive.core.tracks.Track;
-import com.soundhive.gui.tracks.TrackListItemController;
+import com.soundhive.core.tracks.Album;
+import com.soundhive.gui.tracks.AlbumListItemController;
 import com.soundhive.gui.tracks.TracksService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +16,12 @@ import java.util.List;
 
 public class TracksController extends Controller{
     @FXML
-    ListView<AnchorPane> lvTracks;
+    private ListView<AnchorPane> lvTracks;
 
     @FXML
-    ListView<AnchorPane> lvAlbums;
+    private ListView<AnchorPane> lvAlbums;
 
-    TracksService tracksService;
+    private TracksService tracksService;
 
     @FXML
     private void initialize() {
@@ -37,13 +37,13 @@ public class TracksController extends Controller{
     private void setTracksService() { // TODO generify  query service settings initialisation
         this.tracksService = new TracksService(getContext().getSession());
         this.tracksService.setOnSucceeded(e -> {
-            Response<List<Track>> tracks = (Response<List<Track>>) e.getSource().getValue();
+            Response<List<Album>> Albums = Generic.secureResponseCast((Response<?>) e.getSource().getValue());
 
 
 
-            switch (tracks.getStatus()) {
+            switch (Albums.getStatus()) {
                 case SUCCESS:
-                    this.populateTracks(tracks.getContent());
+                    this.populateTracks(Albums.getContent());
                     break;
 
                 case UNAUTHENTICATED:
@@ -53,13 +53,16 @@ public class TracksController extends Controller{
 
                 case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("The server is unreachable. Please check your internet connexion.");
+                    getContext().log(Albums.getMessage());
                     break;
 
-                case UNKNOWN_ERROR:
+                case INTERNAL_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
+                    getContext().log(Albums.getMessage());
+                    getContext().logException(Albums.getException());
                     break;
             }
-            getContext().log("Tracks request : " + tracks.getMessage());
+            getContext().log("Tracks request : " + Albums.getMessage());
             tracksService.reset();
         });
         this.tracksService.setOnFailed(e -> {
@@ -68,17 +71,26 @@ public class TracksController extends Controller{
         });
     }
 
-    private void populateTracks(List<Track> tracks) {
-        for (Track track :
-                tracks) {
+    private void populateTracks(List<Album> albums) {
+        lvTracks.getItems().clear();
+        for (Album album :
+                albums) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/soundhive/gui/templates/AlbumListViewItem.fxml"));
             try {
-                FXMLLoader loader = FXMLLoader.load(getClass().getResource("com/soundhive/gui/templates/TrackListViewItem.fxml"));
-                TrackListItemController controller = loader.getController();
-                this.lvTracks.getItems().add(loader.load());
+
+
+                AnchorPane pane  = loader.load();
+                AlbumListItemController controller = loader.getController();
+                System.out.println(album.getID() + "\n" +  album.getTitle() + "\n" + album.getDescription());
+                System.out.println(controller);
+                controller.setAlbumsAndLoggersAndStart(album,
+                        getContext()::log,
+                        getContext()::logException);
+                this.lvTracks.getItems().add(pane);
 
             } catch (IOException e) {
                 getContext().logException(e);
-                getContext().getRouter().issueDialog("Error in track : " + track.getTitle());
+                getContext().getRouter().issueDialog("Error displaying : " + album.getTitle());
             }
 
 

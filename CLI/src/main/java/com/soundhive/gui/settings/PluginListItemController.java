@@ -19,16 +19,19 @@ public class PluginListItemController {
 
     private Consumer<PluginUIContainer> pluginConsumer;
 
-    boolean verbose;
+    private Consumer<String> messageLogger;
+
+    private Consumer<Throwable> exceptionLogger;
 
     @FXML
     private void initialize() {
 
     }
 
-    public void setPluginAndVerboseAndStart(PluginUIContainer plugin, boolean verbose) {
+    public void setPluginAndLoggerAndStart(PluginUIContainer plugin, Consumer<String> messageLogger, Consumer<Throwable> exceptionLogger) {
         this.plugin = plugin;
-        this.verbose = verbose;
+        this.messageLogger = messageLogger;
+        this.exceptionLogger = exceptionLogger;
         start();
     }
 
@@ -40,9 +43,8 @@ public class PluginListItemController {
         try {
             this.lbPluginName.setText(this.plugin.getPlugin().getName());
         } catch (AbstractMethodError e) {
-            if (verbose) {
-                e.printStackTrace();
-            }
+            messageLogger.accept("Could not obtain name of a plugin");
+            exceptionLogger.accept(e);
             this.lbPluginName.setText("Error");
         }
 
@@ -52,7 +54,6 @@ public class PluginListItemController {
         });
 
         if (!this.plugin.isValid()) {
-            lbPluginName.setAccessibleText("This plugin is invalid. Please delete it.");
             this.lbPluginName.setTextFill(Paint.valueOf("red"));
         }
     }

@@ -69,7 +69,7 @@ public class StatsController extends  Controller{
                     getContext().getRouter().issueDialog("The server is unreachable. Please check your internet connexion.");
                     break;
 
-                case UNKNOWN_ERROR:
+                case INTERNAL_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
                     break;
             }

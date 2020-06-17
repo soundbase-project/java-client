@@ -2,18 +2,12 @@ package com.soundhive.core.response;
 
 public class InternalRequestError extends Error{
     private Response<?> response;
-    public InternalRequestError(Response<?> response) { super(); }
-    public InternalRequestError(String message, Response<?> response) { super(message); }
-    public InternalRequestError(String message, Throwable cause, Response<?> response) { super(message, cause); }
-    public InternalRequestError(Throwable cause, Response<?> response) { super(cause); }
+    public InternalRequestError(Response<?> response) { super(); this.response = response; }
+    public InternalRequestError(String message, Response<?> response) { super(message);  this.response = response; }
+    public InternalRequestError(String message, Throwable cause, Response<?> response) { super(message, cause);  this.response = response; }
+    public InternalRequestError(Throwable cause, Response<?> response) { super(cause);  this.response = response; }
 
-    public Response.Status getRequestStatus() {
-        return this.response.getStatus();
+    public Response<?> getResponse() {
+        return response;
     }
-
-    public String getRequestMessage() {
-        return this.response.getMessage();
-    }
-
-
 }

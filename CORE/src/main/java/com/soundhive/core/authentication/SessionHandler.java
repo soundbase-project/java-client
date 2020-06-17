@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.soundhive.core.response.Response.Status;
-
+//TODO : fix session, token used before it is initialized
 public class SessionHandler {
 
 

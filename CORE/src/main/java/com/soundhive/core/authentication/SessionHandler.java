@@ -111,7 +111,7 @@ public class SessionHandler {
                 });
     }
 
-    private void deleteToken(){
+    private void deleteToken(){ //TODO : pass a logger ?
         if (new File(tokenDir).delete()){
             System.out.println("Token file deleted.");
         }

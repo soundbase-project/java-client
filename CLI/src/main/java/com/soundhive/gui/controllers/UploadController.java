@@ -10,9 +10,8 @@ public class UploadController extends Controller {
     private JFXTextField tfNbTracks;
 
     @FXML
-    private void initialize() {
+    private void initialize() { // TODO use special new component
         this.tfNbTracks.setOnAction(e -> {
-            System.out.println("purifying input");
            purifyNumberField(this.tfNbTracks);
         });
     }

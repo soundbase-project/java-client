@@ -6,6 +6,9 @@ import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
 import com.soundhive.gui.plugin.PluginUiHandler;
+import io.minio.MinioClient;
+import io.minio.errors.InvalidEndpointException;
+import io.minio.errors.InvalidPortException;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -23,6 +26,7 @@ public class Context {
     private final ConfHandler conf;
     private final PluginUiHandler pluginHandler;
 
+
     private final UserProfileConsumer profileLoader;
 
     public Context(final Router router, final UserProfileConsumer profileLoader, final Consumer<List<PluginUIContainer>> pluginsConsumer)  throws  Exception {
@@ -34,6 +38,7 @@ public class Context {
         this.pluginHandler = new PluginUiHandler(this.getConf().getParam("plugin_ui_dir"), this::log, this::logException, pluginsConsumer);
 
     }
+
 
     private void initSession() throws MissingParamException{
         String tokenDirectory = conf.getParam("token_directory");

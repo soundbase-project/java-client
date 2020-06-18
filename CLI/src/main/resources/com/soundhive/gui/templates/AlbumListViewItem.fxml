@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="albumPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="450.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.tracks.AlbumListItemController">
    <children>
-      <ImageView fx:id="ivArt" fitHeight="80.0" fitWidth="80.0" layoutX="25.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ivArt" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lbTitle" layoutX="128.0" layoutY="10.0" prefHeight="80.0" prefWidth="194.0" text="Error" textFill="WHITE" />
       <Label fx:id="lbListens" layoutX="329.0" layoutY="10.0" minHeight="80.0" prefHeight="80.0" prefWidth="121.0" text="ERROR" textFill="#2b03dd">
          <font>

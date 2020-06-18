@@ -5,11 +5,17 @@ import com.soundhive.core.tracks.Album;
 import com.soundhive.core.tracks.Track;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
+import io.minio.MinioClient;
+import io.minio.errors.MinioException;
+import java.io.InputStream;
 import java.util.function.Consumer;
+
+
 
 public class AlbumListItemController {
     private Album album;
@@ -57,18 +63,24 @@ public class AlbumListItemController {
             this.lvTracks.setPrefHeight(0);
 
 
-        } else {
+        } else if (this.album.getTracks().size() > 1){
             for (Track track :
                     album.getTracks()) {
-                System.out.println(track.getTitle());
                 Label lbName = new Label(track.getTitle());
                 lbName.setTextFill(Paint.valueOf("white"));
                 AnchorPane pane = new AnchorPane(lbName);
                 lvTracks.getItems().add(pane);
             }
+            this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 50 + 2) + 20);
+            lvTracks.setPrefHeight(album.getTracks().size() * 50 + 2);
         }
-        this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 50 + 2) + 20);
-        lvTracks.setPrefHeight(album.getTracks().size() * 50 + 2);
+
+        String url = String.format("http://localhost:9000/soundhive/%s",  this.album.getCoverFile());
+        System.out.println(url);
+        Image image = new Image(url, false);
+        ivArt.setImage(image);
+
+
 
     }
 

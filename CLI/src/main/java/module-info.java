@@ -3,6 +3,8 @@ module CLI {
     requires javafx.fxml;
     requires com.jfoenix;
     requires CORE;
+    requires java.desktop;
+    requires minio;
 
     opens com.soundhive.gui to javafx.fxml;
     exports com.soundhive.gui;

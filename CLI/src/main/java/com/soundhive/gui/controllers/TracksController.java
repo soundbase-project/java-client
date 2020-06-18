@@ -81,8 +81,6 @@ public class TracksController extends Controller{
 
                 AnchorPane pane  = loader.load();
                 AlbumListItemController controller = loader.getController();
-                System.out.println(album.getID() + "\n" +  album.getTitle() + "\n" + album.getDescription());
-                System.out.println(controller);
                 controller.setAlbumsAndLoggersAndStart(album,
                         getContext()::log,
                         getContext()::logException);

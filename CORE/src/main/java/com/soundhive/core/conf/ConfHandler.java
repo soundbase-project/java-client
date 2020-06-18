@@ -5,7 +5,7 @@ import kong.unirest.Unirest;
 import java.io.*;
 import java.util.Dictionary;
 import java.util.Hashtable;
-//TODO add comments
+
 public class ConfHandler {
     Dictionary<String, String> parameters;
 
@@ -35,12 +35,19 @@ public class ConfHandler {
             FileReader reader = new FileReader(file);
             char[] buffer = new char[500];
             if (reader.read(buffer) > 0){
-                String rawConf = new String(buffer).trim();
-                String[] entries = rawConf.split(";");
-                for (String entry:
-                        entries) {
-                    String[] keyValue = entry.split("=");
-                    parameters.put(keyValue[0].trim(), keyValue[1].trim());
+                String rawConf = new String(buffer);
+                String[] conf = rawConf.split("\n");
+                for (String line :
+                        conf) {
+                    String filteredLine = line.split("#")[0];
+                    for (String entry:
+                            filteredLine.split(";")) {
+                        if (!entry.isBlank() && !entry.equals("\n")){
+                            String[] keyValue = entry.split("=");
+                            parameters.put(keyValue[0].trim(), keyValue[1].trim());
+                        }
+                    }
+
                 }
             }
             reader.close();
@@ -58,10 +65,13 @@ public class ConfHandler {
 
     private void writeDefaultConfFile(File file) throws IOException{
         FileWriter writer = new FileWriter(file);
-        writer.write("api_base_url=http://localhost:3000/;" +
-                "token_directory=./auth/token;" +
-                "ui_plugin_dir=./UIPlugins;" +
-                "verbose=soft;");
+        writer.write("#This configuration file for SoundHive have been generated automatically. \n" +
+                "#Please write one value per line. syntax is the following : key=value;" +
+                "#You can set comments using hashtag.\n" +
+                "api_base_url=http://localhost:3000/; #URL to access the API \n" +
+                "token_directory=./auth/token; #Directory where the JWT file is stored \n" +
+                "plugin_ui_dir=./UIPlugins; #Directory where plugins jars are to be found \n" +
+                "verbose=soft; # quiet = no logging ; soft = messages logging ; hard = print exceptions stack traces. ");
         writer.close();
     }
 

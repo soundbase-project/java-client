@@ -142,7 +142,7 @@ public class Response<T> { //TODO : implement JSON parsing case
         }
 
         switch (res.getStatus()) {
-            case 200:
+            case 201:
                 try {
                     cast.accept(res.getBody());
                     return new Response<>(Response.Status.SUCCESS, res.getStatusText());

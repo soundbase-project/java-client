@@ -3,6 +3,7 @@ package com.soundhive.gui.controllers;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.soundhive.core.generic.Generic;
 import com.soundhive.core.response.Response;
 import com.soundhive.gui.authentication.LoginService;
 import javafx.fxml.FXML;
@@ -62,7 +63,6 @@ public class LoginController extends Controller {
             pbConnecting.setVisible(true);
             loginService.start();
         }
-
     }
 
     @FXML
@@ -81,10 +81,10 @@ public class LoginController extends Controller {
 
     private void setLoginService(final boolean autoLogin) {
 
-        this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), cbStayConnected.selectedProperty(), getContext().getSession());
+        this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), cbStayConnected.selectedProperty(), getContext().getSession(), autoLogin);
 
         loginService.setOnSucceeded(e -> {
-            Response<Void> response = (Response<Void>) e.getSource().getValue();
+            Response<Void> response = Generic.secureResponseCast((Response<?>) e.getSource().getValue());
             switch (response.getStatus()) {
                 case SUCCESS:
                     getContext().getRouter().issueMessage(String.format("Logged in as %s", getContext().getSession().getUsername()));
@@ -95,17 +95,18 @@ public class LoginController extends Controller {
                 case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("Server unreachable. Please check your internet connection.");
                 case UNAUTHENTICATED:
-                    if (autoLogin){
+                    if (autoLogin) {
                         getContext().getRouter().issueMessage("Could not login Automatically.");
-                    }
-                    else {
+                    } else {
                         getContext().getRouter().issueMessage("Wrong password or username.");
                     }
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
                 case INTERNAL_ERROR:
-                    getContext().getRouter().issueDialog("Unable to connect the server.");
+                    getContext().getRouter().issueDialog("An error occurred.");
+                    getContext().log(response.getMessage());
+                    //getContext().logException(response.getException());
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
@@ -114,18 +115,20 @@ public class LoginController extends Controller {
             loginService.reset();
 
             //next login service will be called by user so all messages need to be activated
-
+            if (autoLogin) {
+                setLoginService(false);
+            }
         });
         this.loginService.setOnFailed(e -> {
             getContext().logException(e.getSource().getException());
             getContext().getRouter().issueDialog("An error occurred.");
             loginService.reset();
+            if (autoLogin) {
+                setLoginService(false);
+            }
         });
 
-        if (autoLogin) {
-            setLoginService(false);
-        }
-    }
 
+    }
 
 }

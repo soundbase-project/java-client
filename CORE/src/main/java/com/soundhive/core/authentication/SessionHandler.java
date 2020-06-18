@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.soundhive.core.response.Response.Status;
-//TODO : fix session, token used before it is initialized
+
 public class SessionHandler {
 
 
@@ -34,7 +34,7 @@ public class SessionHandler {
     }
 
     public Response<Void> openSession(final String username, final String password, final boolean stayConnected) {
-        Response<Void> res =  Response.postResponse("auth/login",
+        return  Response.postResponse("auth/login",
                 "",
                 new HashMap<>() {
                     {
@@ -44,14 +44,12 @@ public class SessionHandler {
                 },
                 jsonToken -> {
                     this.token = jsonToken.getObject().getString("access_token");
+                    if (stayConnected) {
+                        this.saveToken();
+                    }
+
+                    this.loadUserProfile();
                 });
-
-
-        if (res.getStatus() == Status.SUCCESS) {
-            var userProfileReq = this.loadUserProfile();
-        }
-        return res;
-
     }
 
 
@@ -111,11 +109,6 @@ public class SessionHandler {
                 });
     }
 
-    private void deleteToken(){ //TODO : pass a logger ?
-        if (new File(tokenDir).delete()){
-            System.out.println("Token file deleted.");
-        }
-    }
 
     private void bindJSONObjectToAttributes(JsonNode res) {
         JSONObject user = res.getObject();
@@ -125,11 +118,22 @@ public class SessionHandler {
     }
 
 
+    public void destroySession() {
+        this.resetSessionValues();
+        this.deleteToken();
+    }
+
     private void resetSessionValues() {
         this.token = "";
         this.email = "";
         this.username = "";
         this.name = "";
+    }
+
+    private void deleteToken()throws IllegalStateException{
+        if (!new File(tokenDir).delete()){
+            throw new IllegalStateException("Could not delete session token.");
+        }
     }
 
 

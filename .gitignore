@@ -139,6 +139,10 @@ buildNumber.properties
 
 ### Runtime generated content ###
 UIPlugins
+UIPlugins/
 auth
 conf
+conf/
+
+
 

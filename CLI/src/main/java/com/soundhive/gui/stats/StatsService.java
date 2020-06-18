@@ -45,7 +45,7 @@ public class StatsService extends Service<Response<Stats>> {
         this.scope = scope;
     }
 
-    protected Task<Response<Stats>> createTask() {
+    protected StatsTask createTask() {
         SpanOption chosen = cbSpan.getValue();
         StatsHandler stats = null;
         switch (chosen) {

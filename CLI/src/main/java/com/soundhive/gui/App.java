@@ -37,6 +37,8 @@ public class App extends Application {
         stage.setTitle("SoundHive");
         Image icon = new Image(getClass().getResourceAsStream("/drawable/logo-icon.png"));
         stage.getIcons().add(icon);
+        stage.setMaxWidth(1280);
+        stage.setMaxHeight(720);
         stage.show();
     }
 

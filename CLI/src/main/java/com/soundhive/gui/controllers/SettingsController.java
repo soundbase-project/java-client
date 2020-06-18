@@ -4,7 +4,7 @@ package com.soundhive.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.soundhive.gui.plugin.PluginUIContainer;
-import com.soundhive.gui.settings.PluginListViewController;
+import com.soundhive.gui.settings.PluginListItemController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -16,10 +16,10 @@ import java.lang.reflect.InvocationTargetException;
 
 public class SettingsController extends Controller {
     @FXML
-    JFXListView<Pane> lvPlugins;
+    private JFXListView<Pane> lvPlugins;
 
     @FXML
-    JFXButton btLoadPlugin;
+    private JFXButton btLoadPlugin;
 
     @FXML
     private void  initialize(){
@@ -27,21 +27,18 @@ public class SettingsController extends Controller {
             File source = getContext().getRouter().issueFileDialog();
             try {
                 getContext().getPluginHandler().HotLoadPlugin(source);
+                populatePlugins();
             } catch (IOException e) {
                 getContext().getRouter().issueDialog("Could not load plugin file.");
-                if (getContext().Verbose()) {
-                    e.printStackTrace();
-                }
+                getContext().logException(e);
             }
              catch (IllegalAccessException
                      | InstantiationException
                      | NoSuchMethodException
                      | ClassNotFoundException
                      | InvocationTargetException e) {
-                 getContext().getRouter().issueDialog("Something went wrong with the ");
-                 if (getContext().Verbose()) {
-                     e.printStackTrace();
-                 }
+                 getContext().getRouter().issueDialog("Something went wrong with the plugin. Please check its version.");
+                 getContext().logException(e);
              }
         });
     }
@@ -63,20 +60,19 @@ public class SettingsController extends Controller {
                 final AnchorPane view = fxmlLoader.load();
 
                 //acquire controller instance and set its plugin
-                PluginListViewController controller =  fxmlLoader.getController();
-                controller.setPluginAndVerboseAndStart(container, getContext().Verbose());
+                PluginListItemController controller =  fxmlLoader.getController();
+                controller.setPluginAndLoggerAndStart(container, getContext()::log, getContext()::logException);
                 controller.setDeleteEvent(plugin -> {
                     getContext().getPluginHandler().deletePlugin(plugin);
                     populatePlugins();
                 });
 
                 //ad to list view
-                lvPlugins.getItems().add(view);
+                this.lvPlugins.getItems().add(view);
 
             } catch (IOException e) {
                 getContext().logException(e);
                 getContext().getRouter().issueDialog("Error in plugin : " + container.getPlugin().getName());
-                throw new IllegalStateException("Unable to load view : ", e);
             }
         }
     }

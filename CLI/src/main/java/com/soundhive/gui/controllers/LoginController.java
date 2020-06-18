@@ -104,7 +104,7 @@ public class LoginController extends Controller {
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
-                case UNKNOWN_ERROR:
+                case INTERNAL_ERROR:
                     getContext().getRouter().issueDialog("Unable to connect the server.");
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);

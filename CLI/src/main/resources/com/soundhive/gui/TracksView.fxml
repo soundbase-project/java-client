@@ -12,7 +12,7 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <JFXListView fx:id="lvTracks" layoutX="34.0" layoutY="71.0" prefHeight="520.0" prefWidth="460.0" style="-fx-background-color: #343a40;" />
+      <JFXListView fx:id="lvTracks" layoutX="34.0" layoutY="71.0" prefHeight="520.0" prefWidth="470.0" style="-fx-background-color: #343a40;" />
       <Label layoutX="540.0" layoutY="14.0" text="Albums" textFill="WHITE">
          <font>
             <Font size="40.0" />

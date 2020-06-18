@@ -27,6 +27,7 @@ public class SettingsController extends Controller {
             File source = getContext().getRouter().issueFileDialog();
             try {
                 getContext().getPluginHandler().HotLoadPlugin(source);
+                populatePlugins();
             } catch (IOException e) {
                 getContext().getRouter().issueDialog("Could not load plugin file.");
                 getContext().logException(e);
@@ -36,7 +37,7 @@ public class SettingsController extends Controller {
                      | NoSuchMethodException
                      | ClassNotFoundException
                      | InvocationTargetException e) {
-                 getContext().getRouter().issueDialog("Something went wrong with the ");
+                 getContext().getRouter().issueDialog("Something went wrong with the plugin. Please check its version.");
                  getContext().logException(e);
              }
         });

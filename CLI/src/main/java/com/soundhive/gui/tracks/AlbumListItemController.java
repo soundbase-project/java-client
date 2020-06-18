@@ -67,8 +67,8 @@ public class AlbumListItemController {
                 lvTracks.getItems().add(pane);
             }
         }
-        this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 15 + 2) + 20);
-        lvTracks.setPrefHeight(album.getTracks().size() * 15 + 2);
+        this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 50 + 2) + 20);
+        lvTracks.setPrefHeight(album.getTracks().size() * 50 + 2);
 
     }
 

@@ -1,6 +1,5 @@
 package com.soundhive.gui.controllers;
 
-import com.soundhive.core.generic.Generic;
 import com.soundhive.core.response.Response;
 import com.soundhive.core.tracks.Album;
 import com.soundhive.gui.tracks.AlbumListItemController;
@@ -18,8 +17,7 @@ public class TracksController extends Controller{
     @FXML
     private ListView<AnchorPane> lvTracks;
 
-    @FXML
-    private ListView<AnchorPane> lvAlbums;
+    // @FXML private ListView<AnchorPane> lvAlbums;
 
     private TracksService tracksService;
 
@@ -37,13 +35,14 @@ public class TracksController extends Controller{
     private void setTracksService() { // TODO generify  query service settings initialisation
         this.tracksService = new TracksService(getContext().getSession());
         this.tracksService.setOnSucceeded(e -> {
-            Response<List<Album>> Albums = Generic.secureResponseCast((Response<?>) e.getSource().getValue());
+            Response<?> Albums =(Response<?>) e.getSource().getValue();
 
 
 
             switch (Albums.getStatus()) {
                 case SUCCESS:
-                    this.populateTracks(Albums.getContent());
+                    var albums = (List<?>) Albums.getContent();
+                    this.populateTracks(albums);
                     break;
 
                 case UNAUTHENTICATED:
@@ -71,10 +70,11 @@ public class TracksController extends Controller{
         });
     }
 
-    private void populateTracks(List<Album> albums) {
+    private void populateTracks(List<?> albums) {
         lvTracks.getItems().clear();
-        for (Album album :
+        for (var rawAlbum :
                 albums) {
+            Album album = (Album) rawAlbum;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/soundhive/gui/templates/AlbumListViewItem.fxml"));
             try {
 

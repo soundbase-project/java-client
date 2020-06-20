@@ -33,6 +33,10 @@ public class Stats {
 
     }
 
+    public int getListenings() {
+        return listenings;
+    }
+
     public List<Keyframe> getKeyframes() {
         return this.keyframes;
     }

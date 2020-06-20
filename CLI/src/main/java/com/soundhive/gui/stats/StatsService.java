@@ -5,9 +5,7 @@ import com.soundhive.core.response.Response;
 import com.soundhive.core.stats.Stats;
 import com.soundhive.core.stats.StatsHandler;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 
 
 public class StatsService extends Service<Response<Stats>> {

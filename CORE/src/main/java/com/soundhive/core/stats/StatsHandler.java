@@ -2,15 +2,11 @@ package com.soundhive.core.stats;
 
 import com.soundhive.core.authentication.SessionHandler;
 import com.soundhive.core.response.Response;
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.json.JSONException;
 
 
 public class StatsHandler {
     public enum Timespan {
-        YEAR("year"),
+        //YEAR("year"),
         MONTH("month"),
         WEEK("week"),
         DAY("day"),

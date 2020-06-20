@@ -39,7 +39,7 @@ public class PluginListItemController {
         this.pluginConsumer = pluginConsumer;
     }
 
-    private void start() { // TODO :
+    private void start() {
         try {
             this.lbPluginName.setText(this.plugin.getPlugin().getName());
         } catch (AbstractMethodError e) {
@@ -49,9 +49,7 @@ public class PluginListItemController {
         }
 
 
-        this.btDelete.setOnAction(e -> {
-            this.pluginConsumer.accept(this.plugin);
-        });
+        this.btDelete.setOnAction(e -> this.pluginConsumer.accept(this.plugin));
 
         if (!this.plugin.isValid()) {
             this.lbPluginName.setTextFill(Paint.valueOf("red"));

@@ -1,15 +1,11 @@
 package com.soundhive.core.authentication;
 
 import com.soundhive.core.response.Response;
-import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
-import kong.unirest.JsonObjectMapper;
-import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.soundhive.core.response.Response.Status;
@@ -118,23 +114,23 @@ public class SessionHandler {
     }
 
 
-    public void destroySession() {
-        this.resetSessionValues();
-        this.deleteToken();
-    }
+//    public void destroySession() { // TODO : use destroysession
+//        this.resetSessionValues();
+//        this.deleteToken();
+//    }
 
-    private void resetSessionValues() {
-        this.token = "";
-        this.email = "";
-        this.username = "";
-        this.name = "";
-    }
-
-    private void deleteToken()throws IllegalStateException{
-        if (!new File(tokenDir).delete()){
-            throw new IllegalStateException("Could not delete session token.");
-        }
-    }
+//    private void resetSessionValues() {
+//        this.token = "";
+//        this.email = "";
+//        this.username = "";
+//        this.name = "";
+//    }
+//
+//    private void deleteToken()throws IllegalStateException{
+//        if (!new File(tokenDir).delete()){
+//            throw new IllegalStateException("Could not delete session token.");
+//        }
+//    }
 
 
     public boolean isConnected() {
@@ -149,13 +145,13 @@ public class SessionHandler {
         return token;
     }
 
-    public String getName() {
-        return name;
-    }
+    //public String getName() {
+    //    return name;
+    //}
 
-    public String getEmail() {
-        return email;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
 
     public void setUserInfos(){
         this.profileLoader.accept(this.username);

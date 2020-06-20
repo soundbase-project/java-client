@@ -8,8 +8,8 @@ import com.soundhive.core.stats.Keyframe;
 import com.soundhive.core.stats.StatsHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
+// import javafx.scene.chart.CategoryAxis;
+// import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 import java.util.List;
@@ -20,11 +20,9 @@ public class StatsController extends  Controller{
     @FXML
     AreaChart<String, Number> acStats;
 
-    @FXML
-    private NumberAxis yAxis;
+    // @FXML private NumberAxis yAxis;
 
-    @FXML
-    private CategoryAxis xAxis;
+    // @FXML private CategoryAxis xAxis;
 
     @FXML
     JFXComboBox<StatsService.SpanOption> cbSpan;
@@ -54,11 +52,10 @@ public class StatsController extends  Controller{
     private void setStatsService() {
         statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
         statsService.setOnSucceeded(e -> {
-
-            Response<Stats> stats = (Response<Stats>) e.getSource().getValue();
+            Response<?> stats = (Response<?>) e.getSource().getValue();
             switch (stats.getStatus()) {
                 case SUCCESS:
-                    this.acStats.getData().add(generateListenSeries(stats.getContent().getKeyframes()));
+                    this.acStats.getData().add(generateListenSeries(((Stats)stats.getContent()).getKeyframes()));
                     break;
 
                 case UNAUTHENTICATED:

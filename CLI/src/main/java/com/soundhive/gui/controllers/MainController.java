@@ -7,11 +7,9 @@ import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.Context;
 import com.soundhive.gui.Router;
 import com.soundhive.gui.plugin.PluginUIContainer;
-import com.soundhive.gui.plugin.PluginUiHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -34,11 +32,11 @@ public class MainController {
 
     @FXML private Label lbSession;
 
-    @FXML private ImageView ivSession;
+    //@FXML private ImageView ivSession; TODO implement profile pic
 
     @FXML private AnchorPane appContent;
 
-    @FXML private VBox vbNavMenu;
+    //@FXML private VBox vbNavMenu;
 
     @FXML public void initialize() {
         initContext();
@@ -53,7 +51,7 @@ public class MainController {
     private void initContext(){
 
         try {
-            this.context = new Context(new Router(this.appContent, this.mainContainer, this.stageRef), username -> this.lbSession.setText(username),plugins -> displayPlugins(plugins) );
+            this.context = new Context(new Router(this.appContent, this.mainContainer, this.stageRef), username -> this.lbSession.setText(username), this::displayPlugins);
         }
         catch (ConfigFileException | MissingParamException e) {
             issueNotWorkingNotice(e.getMessage());
@@ -70,9 +68,7 @@ public class MainController {
         JFXButton button = new JFXButton("Exit");
         VBox box = new VBox();
 
-        button.setOnAction(e -> {
-            System.exit(-1);
-        });
+        button.setOnAction(e -> System.exit(-1));
 
         box.getChildren().setAll(secondLabel, button);
         StackPane secondaryLayout = new StackPane();
@@ -140,9 +136,7 @@ public class MainController {
 
             setButtonStyle(button);
             button.setText(plugin.getPlugin().getName());
-            button.setOnAction(e -> {
-                context.getRouter().goTo(plugin.getView(), c -> c.setContextAndStart(context));
-            });
+            button.setOnAction(e -> context.getRouter().goTo(plugin.getView(), c -> c.setContextAndStart(context)));
             AnchorPane pane = new AnchorPane(button);
             //buttonPane.setStyle("-fx-background-color: #343a40");
 

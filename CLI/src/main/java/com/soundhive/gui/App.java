@@ -1,6 +1,5 @@
 package com.soundhive.gui;
 
-import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.gui.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 
 /**

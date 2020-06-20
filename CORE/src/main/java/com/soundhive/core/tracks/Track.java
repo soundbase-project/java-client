@@ -1,6 +1,5 @@
 package com.soundhive.core.tracks;
 
-import kong.unirest.JsonNode;
 import kong.unirest.json.JSONObject;
 
 public class Track {

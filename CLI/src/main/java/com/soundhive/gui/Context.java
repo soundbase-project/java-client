@@ -6,9 +6,6 @@ import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
 import com.soundhive.gui.plugin.PluginUiHandler;
-import io.minio.MinioClient;
-import io.minio.errors.InvalidEndpointException;
-import io.minio.errors.InvalidPortException;
 
 import java.util.List;
 import java.util.function.Consumer;

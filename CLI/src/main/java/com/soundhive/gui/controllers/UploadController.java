@@ -11,9 +11,7 @@ public class UploadController extends Controller {
 
     @FXML
     private void initialize() { // TODO use special new component
-        this.tfNbTracks.setOnAction(e -> {
-           purifyNumberField(this.tfNbTracks);
-        });
+        this.tfNbTracks.setOnAction(e -> purifyNumberField(this.tfNbTracks));
     }
 
     @Override

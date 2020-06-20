@@ -3,13 +3,10 @@ package com.soundhive.gui.controllers;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
-import com.soundhive.core.generic.Generic;
 import com.soundhive.core.response.Response;
 import com.soundhive.gui.authentication.LoginService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 
 public class LoginController extends Controller {
 
@@ -28,8 +25,6 @@ public class LoginController extends Controller {
     @FXML
     private CheckBox cbStayConnected;
 
-    @FXML
-    private Pane frame;
 
     private LoginService loginService;
 
@@ -65,10 +60,10 @@ public class LoginController extends Controller {
         }
     }
 
-    @FXML
-    public void keyPressed(final KeyEvent event) {
-        System.out.println("Key pressed: " + event.getCode().getName());
-    } // TODO : login on RETURN pressed
+//    @FXML
+//    public void keyPressed(final KeyEvent event) {
+//        System.out.println("Key pressed: " + event.getCode().getName());
+//    } // TODO : login on RETURN pressed
 
     @Override
     protected void start() {
@@ -84,7 +79,7 @@ public class LoginController extends Controller {
         this.loginService = new LoginService(tfUsername.textProperty(), tfPassword.textProperty(), cbStayConnected.selectedProperty(), getContext().getSession(), autoLogin);
 
         loginService.setOnSucceeded(e -> {
-            Response<Void> response = Generic.secureResponseCast((Response<?>) e.getSource().getValue());
+            var response = (Response<?>) e.getSource().getValue();
             switch (response.getStatus()) {
                 case SUCCESS:
                     getContext().getRouter().issueMessage(String.format("Logged in as %s", getContext().getSession().getUsername()));

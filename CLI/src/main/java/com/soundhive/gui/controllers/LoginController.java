@@ -7,6 +7,7 @@ import com.soundhive.core.response.Response;
 import com.soundhive.gui.authentication.LoginService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 
 public class LoginController extends Controller {
 
@@ -45,6 +46,7 @@ public class LoginController extends Controller {
         tfPassword.focusedProperty().addListener((o,oldVal,newVal)->{
             if(!newVal) tfPassword.validate();
         });
+
     }
 
 
@@ -69,6 +71,13 @@ public class LoginController extends Controller {
     protected void start() {
         setLoginService(true);
         loginService.start();
+
+        this.btLogin.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                loginService.start();
+            }
+
+        });
     }
 
 
@@ -95,13 +104,16 @@ public class LoginController extends Controller {
                     } else {
                         getContext().getRouter().issueMessage("Wrong password or username.");
                     }
+                    getContext().getSession().destroySession();
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;
                 case INTERNAL_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
                     getContext().log(response.getMessage());
-                    //getContext().logException(response.getException());
+                    if (response.getException() != null) {
+                        getContext().logException((response.getException()));
+                    }
                     pbConnecting.setVisible(false);
                     btLogin.setVisible(true);
                     break;

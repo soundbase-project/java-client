@@ -32,7 +32,7 @@ public class TracksController extends Controller{
         this.tracksService.start();
     }
 
-    private void setTracksService() { // TODO generify  query service settings initialisation
+    private void setTracksService() {
         this.tracksService = new TracksService(getContext().getSession());
         this.tracksService.setOnSucceeded(e -> {
             Response<?> Albums =(Response<?>) e.getSource().getValue();
@@ -48,6 +48,7 @@ public class TracksController extends Controller{
                 case UNAUTHENTICATED:
                     getContext().getRouter().issueDialog("You were disconnected from your session. Please log in again.");
                     getContext().getRouter().goTo("Login", c -> c.setContextAndStart(getContext()));
+                    getContext().getSession().destroySession();
                     break;
 
                 case CONNECTION_FAILED:

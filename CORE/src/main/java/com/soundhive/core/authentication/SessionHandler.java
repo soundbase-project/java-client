@@ -114,23 +114,23 @@ public class SessionHandler {
     }
 
 
-//    public void destroySession() { // TODO : use destroysession
-//        this.resetSessionValues();
-//        this.deleteToken();
-//    }
+    public void destroySession() {
+        this.resetSessionValues();
+        this.deleteToken();
+    }
 
-//    private void resetSessionValues() {
-//        this.token = "";
-//        this.email = "";
-//        this.username = "";
-//        this.name = "";
-//    }
-//
-//    private void deleteToken()throws IllegalStateException{
-//        if (!new File(tokenDir).delete()){
-//            throw new IllegalStateException("Could not delete session token.");
-//        }
-//    }
+    private void resetSessionValues() {
+        this.token = "";
+        this.email = "";
+        this.username = "";
+        this.name = "";
+    }
+
+    private void deleteToken()throws IllegalStateException{
+        if (!new File(tokenDir).delete()){
+            throw new IllegalStateException("Could not delete session token.");
+        }
+    }
 
 
     public boolean isConnected() {

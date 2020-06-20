@@ -6,7 +6,7 @@ import kong.unirest.json.JSONException;
 
 import java.util.Map;
 
-public class Response<T> { //TODO : implement JSON parsing case
+public class Response<T> {
 
     public enum Status {
         SUCCESS,
@@ -91,10 +91,10 @@ public class Response<T> { //TODO : implement JSON parsing case
         return message;
     }
 
-    public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) { // TODO: USE UNIREST'S "ONSUCCESS", maybe use inheritance
+    public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) {
         HttpResponse<JsonNode> res;
         try {
-            res = Unirest.get(route)
+                res = Unirest.get(route)
                     .header("accept", "application/json")
                     .header("authorization", "Bearer " + token)
                     .asJson();

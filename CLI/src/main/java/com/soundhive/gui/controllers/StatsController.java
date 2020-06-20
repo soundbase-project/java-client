@@ -60,6 +60,7 @@ public class StatsController extends  Controller{
 
                 case UNAUTHENTICATED:
                     getContext().getRouter().issueDialog("You were disconnected from your session. Please log in again.");
+                    getContext().getSession().destroySession();
                     break;
 
                 case CONNECTION_FAILED:

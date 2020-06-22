@@ -33,14 +33,35 @@ public class StatsService extends Service<Response<Stats>> {
 
     private final ObjectProperty<SpanOption> cbSpan;
 
+    private final String target;
+
 
 
     StatsHandler.Scope scope;
 
-    public StatsService(final SessionHandler session, final ObjectProperty<SpanOption> cbSpan, final StatsHandler.Scope scope) {
+    /**
+     * Get stats for a user
+     * @param session Instance of the current session
+     * @param cbSpan Timespan for the requested stats
+     */
+    public StatsService(final SessionHandler session, final ObjectProperty<SpanOption> cbSpan) {
         this.cbSpan = cbSpan;
         this.session = session;
-        this.scope = scope;
+        this.scope = StatsHandler.Scope.USER;
+        this.target = session.getUsername();
+    }
+
+    /**
+     * Get stats per track
+     * @param session Instance of the current session
+     * @param cbSpan Timespan for the requested stats
+     * @param track UUID of the track from which we want the stats
+     */
+    public StatsService(final SessionHandler session, final ObjectProperty<SpanOption> cbSpan, String track) {
+        this.cbSpan = cbSpan;
+        this.session = session;
+        this.scope = StatsHandler.Scope.TRACKS;
+        this.target = track;
     }
 
     protected StatsTask createTask() {
@@ -48,22 +69,22 @@ public class StatsService extends Service<Response<Stats>> {
         StatsHandler stats = null;
         switch (chosen) {
             case LAST_YEAR:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 12, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 12, scope, this.target);
                 break;
             case LAST_6_MONTHS:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 6, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 6,scope, this.target);
                 break;
             case LAST_TWO_MONTHS:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.WEEK, 9, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.WEEK, 9, scope, this.target);
                 break;
             case LAST_WEEK:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.DAY, 7, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.DAY, 7, scope, this.target);
                 break;
             case LAST_48_HOURS:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 48, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 48, scope, this.target);
                 break;
             case LAST_DAY:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 24, scope);
+                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 24, scope, this.target);
                 break;
         }
 

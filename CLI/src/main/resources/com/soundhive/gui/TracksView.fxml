@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.controllers.TracksController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Tracks" textFill="WHITE">
+      <Label layoutX="14.0" layoutY="14.0" text="Album" textFill="WHITE">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
       <JFXListView fx:id="lvTracks" layoutX="34.0" layoutY="71.0" prefHeight="520.0" prefWidth="470.0" style="-fx-background-color: #343a40;" />
-      <Label layoutX="540.0" layoutY="14.0" text="Albums" textFill="WHITE">
+      <AreaChart fx:id="acStats" layoutX="540.0" layoutY="126.0" prefHeight="266.0" prefWidth="518.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </AreaChart>
+      <Label layoutX="540.0" layoutY="14.0" text="Stats" textFill="WHITE">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <JFXListView fx:id="lvAlbums" layoutX="540.0" layoutY="71.0" prefHeight="516.0" prefWidth="530.0" style="-fx-background-color: #343a40;" />
+      <ComboBox layoutX="586.0" layoutY="466.0" prefHeight="25.0" prefWidth="458.0" />
+      <JFXComboBox fx:id="cbSpan" focusColor="WHITE" layoutX="580.0" layoutY="71.0" prefHeight="25.0" prefWidth="458.0" promptText="Time span" />
    </children>
 </AnchorPane>

@@ -62,11 +62,6 @@ public class LoginController extends Controller {
         }
     }
 
-//    @FXML
-//    public void keyPressed(final KeyEvent event) {
-//        System.out.println("Key pressed: " + event.getCode().getName());
-//    } // TODO : login on RETURN pressed
-
     @Override
     protected void start() {
         setLoginService(true);

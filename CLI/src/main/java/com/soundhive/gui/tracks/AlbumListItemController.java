@@ -18,6 +18,7 @@ public class AlbumListItemController {
     private Album album;
     private Consumer<String> messageLogger;
     private Consumer<Throwable> errorLogger;
+    private Consumer<String> updateStats;
 
     @FXML
     private Label lbTitle;
@@ -39,12 +40,14 @@ public class AlbumListItemController {
     }
 
 
-    public void setAlbumsAndLoggersAndStart(final Album album,
-                                          final Consumer<String> messageLogger,
-                                          final Consumer<Throwable> errorLogger) {
+    public void prepareAndStart(final Album album,
+                                final Consumer<String> updateStats,
+                                final Consumer<String> messageLogger,
+                                final Consumer<Throwable> errorLogger) {
         this.album = album;
         this.messageLogger = messageLogger;
         this.errorLogger = errorLogger;
+        this.updateStats = updateStats;
         start();
     }
 
@@ -66,6 +69,7 @@ public class AlbumListItemController {
                 Label lbName = new Label(track.getTitle());
                 lbName.setTextFill(Paint.valueOf("white"));
                 AnchorPane pane = new AnchorPane(lbName);
+                pane.setOnMouseClicked( event -> updateStats.accept(track.getID()));
                 lvTracks.getItems().add(pane);
             }
             this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 50 + 2) + 20);

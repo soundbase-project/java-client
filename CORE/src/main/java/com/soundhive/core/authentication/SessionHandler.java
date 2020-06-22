@@ -127,7 +127,8 @@ public class SessionHandler {
     }
 
     private void deleteToken()throws IllegalStateException{
-        if (!new File(tokenDir).delete()){
+        File tokenFile = new File(tokenDir);
+        if (tokenFile.exists() && !tokenFile.delete()){
             throw new IllegalStateException("Could not delete session token.");
         }
     }

@@ -92,6 +92,7 @@ public class Response<T> {
     }
 
     public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) {
+        System.out.println(route);
         HttpResponse<JsonNode> res;
         try {
                 res = Unirest.get(route)

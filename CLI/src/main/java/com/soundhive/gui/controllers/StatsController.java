@@ -4,15 +4,11 @@ import com.jfoenix.controls.JFXComboBox;
 import com.soundhive.core.response.Response;
 import com.soundhive.core.stats.Stats;
 import com.soundhive.gui.stats.StatsService;
-import com.soundhive.core.stats.Keyframe;
 import com.soundhive.core.stats.StatsHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
-// import javafx.scene.chart.CategoryAxis;
-// import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 
-import java.util.List;
+import static com.soundhive.gui.stats.StatsUtils.generateListenSeries;
 
 public class StatsController extends  Controller{
     private StatsService statsService;
@@ -49,8 +45,8 @@ public class StatsController extends  Controller{
     }
 
 
-    private void setStatsService() {
-        statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty(), StatsHandler.Scope.USER);
+    private void setStatsService() { //TODO : generic able
+        statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty());
         statsService.setOnSucceeded(e -> {
             Response<?> stats = (Response<?>) e.getSource().getValue();
             switch (stats.getStatus()) {
@@ -81,15 +77,5 @@ public class StatsController extends  Controller{
     }
 
 
-    XYChart.Series<String, Number> generateListenSeries(List<Keyframe> keyframes){
-        XYChart.Series<String, Number> listenSeries = new XYChart.Series<>();
-        listenSeries.setName("Listens");
 
-        for (Keyframe frame :
-                keyframes) {
-            listenSeries.getData().add(new XYChart.Data<>(frame.getPeriod(), frame.getPlays()));
-        }
-
-        return listenSeries;
-    }
 }

@@ -46,19 +46,26 @@ public class StatsHandler {
 
     private final int nbSpan;
 
+    private final String target;
 
 
 
-    public StatsHandler(SessionHandler session, Timespan span, int nbSpan, Scope scope ) {
+
+    public StatsHandler(final SessionHandler session,final  Timespan span, final int nbSpan, Scope scope, final String target) {
         this.session = session;
         this.nbSpan = nbSpan;
         this.span = span;
         this.scope = scope;
+        this.target = target;
     }
 
-    //localhost:3000/users/:username/stats/last/:nb/day
+
+    /**
+     * request : localhost:3000/:scope/:target/stats/last/:nb/day
+     * @return A response containing the requested stats in an object
+     */
     public Response<Stats> queryStats() {
-        String request = String.format("%s/%s/stats/last/%d/%s", this.scope.toString(), session.getUsername(), this.nbSpan, this.span.toString());
+        String request = String.format("%s/%s/stats/last/%d/%s", this.scope.toString(), target, this.nbSpan, this.span.toString());
 
         return Response.queryResponse(request,
                 session.getToken(),

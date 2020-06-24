@@ -27,7 +27,6 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <ComboBox layoutX="586.0" layoutY="466.0" prefHeight="25.0" prefWidth="458.0" />
       <JFXComboBox fx:id="cbSpan" focusColor="WHITE" layoutX="580.0" layoutY="71.0" prefHeight="25.0" prefWidth="458.0" promptText="Time span" />
    </children>
 </AnchorPane>

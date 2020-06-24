@@ -129,7 +129,7 @@ public class Response<T> {
 
     }
 
-    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> fields, JsonConsumerInterface cast) {
+    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> fields, JsonConsumerInterface onResult) { //TODO : force a return value ?
         HttpResponse<JsonNode> res;
         try {
             res = Unirest.post(route)
@@ -145,7 +145,10 @@ public class Response<T> {
         switch (res.getStatus()) {
             case 201:
                 try {
-                    cast.accept(res.getBody());
+                    if (onResult != null){
+                        onResult.accept(res.getBody());
+                    }
+
                     return new Response<>(Response.Status.SUCCESS, res.getStatusText());
                 } catch (JSONException e) {
                     return new Response<>(Response.Status.INTERNAL_ERROR, e.getMessage());

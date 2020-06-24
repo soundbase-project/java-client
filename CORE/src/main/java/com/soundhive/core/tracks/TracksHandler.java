@@ -11,7 +11,9 @@ import java.util.List;
 import static com.soundhive.core.response.Response.Status.*;
 
 public class TracksHandler {
+
     private final SessionHandler session;
+
     public TracksHandler(final SessionHandler session) {
         this.session = session;
 

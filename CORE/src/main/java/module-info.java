@@ -6,4 +6,5 @@ module CORE {
     exports com.soundhive.core.conf;
     exports com.soundhive.core.generic;
     exports com.soundhive.core.tracks;
+    exports com.soundhive.core.upload;
 }

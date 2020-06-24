@@ -6,12 +6,12 @@ import com.soundhive.core.response.Response;
 
 import java.util.HashMap;
 
-public class TracksUploadHandler {
+public class UploadHandler {
 
     private final  SessionHandler session;
     private final AlbumUpload album;
 
-    public TracksUploadHandler(final SessionHandler session, final AlbumUpload album) {
+    public UploadHandler(final SessionHandler session, final AlbumUpload album) {
         this.session = session;
         this.album = album;
     }

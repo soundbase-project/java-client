@@ -1,17 +1,23 @@
 package com.soundhive.gui.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 
 public class UploadController extends Controller {
 
 
-    @FXML
-    private JFXTextField tfNbTracks;
+    @FXML private JFXTextField tfTitle;
+    @FXML private JFXListView<AnchorPane> lvTracks;
+    @FXML private JFXButton btAddTrack;
+    @FXML private JFXButton btRemoveTrack;
+    @FXML private JFXButton btCoverFile;
 
     @FXML
     private void initialize() { // TODO use special new component
-        this.tfNbTracks.setOnAction(e -> purifyNumberField(this.tfNbTracks));
+        //this.tfNbTracks.setOnAction(e -> purifyNumberField(this.tfNbTracks));
     }
 
     @Override

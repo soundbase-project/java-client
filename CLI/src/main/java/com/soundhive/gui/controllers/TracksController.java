@@ -107,8 +107,6 @@ public class TracksController extends Controller{
                 getContext().logException(e);
                 getContext().getRouter().issueDialog("Error displaying : " + album.getTitle());
             }
-
-
         }
     }
 

@@ -10,7 +10,19 @@ public class AlbumUpload {
     private final File coverFile;
     private final List<TrackUpload> tracks;
 
-    public AlbumUpload(final String title, final String description, final File coverFile) {
+    public AlbumUpload(final String title, final String description, final File coverFile) throws InvalidUploadException{
+        if (title.isEmpty() || title.isBlank()) {
+            throw new InvalidUploadException("The album must have a title.");
+        }
+
+        if ( description.isEmpty() || description.isBlank()) {
+            throw new InvalidUploadException("The album must have a description.");
+        }
+
+        if (coverFile == null  || !coverFile.exists()) {
+            throw new InvalidUploadException("the album must have a valid cover file.");
+        }
+
         this.title = title;
         this.description = description;
         this.coverFile = coverFile;

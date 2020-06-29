@@ -59,11 +59,12 @@ public class AlbumListItemController {
 
     private void fillTracks() {
         this.lvTracks.getItems().clear();
+
         if (this.album.getTracks().size() == 1) {
             this.lvTracks.setPrefHeight(0);
 
-
         } else if (this.album.getTracks().size() > 1){
+
             for (Track track :
                     album.getTracks()) {
                 Label lbName = new Label(track.getTitle());
@@ -77,11 +78,8 @@ public class AlbumListItemController {
         }
 
         String url = String.format("http://localhost:9000/soundhive/%s",  this.album.getCoverFile());
-        System.out.println(url);
         Image image = new Image(url, false);
         ivArt.setImage(image);
-
-
 
     }
 

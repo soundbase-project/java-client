@@ -91,7 +91,7 @@ public class Response<T> {
         return message;
     }
 
-    public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) {
+    public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) { // TODO : fetch error message from API JSON response
         System.out.println(route);
         HttpResponse<JsonNode> res;
         try {

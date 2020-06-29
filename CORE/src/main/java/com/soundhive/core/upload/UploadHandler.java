@@ -19,7 +19,7 @@ public class UploadHandler {
     public Response<Void> postAlbum() {
 
         return Response.postResponse(
-                "/albums",
+                "albums",
                 session.getToken(),
                 new HashMap<>() {
                     {
@@ -28,10 +28,10 @@ public class UploadHandler {
                         put("coverFile", album.getCoverFile());
                     }
                 },
-                object -> {
+                node -> {
                     for (TrackUpload track :
                             this.album.getTracks()) {
-                        Response<?> res = postTrack(track);
+                        Response<?> res = postTrack(node.getObject().getString("id"), track);
                         if (!res.getStatus().equals(Response.Status.SUCCESS)){
                             throw new InternalRequestError("Could not upload track : " + track.getTitle(), res);
                         }
@@ -41,9 +41,9 @@ public class UploadHandler {
         );
     }
 
-    public Response<Void> postTrack(TrackUpload track) {
+    public Response<Void> postTrack(String albumID, TrackUpload track) {
         return Response.postResponse(
-                "/tracks",
+                "tracks",
                 session.getToken(),
                 new HashMap<>() {
                     {
@@ -51,6 +51,7 @@ public class UploadHandler {
                         put("description", track.getDescription());
                         put("genre", track.getGenre());
                         put("trackFile", track.getTrackFile());
+                        put("album", albumID);
                     }
                 },
                 null

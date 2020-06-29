@@ -19,12 +19,16 @@
             <Font size="20.0" />
          </font>
       </JFXButton>
-      <JFXTextArea layoutX="32.0" layoutY="131.0" prefHeight="74.0" prefWidth="237.0" promptText="Description" />
-      <JFXButton fx:id="btCoverFile" layoutX="20.0" layoutY="226.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="237.0" text="Cover file" textAlignment="CENTER" textFill="#1201ff">
+      <JFXTextArea fx:id="taDescription" layoutX="32.0" layoutY="131.0" prefHeight="74.0" prefWidth="237.0" promptText="Description" />
+      <JFXButton fx:id="btCoverFile" layoutX="20.0" layoutY="226.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="237.0" text="Cover file" textAlignment="CENTER" textFill="#1201ff">
          <font>
-            <Font size="40.0" />
+            <Font size="20.0" />
          </font>
       </JFXButton>
-      <ImageView fitHeight="150.0" fitWidth="170.0" layoutX="47.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ivCover" fitHeight="150.0" fitWidth="170.0" layoutX="47.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXButton fx:id="btUpload" layoutX="32.0" layoutY="420.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="213.0" text="Confirm" textFill="#3c00ff">
+         <font>
+            <Font size="20.0" />
+         </font></JFXButton>
    </children>
 </AnchorPane>

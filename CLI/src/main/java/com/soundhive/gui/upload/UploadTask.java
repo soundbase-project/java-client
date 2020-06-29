@@ -14,25 +14,16 @@ import java.util.List;
 public class UploadTask extends Task<Response<Void>> {
 
     private final SessionHandler session;
-    private final String title;
-    private final String description;
-    private  final File coverFile;
-    private final List<TrackUpload> tracks;
+private final AlbumUpload albumUpload;
 
-
-    public UploadTask(final SessionHandler session, final String title, final String description, final File coverFile, final List<TrackUpload> tracks) {
-        this.title = title;
-        this.description = description;
-        this.coverFile = coverFile;
-        this.tracks = tracks;
+    public UploadTask(final SessionHandler session,final AlbumUpload album) {
         this.session = session;
+        this.albumUpload = album;
     }
 
     @Override
     protected Response<Void> call() {
-        AlbumUpload album = new AlbumUpload(this.title, this.description, this.coverFile);
-        album.getTracks().addAll(this.tracks);
-        UploadHandler uploader = new UploadHandler(session, album);
+        UploadHandler uploader = new UploadHandler(session, albumUpload);
         return uploader.postAlbum();
     }
 }

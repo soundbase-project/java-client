@@ -38,6 +38,7 @@ public class SessionHandler {
                         put("password", password);
                     }
                 },
+                null,
                 jsonToken -> {
                     this.token = jsonToken.getObject().getString("access_token");
                     if (stayConnected) {

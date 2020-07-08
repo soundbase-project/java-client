@@ -1,9 +1,18 @@
 package com.soundhive.core.response;
 
 
+import com.soundhive.core.upload.FileUpload;
+import com.soundhive.core.upload.FileUploadError;
 import kong.unirest.*;
 import kong.unirest.json.JSONException;
 
+
+import java.io.File;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Map;
 
 public class Response<T> {
@@ -92,15 +101,14 @@ public class Response<T> {
     }
 
     public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) { // TODO : fetch error message from API JSON response
-        System.out.println(route);
         HttpResponse<JsonNode> res;
         try {
                 res = Unirest.get(route)
                     .header("accept", "application/json")
                     .header("authorization", "Bearer " + token)
                     .asJson();
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return new Response<>(Response.Status.CONNECTION_FAILED, "No query response from the server.",e);
         }
 
@@ -122,29 +130,43 @@ public class Response<T> {
                 return new Response<>(Status.UNAUTHENTICATED, res.getStatusText());
 
             default:
-                return  new Response<>(Response.Status.INTERNAL_ERROR, res.getStatusText());
-
-
+                if (res.getBody().getObject().has("message"))
+                    return new Response<>(Response.Status.INTERNAL_ERROR,res.getBody().getObject().getString("message"));
+                else
+                    return new Response<>(Response.Status.INTERNAL_ERROR, res.getStatusText());
         }
 
     }
 
-    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> fields, JsonConsumerInterface onResult) { //TODO : force a return value ?
+    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> textFields, Map<String, File> fileFields, JsonConsumerInterface onResult) { //TODO : include bad request message
+         HttpRequestWithBody req = Unirest.post(route)
+                 .header("accept", "application/json")
+                 .header("authorization", "Bearer " + token);
+
+
+
         HttpResponse<JsonNode> res;
         try {
-            res = Unirest.post(route)
-                    .header("accept", "application/json")
-                    .header("authorization", "Bearer " + token)
-                    .fields(fields)
-                    .asJson();
+            MultipartBody reqFields = req.fields(textFields);
 
-        } catch (Exception e) {
-            return new Response<>(Response.Status.CONNECTION_FAILED, e.getMessage());
+            if (fileFields != null) // fields do not add...
+                setFilesFields(fileFields, reqFields);
+
+
+            res = reqFields.asJson();
+
+        } catch (FileUploadError e) {
+            return new Response<>(Status.INTERNAL_ERROR, e.getMessage(), e);
         }
+        catch (Exception e) {
+            return new Response<>(Response.Status.CONNECTION_FAILED, e.getMessage(), e);
+        }
+
 
         switch (res.getStatus()) {
             case 201:
                 try {
+
                     if (onResult != null){
                         onResult.accept(res.getBody());
                     }
@@ -161,9 +183,26 @@ public class Response<T> {
                 return new Response<>(Status.UNAUTHENTICATED, res.getStatusText());
 
             default:
-                return new Response<>(Response.Status.INTERNAL_ERROR, res.getStatusText());
-
-
+                if (res.getBody().getObject().has("message"))
+                    return new Response<>(Response.Status.INTERNAL_ERROR,res.getBody().getObject().getString("message"));
+                else
+                    return new Response<>(Response.Status.INTERNAL_ERROR, res.getStatusText());
         }
+    }
+
+
+    private static void setFilesFields(final Map<String, File> fileFields, final MultipartBody req) throws FileUploadError {
+        fileFields.forEach((key, fileObject) -> {
+            try {
+                ContentType mime = ContentType.create(Files.probeContentType(fileObject.toPath()));
+                InputStream stream = new FileInputStream(fileObject);
+                System.out.println("added " + fileObject + "to API req fields");
+                req.field(key, stream, mime);
+
+            } catch (IOException e) {
+                throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", fileObject.getName() ),e);
+            }
+        });
+
     }
 }

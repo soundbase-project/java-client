@@ -1,8 +1,6 @@
 package com.soundhive.gui.upload;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.soundhive.core.upload.InvalidUploadException;
 import com.soundhive.core.upload.TrackUpload;
 import com.soundhive.gui.Router;
@@ -18,18 +16,20 @@ public class TrackUploadController {
     @FXML private JFXTextField tfGenre;
     @FXML private JFXTextArea  taDescription;
     @FXML private JFXButton btFile;
+    @FXML private JFXComboBox<TrackUpload.License> cbLicense;
+    @FXML private JFXCheckBox cbDownloadable;
 
     private File trackFile;
 
 
 
-    @FXML private void initialize() {
-
+    @FXML private void initialize() { // TODO : add license and downloadable support
+        cbLicense.getItems().setAll(TrackUpload.License.values());
     }
 
     public void setOpenFileDialog(Router router){
         btFile.setOnAction(e -> {
-            this.trackFile = router.issueFileDialog();
+            this.trackFile = router.issueFileDialog("Audio files (.wav, .mp3)", "*.wav", "*.mp3");
         });
     }
 
@@ -49,6 +49,6 @@ public class TrackUploadController {
         if (trackFile == null){
             throw new InvalidUploadException("");
         }
-        return new TrackUpload(tfTitle.getText(), tfGenre.getText(), taDescription.getText(), trackFile);
+        return new TrackUpload(tfTitle.getText(), tfGenre.getText(), taDescription.getText(), trackFile, cbLicense.getValue(), cbDownloadable.isSelected());
     }
 }

@@ -5,15 +5,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
 <AnchorPane fx:id="Container" maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.controllers.MainController">
    <children>
-   <StackPane fx:id="mainContainer" maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-border-radius: 10px;" >
+   <StackPane fx:id="mainContainer" maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-border-radius: 10px;">
          <children>
             <VBox maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-radius: 10px;">
                <children>
                   <AnchorPane maxHeight="130.0" maxWidth="1280.0" minHeight="130.0" minWidth="1280.0" prefHeight="130.0" prefWidth="1280.0" style="-fx-background-color: #343a40;">
                      <children>
-                        <ImageView fitHeight="79.0" fitWidth="368.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="79.0" fitWidth="368.0" layoutX="473.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../drawable/logo-white.png" />
                            </image>
@@ -28,6 +30,10 @@
                               <Label fx:id="lbSession" text="Disconected" textFill="WHITE" />
                            </children>
                         </VBox>
+                        <JFXButton layoutX="14.0" layoutY="30.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="128.0" text="Exit" textFill="WHITE">
+                           <font>
+                              <Font size="36.0" />
+                           </font></JFXButton>
                      </children>
                   </AnchorPane>
                   <HBox prefHeight="666.0" prefWidth="1280.0" style="-fx-background-color: #343a40;">

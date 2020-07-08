@@ -24,7 +24,7 @@ public class SettingsController extends Controller {
     @FXML
     private void  initialize(){
         this.btLoadPlugin.setOnAction(a ->{
-            File source = getContext().getRouter().issueFileDialog();
+            File source = getContext().getRouter().issueFileDialog("Jar file (.jar)", "*.jar");
             try {
                 getContext().getPluginHandler().HotLoadPlugin(source);
                 populatePlugins();

@@ -11,6 +11,7 @@ import com.soundhive.gui.upload.TrackUploadController;
 import com.soundhive.gui.upload.UploadService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -38,7 +39,6 @@ public class UploadController extends Controller {
     @FXML
     private void initialize() { // TODO use special new component
         this.trackControllers = new ArrayList<>();
-
     }
 
     private void setAlbumUploadService() {
@@ -51,11 +51,6 @@ public class UploadController extends Controller {
             }
             this.uploadService = new UploadService(getContext().getSession(), tfTitle.textProperty(), taDescription.textProperty(), this.coverFile, tracks );
 
-        } catch (InvalidUploadException e) {
-            getContext().getRouter().issueDialog("Cannot upload album : " + e.getMessage());
-            getContext().log(e.getMessage());
-            getContext().logException(e);
-        } finally {
             uploadService.setOnSucceeded(e -> {
                 Response<?> stats = (Response<?>) e.getSource().getValue();
                 switch (stats.getStatus()) {
@@ -82,6 +77,11 @@ public class UploadController extends Controller {
                 getContext().logException(e.getSource().getException());
                 getContext().log(e.getSource().getException().getMessage());
             });
+
+        } catch (InvalidUploadException e) {
+            getContext().getRouter().issueDialog("Cannot upload album : " + e.getMessage());
+            getContext().log(e.getMessage());
+            getContext().logException(e);
         }
     }
 
@@ -111,9 +111,7 @@ public class UploadController extends Controller {
         });
 
         btCoverFile.setOnAction(event -> {
-            this.coverFile = getContext().getRouter().issueFileDialog();
-            System.out.println(coverFile.getAbsoluteFile()
-            );
+            this.coverFile = getContext().getRouter().issueFileDialog("Picture (.png, .jpg)", "*.png", "*.jpg");
             Image cover = new Image("file://" + coverFile.getAbsolutePath());
             this.ivCover.setImage(cover);
         });

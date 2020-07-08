@@ -28,7 +28,7 @@ public class LoginService extends Service<Response<Void>> {
         this.autoConnect = autoConnect;
     }
 
-    protected Task<Response<Void>> createTask() {
+    protected LoginTask createTask() {
         return new LoginTask(usernameProperty.getValueSafe(),
                 passwordProperty.getValueSafe(),
                 this.stayConnected.getValue(),

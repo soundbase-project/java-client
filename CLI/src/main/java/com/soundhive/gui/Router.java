@@ -69,12 +69,10 @@ public class Router {
         dialog.show(this.dialogContainer);
     }
 
-    public File issueFileDialog() {
+    public File issueFileDialog(String contentDesc,  String ...extensions) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(contentDesc, extensions));
         return fileChooser.showOpenDialog(stage);
     }
-
-
-
 }

@@ -5,9 +5,11 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import com.soundhive.core.response.Response;
 import com.soundhive.gui.authentication.LoginService;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+
+import java.security.Provider;
 
 public class LoginController extends Controller {
 
@@ -54,10 +56,12 @@ public class LoginController extends Controller {
     public void login() {
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
             getContext().getRouter().issueMessage("One field is empty.");
+
         } else {
-            btLogin.setVisible(false);
             pbConnecting.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+            btLogin.setVisible(false);
             pbConnecting.setVisible(true);
+
             loginService.start();
         }
     }
@@ -67,12 +71,6 @@ public class LoginController extends Controller {
         setLoginService(true);
         loginService.start();
 
-        this.btLogin.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                loginService.start();
-            }
-
-        });
     }
 
 
@@ -87,12 +85,14 @@ public class LoginController extends Controller {
             switch (response.getStatus()) {
                 case SUCCESS:
                     getContext().getRouter().issueMessage(String.format("Logged in as %s", getContext().getSession().getUsername()));
-
                     getContext().getSession().setUserInfos();
                     getContext().getRouter().goTo("Stats", controller -> controller.setContextAndStart(getContext()));
                     break;
+
                 case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("Server unreachable. Please check your internet connection.");
+                    break;
+
                 case UNAUTHENTICATED:
                     if (autoLogin) {
                         getContext().getRouter().issueMessage("Could not login Automatically.");
@@ -100,34 +100,33 @@ public class LoginController extends Controller {
                         getContext().getRouter().issueMessage("Wrong password or username.");
                     }
                     getContext().getSession().destroySession();
-                    pbConnecting.setVisible(false);
-                    btLogin.setVisible(true);
                     break;
+
                 case INTERNAL_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
                     getContext().log(response.getMessage());
                     if (response.getException() != null) {
                         getContext().logException((response.getException()));
                     }
-                    pbConnecting.setVisible(false);
-                    btLogin.setVisible(true);
                     break;
             }
-            getContext().log("login request : " + response.getMessage());
-            loginService.reset();
 
-            //next login service will be called by user so all messages need to be activated
-            if (autoLogin) {
-                setLoginService(false);
-            }
+            pbConnecting.setVisible(false);
+            btLogin.setVisible(true);
+            loginService.reset();
+            setLoginService(false);
+
+            getContext().log("login request : " + response.getMessage());
+            System.out.println(response.getStatus());
         });
         this.loginService.setOnFailed(e -> {
-            getContext().logException(e.getSource().getException());
-            getContext().getRouter().issueDialog("An error occurred.");
+            pbConnecting.setVisible(false);
+            btLogin.setVisible(true);
             loginService.reset();
-            if (autoLogin) {
-                setLoginService(false);
-            }
+            setLoginService(false);
+
+            getContext().logException(e.getSource().getException());
+            getContext().getRouter().issueDialog("An error occurred in the login process.");
         });
 
 

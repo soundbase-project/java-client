@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane maxWidth="800.0" minWidth="800.0" prefHeight="254.0" prefWidth="800.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.upload.TrackUploadController">
+<AnchorPane maxWidth="800.0" minWidth="800.0" prefHeight="341.0" prefWidth="800.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.upload.TrackUploadController">
    <children>
       <JFXTextField fx:id="tfTitle" layoutX="23.0" layoutY="76.0" prefHeight="25.0" prefWidth="296.0" />
       <JFXTextField fx:id="tfGenre" layoutX="400.0" layoutY="76.0" />
@@ -31,5 +30,16 @@
             <Font size="40.0" />
          </font>
       </JFXButton>
+      <Label layoutX="12.0" layoutY="261.0" text="Licence" textFill="#0062ff">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cbLicense" layoutX="171.0" layoutY="272.0" prefHeight="25.0" prefWidth="148.0" />
+      <JFXCheckBox fx:id="cbDownloadable" checkedColor="#0b37ff" layoutX="474.0" layoutY="262.0" mnemonicParsing="false" text="Downloadable" textFill="#0049ff">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </JFXCheckBox>
    </children>
 </AnchorPane>

@@ -25,9 +25,14 @@ public class UploadHandler {
                     {
                         put("title", album.getTitle());
                         put("description", album.getDescription());
-                        put("coverFile", album.getCoverFile());
                     }
                 },
+                new HashMap<>() {
+                    {
+                        put("coverFile", album.getCoverFile());
+                    }
+                }
+                ,
                 node -> {
                     for (TrackUpload track :
                             this.album.getTracks()) {
@@ -52,8 +57,16 @@ public class UploadHandler {
                         put("genre", track.getGenre());
                         put("trackFile", track.getTrackFile());
                         put("album", albumID);
+                        put("license", track.getLicense().toString());
+                        put("downloadable", track.isDownloadable());
                     }
                 },
+                new HashMap<>() {
+                    {
+                        put("trackFile",track.getTrackFile());
+                    }
+                }
+                ,
                 null
         );
 

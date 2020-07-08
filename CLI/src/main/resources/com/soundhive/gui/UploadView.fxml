@@ -19,7 +19,7 @@
             <Font size="20.0" />
          </font>
       </JFXButton>
-      <JFXTextArea fx:id="taDescription" layoutX="32.0" layoutY="131.0" prefHeight="74.0" prefWidth="237.0" promptText="Description" />
+      <JFXTextArea fx:id="taDescription" layoutX="32.0" layoutY="131.0" prefHeight="37.0" prefWidth="237.0" promptText="Description" />
       <JFXButton fx:id="btCoverFile" layoutX="20.0" layoutY="226.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="237.0" text="Cover file" textAlignment="CENTER" textFill="#1201ff">
          <font>
             <Font size="20.0" />

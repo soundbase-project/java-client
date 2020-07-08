@@ -3,7 +3,9 @@ package com.soundhive.core.upload;
 import com.soundhive.core.authentication.SessionHandler;
 import com.soundhive.core.response.InternalRequestError;
 import com.soundhive.core.response.Response;
+import org.javatuples.Pair;
 
+import java.io.File;
 import java.util.HashMap;
 
 public class UploadHandler {
@@ -27,11 +29,7 @@ public class UploadHandler {
                         put("description", album.getDescription());
                     }
                 },
-                new HashMap<>() {
-                    {
-                        put("coverFile", album.getCoverFile());
-                    }
-                }
+                new Pair<>("coverFile", album.getCoverFile())
                 ,
                 node -> {
                     for (TrackUpload track :
@@ -55,17 +53,12 @@ public class UploadHandler {
                         put("title", track.getTitle());
                         put("description", track.getDescription());
                         put("genre", track.getGenre());
-                        put("trackFile", track.getTrackFile());
                         put("album", albumID);
                         put("license", track.getLicense().toString());
                         put("downloadable", track.isDownloadable());
                     }
                 },
-                new HashMap<>() {
-                    {
-                        put("trackFile",track.getTrackFile());
-                    }
-                }
+                new Pair<>("trackFile", track.getTrackFile())
                 ,
                 null
         );

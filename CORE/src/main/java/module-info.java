@@ -1,5 +1,6 @@
 module CORE {
     requires transitive unirest.java;
+    requires transitive javatuples;
     exports com.soundhive.core.response;
     exports com.soundhive.core.stats;
     exports com.soundhive.core.authentication;

@@ -5,6 +5,7 @@ import com.soundhive.core.upload.FileUpload;
 import com.soundhive.core.upload.FileUploadError;
 import kong.unirest.*;
 import kong.unirest.json.JSONException;
+import org.javatuples.Pair;
 
 
 import java.io.File;
@@ -138,25 +139,32 @@ public class Response<T> {
 
     }
 
-    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> textFields, Map<String, File> fileFields, JsonConsumerInterface onResult) { //TODO : include bad request message
-         HttpRequestWithBody req = Unirest.post(route)
-                 .header("accept", "application/json")
-                 .header("authorization", "Bearer " + token);
-
+    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> textFields, Pair<String, File> file, JsonConsumerInterface onResult) { //TODO : include bad request message
 
 
         HttpResponse<JsonNode> res;
         try {
-            MultipartBody reqFields = req.fields(textFields);
 
-            if (fileFields != null) // fields do not add...
-                setFilesFields(fileFields, reqFields);
+            MultipartBody req = Unirest.post(route)
+                    .header("accept", "application/json")
+                    .header("authorization", "Bearer " + token)
+                    .fields(textFields);
+
+            if (file != null) {
+                ContentType mime = ContentType.create(Files.probeContentType(file.getValue1().toPath()));
+                InputStream stream = new FileInputStream(file.getValue1());
+                req = req.field(file.getValue0(), stream, mime, "file");
+            }
 
 
-            res = reqFields.asJson();
+
+            res = req.asJson();
 
         } catch (FileUploadError e) {
             return new Response<>(Status.INTERNAL_ERROR, e.getMessage(), e);
+        }
+        catch (IOException e) {
+            throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", file.getValue1().getName() ),e);
         }
         catch (Exception e) {
             return new Response<>(Response.Status.CONNECTION_FAILED, e.getMessage(), e);
@@ -190,19 +198,23 @@ public class Response<T> {
         }
     }
 
+    private static void setTextFieldsIndividually(final Map<String, Object> fileFields, final HttpRequestWithBody req) {
+        fileFields.forEach((key, object) -> {
 
-    private static void setFilesFields(final Map<String, File> fileFields, final MultipartBody req) throws FileUploadError {
-        fileFields.forEach((key, fileObject) -> {
-            try {
-                ContentType mime = ContentType.create(Files.probeContentType(fileObject.toPath()));
-                InputStream stream = new FileInputStream(fileObject);
-                System.out.println("added " + fileObject + "to API req fields");
-                req.field(key, stream, mime);
-
-            } catch (IOException e) {
-                throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", fileObject.getName() ),e);
-            }
         });
-
     }
+
+//    private static void setFilesFields(final Map<String, File> fileFields, final HttpRequestWithBody req) throws FileUploadError {
+//        fileFields.forEach((key, fileObject) -> {
+//            try {
+//                ContentType mime = ContentType.create(Files.probeContentType(fileObject.toPath()));
+//                InputStream stream = new FileInputStream(fileObject);
+//                System.out.println("added " + fileObject + "to API req fields");
+//                req = req.field(key, stream, mime, "file");
+//            } catch (IOException e) {
+//                throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", fileObject.getName() ),e);
+//            }
+//        });
+//
+//    }
 }

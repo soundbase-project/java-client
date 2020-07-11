@@ -29,7 +29,7 @@ public class UploadHandler {
                         put("description", album.getDescription());
                     }
                 },
-                new Pair<>("coverFile", album.getCoverFile())
+                new Pair<>("cover_file", album.getCoverFile())
                 ,
                 node -> {
                     for (TrackUpload track :
@@ -58,7 +58,7 @@ public class UploadHandler {
                         put("downloadable", track.isDownloadable());
                     }
                 },
-                new Pair<>("trackFile", track.getTrackFile())
+                new Pair<>("track_file", track.getTrackFile())
                 ,
                 null
         );

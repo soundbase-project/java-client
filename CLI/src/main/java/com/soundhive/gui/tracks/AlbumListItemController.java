@@ -3,6 +3,7 @@ package com.soundhive.gui.tracks;
 import com.jfoenix.controls.JFXListView;
 import com.soundhive.core.tracks.Album;
 import com.soundhive.core.tracks.Track;
+import com.soundhive.gui.ImageFetchingHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,6 +20,8 @@ public class AlbumListItemController {
     private Consumer<String> messageLogger;
     private Consumer<Throwable> errorLogger;
     private Consumer<String> updateStats;
+    private ImageFetchingHandler imageHandler;
+
 
     @FXML
     private Label lbTitle;
@@ -35,12 +38,14 @@ public class AlbumListItemController {
     @FXML
     private AnchorPane albumPane;
 
+
     @FXML
     private void initialize(){
     }
 
 
     public void prepareAndStart(final Album album,
+                                final ImageFetchingHandler imageHandler,
                                 final Consumer<String> updateStats,
                                 final Consumer<String> messageLogger,
                                 final Consumer<Throwable> errorLogger) {
@@ -48,6 +53,7 @@ public class AlbumListItemController {
         this.messageLogger = messageLogger;
         this.errorLogger = errorLogger;
         this.updateStats = updateStats;
+        this.imageHandler = imageHandler;
         start();
     }
 
@@ -76,10 +82,14 @@ public class AlbumListItemController {
             this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 50 + 2) + 20);
             lvTracks.setPrefHeight(album.getTracks().size() * 50 + 2);
         }
+        try {
+            ivArt.setImage(imageHandler.getImage(album.getCoverFile()));
+        }
+        catch (IllegalArgumentException e) {
+            messageLogger.accept("Could not connect to the file managing server.");
+            errorLogger.accept(e);
+        }
 
-        String url = String.format("http://localhost:9000/soundhive/%s",  this.album.getCoverFile());
-        Image image = new Image(url, false);
-        ivArt.setImage(image);
 
     }
 

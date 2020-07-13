@@ -5,7 +5,6 @@ import com.soundhive.core.response.InternalRequestError;
 import com.soundhive.core.response.Response;
 import org.javatuples.Pair;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class UploadHandler {
@@ -29,7 +28,7 @@ public class UploadHandler {
                         put("description", album.getDescription());
                     }
                 },
-                new Pair<>("coverFile", album.getCoverFile())
+                new Pair<>("cover_file", album.getCoverFile())
                 ,
                 node -> {
                     for (TrackUpload track :
@@ -58,7 +57,7 @@ public class UploadHandler {
                         put("downloadable", track.isDownloadable());
                     }
                 },
-                new Pair<>("trackFile", track.getTrackFile())
+                new Pair<>("track_file", track.getTrackFile())
                 ,
                 null
         );

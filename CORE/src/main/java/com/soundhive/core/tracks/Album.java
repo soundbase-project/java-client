@@ -15,7 +15,7 @@ public class Album {
 
     public Album(JSONObject object) {
         this.ID = object.getString("id");
-        this.coverFile = object.getString("coverFilename");
+        this.coverFile = object.getString("cover_filename");
         this.title = object.getString("title");
         if (object.has("description")) {
             this.description = object.getString("description");

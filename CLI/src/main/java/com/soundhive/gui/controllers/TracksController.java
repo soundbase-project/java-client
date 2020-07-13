@@ -98,6 +98,7 @@ public class TracksController extends Controller{
                 AnchorPane pane  = loader.load();
                 AlbumListItemController controller = loader.getController();
                 controller.prepareAndStart(album,
+                        getContext().getPicHandler(),
                         this::updateStats,
                         getContext()::log,
                         getContext()::logException);

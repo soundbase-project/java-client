@@ -2,6 +2,6 @@ package com.soundhive.core.authentication;
 
 @FunctionalInterface
 public interface UserProfileConsumer {
-    void accept(String username);
+    void accept(String username, String profilePicUrl);
 
 }

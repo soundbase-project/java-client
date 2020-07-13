@@ -10,6 +10,8 @@ import com.soundhive.gui.plugin.PluginUIContainer;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,18 +34,14 @@ public class MainController {
 
     @FXML private Label lbSession;
 
-    //@FXML private ImageView ivSession; TODO implement profile pic
+    @FXML private ImageView ivSession;// TODO implement profile pic
 
     @FXML private AnchorPane appContent;
-
-    //@FXML private VBox vbNavMenu;
 
     @FXML public void initialize() {
         initContext();
 
-        displayPlugins(context.getPluginHandler().getPlugins());
-
-
+        displayPlugins(this.context.getPluginHandler().getPlugins());
 
         context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
     }
@@ -51,15 +49,25 @@ public class MainController {
     private void initContext(){
 
         try {
-            this.context = new Context(new Router(this.appContent, this.mainContainer, this.stageRef), username -> this.lbSession.setText(username), this::displayPlugins);
+            this.context = new Context(new Router(this.appContent, this.mainContainer, this.stageRef), this::setUserInfos, this::displayPlugins);
+
         }
         catch (ConfigFileException | MissingParamException e) {
             issueNotWorkingNotice(e.getMessage());
+            e.printStackTrace();
         }
         catch ( Exception e ) {
             issueNotWorkingNotice("Unable to load plugins.");
+            e.printStackTrace();
         }
 
+    }
+
+    //pichandler has not been initialized yet at this moment
+    private void setUserInfos(String username, Image picture){
+        this.lbSession.setText(username);
+
+        this.ivSession.setImage(picture);
     }
 
     private void issueNotWorkingNotice(String message) {

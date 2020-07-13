@@ -17,6 +17,7 @@ public class SessionHandler {
     private String name;
     private String username;
     private String email;
+    private String profilePic;
 
     private final String tokenDir;
 
@@ -112,6 +113,7 @@ public class SessionHandler {
         this.username = user.getString("username");
         this.name = user.getString("name");
         this.email = user.getString("email");
+        this.profilePic = user.getString("profilePicture");
     }
 
 
@@ -156,6 +158,9 @@ public class SessionHandler {
 //    }
 
     public void setUserInfos(){
-        this.profileLoader.accept(this.username);
+        System.out.println("username :" + this.username);
+        System.out.println("profile pic :" + this.profilePic);
+        System.out.println(this.profileLoader);
+        this.profileLoader.accept(this.username, this.profilePic);
     }
 }

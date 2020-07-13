@@ -32,31 +32,49 @@ public class ConfHandler {
 
     private void readConfFile(File file) throws ConfigFileException{
         try {
+
             FileReader reader = new FileReader(file);
-            char[] buffer = new char[500];
+
+            char[] buffer = new char[1000];
+
             if (reader.read(buffer) > 0){
+
                 String rawConf = new String(buffer);
+
                 String[] conf = rawConf.split("\n");
+
                 for (String line :
                         conf) {
+
                     String filteredLine = line.split("#")[0];
+
                     for (String entry:
                             filteredLine.split(";")) {
+
                         if (!entry.isBlank() && !entry.equals("\n")){
+
                             String[] keyValue = entry.split("=");
+
+
                             parameters.put(keyValue[0].trim(), keyValue[1].trim());
+
                         }
                     }
 
                 }
             }
+
             reader.close();
         }
         catch (IOException e) {
+
             throw new ConfigFileException("Something went wrong with the Config file.", e);
+
         }
         catch (ArrayIndexOutOfBoundsException e) {
+
             throw new ConfigFileException("Config file is not valid.", e);
+
         }
 
 
@@ -71,7 +89,8 @@ public class ConfHandler {
                 "api_base_url=http://localhost:3000/; #URL to access the API \n" +
                 "token_directory=./auth/token; #Directory where the JWT file is stored \n" +
                 "plugin_ui_dir=./UIPlugins; #Directory where plugins jars are to be found \n" +
-                "verbose=soft; # quiet = no logging ; soft = messages logging ; hard = print exceptions stack traces. ");
+                "verbose=soft; # quiet = no logging ; soft = messages logging ; hard = print exceptions stack traces. \n" +
+                "minio_url=localhost:9000/soundhive/ #url to the minio server for file management.");
         writer.close();
     }
 

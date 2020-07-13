@@ -6,8 +6,10 @@ import com.soundhive.core.conf.ConfHandler;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
 import com.soundhive.gui.plugin.PluginUiHandler;
+import javafx.scene.image.Image;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class Context {
@@ -22,19 +24,27 @@ public class Context {
     private final Router router;
     private final ConfHandler conf;
     private final PluginUiHandler pluginHandler;
+    private final ImageFetchingHandler picHandler;
 
 
     private final UserProfileConsumer profileLoader;
 
-    public Context(final Router router, final UserProfileConsumer profileLoader, final Consumer<List<PluginUIContainer>> pluginsConsumer)  throws  Exception {
-        this.conf = new ConfHandler();
-        this.profileLoader = profileLoader;
+    public Context(final Router router,
+                   final BiConsumer<String, Image> profileLoader,
+                   final Consumer<List<PluginUIContainer>> pluginsConsumer)  throws  Exception {
         this.router = router;
+        this.conf = new ConfHandler();
+
+        String baseMinioURL = this.getConf().getParam("minio_url");
+        this.picHandler = new ImageFetchingHandler(baseMinioURL);
+
+        this.profileLoader = ((username, profilePicUrl) -> profileLoader.accept(username, this.picHandler.getImage(profilePicUrl)));
+
         initSession();
         initVerbose();
         this.pluginHandler = new PluginUiHandler(this.getConf().getParam("plugin_ui_dir"), this::log, this::logException, pluginsConsumer);
-
     }
+
 
 
     private void initSession() throws MissingParamException{
@@ -96,4 +106,7 @@ public class Context {
         }
     }
 
+    public ImageFetchingHandler getPicHandler() {
+        return picHandler;
+    }
 }

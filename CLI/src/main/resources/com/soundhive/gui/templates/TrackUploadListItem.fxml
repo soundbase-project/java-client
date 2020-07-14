@@ -20,7 +20,7 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <Label layoutX="23.0" layoutY="112.0" text="Description" textFill="#0038ff">
+      <Label layoutX="23.0" layoutY="112.0" text="Description" textFill="WHITE">
          <font>
             <Font size="40.0" />
          </font>

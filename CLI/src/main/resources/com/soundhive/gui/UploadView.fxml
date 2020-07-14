@@ -9,24 +9,24 @@
    <children>
       <JFXTextField fx:id="tfTitle" focusColor="WHITE" layoutX="28.0" layoutY="68.0" prefHeight="28.0" prefWidth="237.0" promptText="Album Title" />
       <JFXListView fx:id="lvTracks" layoutX="270.0" layoutY="15.0" prefHeight="570.0" prefWidth="792.0" style="-fx-background-color: #343a40;" />
-      <JFXButton fx:id="btAddTrack" layoutX="13.0" layoutY="512.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="237.0" text="Add Track" textFill="#002bff">
+      <JFXButton fx:id="btAddTrack" layoutX="13.0" layoutY="512.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="237.0" text="Add Track" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btRemoveTrack" layoutX="20.0" layoutY="438.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="237.0" text="Remove Track" textFill="#0713ff">
+      <JFXButton fx:id="btRemoveTrack" layoutX="20.0" layoutY="438.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="237.0" text="Remove Track" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </JFXButton>
       <JFXTextArea fx:id="taDescription" layoutX="32.0" layoutY="131.0" prefHeight="37.0" prefWidth="237.0" promptText="Description" />
-      <JFXButton fx:id="btCoverFile" layoutX="20.0" layoutY="226.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="237.0" text="Cover file" textAlignment="CENTER" textFill="#1201ff">
+      <JFXButton fx:id="btCoverFile" layoutX="20.0" layoutY="226.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="237.0" text="Cover file" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </JFXButton>
       <ImageView fx:id="ivCover" fitHeight="150.0" fitWidth="170.0" layoutX="47.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton fx:id="btUpload" layoutX="32.0" layoutY="420.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="213.0" text="Confirm" textFill="#3c00ff">
+      <JFXButton fx:id="btUpload" layoutX="32.0" layoutY="420.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="213.0" text="Confirm" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font></JFXButton>

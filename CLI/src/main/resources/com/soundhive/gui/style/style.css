@@ -18,3 +18,22 @@
     -fx-background-color:  #343a40;
 }
 
+.jfx-combo-box {
+    -fx-background-color:  #85a1ff;
+}
+
+.combo-box .cell {
+    -fx-text-fill: white;
+}
+
+.jfx-text-field {
+    -fx-prompt-text-fill: WHITE;
+    -jfx-focus-color: WHITE;
+    -jfx-unfocus-color: WHITE;
+}
+
+.jfx-text-area {
+    -fx-prompt-text-fill: WHITE;
+    -jfx-focus-color: WHITE;
+    -jfx-unfocus-color: WHITE;
+}

@@ -12,6 +12,7 @@
         <module>CORE</module>
         <module>GUI</module>
         <module>plugin_hello</module>
+        <module>CLI</module>
     </modules>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

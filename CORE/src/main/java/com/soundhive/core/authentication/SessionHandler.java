@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import com.soundhive.core.response.Response.Status;
 
-public class SessionHandler {
+public class SessionHandler { //TODO make function to check token validity
 
 
     private String token;
@@ -26,6 +26,13 @@ public class SessionHandler {
     public SessionHandler(final String tokenDir,final  UserProfileConsumer profileLoader) {
         this.tokenDir = tokenDir;
         this.profileLoader = profileLoader;
+        this.token = loadToken();
+
+    }
+
+    public SessionHandler(final String tokenDir) {
+        this.tokenDir = tokenDir;
+        this.profileLoader = null;
         this.token = loadToken();
 
     }
@@ -158,9 +165,9 @@ public class SessionHandler {
 //    }
 
     public void setUserInfos(){
-        System.out.println("username :" + this.username);
-        System.out.println("profile pic :" + this.profilePic);
-        System.out.println(this.profileLoader);
-        this.profileLoader.accept(this.username, this.profilePic);
+        if (this.profileLoader != null ){
+            this.profileLoader.accept(this.username, this.profilePic);
+        }
+
     }
 }

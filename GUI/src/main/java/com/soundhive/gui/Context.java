@@ -3,6 +3,7 @@ package com.soundhive.gui;
 import com.soundhive.core.authentication.SessionHandler;
 import com.soundhive.core.authentication.UserProfileConsumer;
 import com.soundhive.core.conf.ConfHandler;
+import com.soundhive.core.conf.ConfHandler.VerboseLevel;
 import com.soundhive.core.conf.MissingParamException;
 import com.soundhive.gui.plugin.PluginUIContainer;
 import com.soundhive.gui.plugin.PluginUiHandler;
@@ -12,26 +13,23 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+
 public class Context {
-    public enum VerboseLevel{
-        QUIET,
-        SOFT,
-        HARD
-    }
 
-    private VerboseLevel verbose;
-    private SessionHandler session;
-    private final Router router;
-    private final ConfHandler conf;
-    private final PluginUiHandler pluginHandler;
     private final ImageFetchingHandler picHandler;
+    private final PluginUiHandler pluginHandler;
+    private final ConfHandler conf;
+    private final Router router;
 
+    private SessionHandler session;
+    private VerboseLevel verbose;
 
     private final UserProfileConsumer profileLoader;
 
     public Context(final Router router,
                    final BiConsumer<String, Image> profileLoader,
                    final Consumer<List<PluginUIContainer>> pluginsConsumer)  throws  Exception {
+
         this.router = router;
         this.conf = new ConfHandler();
 
@@ -68,7 +66,8 @@ public class Context {
                     this.verbose = VerboseLevel.HARD;
                     break;
                 default:
-                    this.router.issueDialog("Given verbose level is incorrect. Please set verbose as \"quiet\", \"soft\", or \"hard\".");
+                    this.verbose = VerboseLevel.SOFT;
+                    this.router.issueDialog("Given verbose level is incorrect. Please set verbose as \"quiet\", \"soft\", or \"hard\".\n Verbose automatically set to \"soft\"");
             }
         } catch (MissingParamException e){
             //default

@@ -7,6 +7,12 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class ConfHandler {
+
+    public enum VerboseLevel{
+        QUIET,
+        SOFT,
+        HARD
+    }
     Dictionary<String, String> parameters;
 
 

@@ -1,7 +1,6 @@
 package com.soundhive.core.response;
 
 
-import com.soundhive.core.upload.FileUpload;
 import com.soundhive.core.upload.FileUploadError;
 import kong.unirest.*;
 import kong.unirest.json.JSONException;
@@ -101,7 +100,7 @@ public class Response<T> {
         return message;
     }
 
-    public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) { // TODO : fetch error message from API JSON response
+    public static <T> Response<T> queryResponse(String route, String token, JsonInterpretingFunction<T> cast) {
         HttpResponse<JsonNode> res;
         try {
                 res = Unirest.get(route)
@@ -139,7 +138,7 @@ public class Response<T> {
 
     }
 
-    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> textFields, Pair<String, File> file, JsonConsumerInterface onResult) { //TODO : include bad request message
+    public static <T> Response<T> postResponse(String route, String token, Map<String, Object> textFields, Pair<String, File> file, JsonConsumerInterface onResult) {
 
 
         HttpResponse<JsonNode> res;
@@ -197,24 +196,4 @@ public class Response<T> {
                     return new Response<>(Response.Status.INTERNAL_ERROR, res.getStatusText());
         }
     }
-
-    private static void setTextFieldsIndividually(final Map<String, Object> fileFields, final HttpRequestWithBody req) {
-        fileFields.forEach((key, object) -> {
-
-        });
-    }
-
-//    private static void setFilesFields(final Map<String, File> fileFields, final HttpRequestWithBody req) throws FileUploadError {
-//        fileFields.forEach((key, fileObject) -> {
-//            try {
-//                ContentType mime = ContentType.create(Files.probeContentType(fileObject.toPath()));
-//                InputStream stream = new FileInputStream(fileObject);
-//                System.out.println("added " + fileObject + "to API req fields");
-//                req = req.field(key, stream, mime, "file");
-//            } catch (IOException e) {
-//                throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", fileObject.getName() ),e);
-//            }
-//        });
-//
-//    }
 }

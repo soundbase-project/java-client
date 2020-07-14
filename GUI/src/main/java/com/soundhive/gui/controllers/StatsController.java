@@ -7,6 +7,11 @@ import com.soundhive.gui.stats.StatsService;
 import com.soundhive.core.stats.StatsHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+
+import java.util.stream.Collectors;
 
 import static com.soundhive.gui.stats.StatsUtils.generateListenSeries;
 
@@ -16,16 +21,21 @@ public class StatsController extends  Controller{
     @FXML
     AreaChart<String, Number> acStats;
 
-    // @FXML private NumberAxis yAxis;
+    @FXML private NumberAxis yAxis;
 
-    // @FXML private CategoryAxis xAxis;
+    @FXML private CategoryAxis xAxis;
+
+
 
     @FXML
     JFXComboBox<StatsService.SpanOption> cbSpan;
 
     @FXML
     public void initialize() {
-
+        cbSpan.setOnAction(event -> {
+            setStatsService();
+            statsService.start();
+        });
 
     }
 
@@ -50,8 +60,13 @@ public class StatsController extends  Controller{
         statsService.setOnSucceeded(e -> {
             Response<?> stats = (Response<?>) e.getSource().getValue();
             switch (stats.getStatus()) {
+
                 case SUCCESS:
-                    this.acStats.getData().add(generateListenSeries(((Stats)stats.getContent()).getKeyframes()));
+                    this.acStats.getData().clear();
+                    XYChart.Series<String, Number> series = generateListenSeries(((Stats)stats.getContent()).getKeyframes());
+                    this.acStats.getData().add(0, series);
+
+
                     break;
 
                 case UNAUTHENTICATED:
@@ -66,16 +81,15 @@ public class StatsController extends  Controller{
                 case INTERNAL_ERROR:
                     getContext().getRouter().issueDialog("An error occurred.");
                     break;
+
             }
             getContext().log("Stats request : " + stats.getMessage());
             statsService.reset();
         });
         statsService.setOnFailed(e -> {
             getContext().logException(e.getSource().getException());
+            getContext().log("Stats request : " + e.getSource().getException().getMessage());
             statsService.reset();
         });
     }
-
-
-
 }

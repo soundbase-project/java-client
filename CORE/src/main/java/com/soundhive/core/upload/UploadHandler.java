@@ -53,7 +53,7 @@ public class UploadHandler {
                         put("description", track.getDescription());
                         put("genre", track.getGenre());
                         put("album", albumID);
-                        put("license", track.getLicense().toString());
+                        put("license", track.getLicense().toString()); //TODO : manage nullpointerexception
                         put("downloadable", track.isDownloadable());
                     }
                 },

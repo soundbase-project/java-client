@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>CORE</module>
-        <module>CLI</module>
+        <module>GUI</module>
         <module>plugin_hello</module>
     </modules>
     <properties>

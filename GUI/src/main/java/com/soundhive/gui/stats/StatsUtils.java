@@ -3,6 +3,7 @@ package com.soundhive.gui.stats;
 import com.soundhive.core.stats.Keyframe;
 import javafx.scene.chart.XYChart;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class StatsUtils {
@@ -12,7 +13,7 @@ public class StatsUtils {
 
         for (Keyframe frame :
                 keyframes) {
-            listenSeries.getData().add(new XYChart.Data<>(frame.getPeriod(), frame.getPlays()));
+            listenSeries.getData().add(new XYChart.Data<>(new SimpleDateFormat("dd/MM/yyyy \n hh:mm aa").format(frame.getPeriod()), frame.getPlays()));
         }
 
         return listenSeries;

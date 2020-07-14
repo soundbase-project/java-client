@@ -1,4 +1,4 @@
-module CLI {
+module GUI {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.jfoenix;

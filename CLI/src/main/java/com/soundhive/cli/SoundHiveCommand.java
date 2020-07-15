@@ -1,18 +1,15 @@
 package com.soundhive.cli;
 
 import com.soundhive.cli.login.LoginCommand;
-import com.soundhive.core.authentication.SessionHandler;
-import com.soundhive.core.conf.ConfHandler;
+import com.soundhive.cli.login.LogoutCommand;
 import com.soundhive.core.conf.ConfigFileException;
 import com.soundhive.core.conf.MissingParamException;
+import com.soundhive.core.response.Response;
 import picocli.CommandLine;
-
-import java.nio.file.attribute.UserPrincipalLookupService;
-import java.util.concurrent.Callable;
 
 @CommandLine.Command(
         subcommands = {
-            LoginCommand.class
+            LoginCommand.class, LogoutCommand.class,
         },
         mixinStandardHelpOptions = true,
         version = "SoundHive CLI 0.1",
@@ -41,7 +38,7 @@ public class SoundHiveCommand implements Runnable {
             }
             System.exit(-1);
         }
-        if (!context.getSession().checkForToken()) {
+        if (!context.getSession().checkForToken() && !context.getSession().loadUserProfile().getStatus().equals(Response.Status.SUCCESS)) {
             context.log("You are not currently logged in. Please login using `soundhive login <username> [--stay-connected]`.");
         }
 

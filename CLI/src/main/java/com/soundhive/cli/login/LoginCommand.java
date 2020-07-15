@@ -16,7 +16,7 @@ public class LoginCommand implements Runnable {
     @CommandLine.Parameters(index = "0", paramLabel = "password", description = "User password", interactive = true)
     String password;
 
-    @CommandLine.Option(names = "-sc, --stay-connected", description = "Connect automatically using a stored token")
+    @CommandLine.Option(names = {"-sc","--stay-connected"}, description = "Connect automatically using a stored token")
     boolean stayConnected = false;
 
 

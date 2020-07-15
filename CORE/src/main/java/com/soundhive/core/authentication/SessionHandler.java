@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import com.soundhive.core.response.Response.Status;
 
-public class SessionHandler { //TODO make function to check token validity
+public class SessionHandler {
 
 
     private String token;

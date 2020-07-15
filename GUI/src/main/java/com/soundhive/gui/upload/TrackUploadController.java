@@ -23,32 +23,15 @@ public class TrackUploadController {
 
 
 
-    @FXML private void initialize() { // TODO : add license and downloadable support
+    @FXML private void initialize() {
         cbLicense.getItems().setAll(TrackUpload.License.values());
     }
 
     public void setOpenFileDialog(Router router){
-        btFile.setOnAction(e -> {
-            this.trackFile = router.issueFileDialog("Audio files (.wav, .mp3)", "*.wav", "*.mp3");
-        });
+        btFile.setOnAction(e -> this.trackFile = router.issueFileDialog("Audio files (.wav, .mp3)", "*.wav", "*.mp3"));
     }
 
-    public TrackUpload getTrack() throws InvalidUploadException { //TODO : move checks to object
-        if (tfTitle.getText().isEmpty()){
-            throw new InvalidUploadException("No title provided for a track.");
-        }
-
-        if (tfGenre.getText().isEmpty()){
-            throw new InvalidUploadException("No genre provided for the track : " + tfTitle.getText());
-        }
-
-        if (tfGenre.getText().isEmpty()){
-            throw new InvalidUploadException("No description provided for the track : " + tfTitle.getText());
-        }
-
-        if (trackFile == null){
-            throw new InvalidUploadException("");
-        }
+    public TrackUpload getTrack() throws InvalidUploadException {
         return new TrackUpload(tfTitle.getText(), tfGenre.getText(), taDescription.getText(), trackFile, cbLicense.getValue(), cbDownloadable.isSelected());
     }
 }

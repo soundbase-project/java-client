@@ -6,7 +6,6 @@ import com.soundhive.core.tracks.Track;
 import com.soundhive.gui.ImageFetchingHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -54,12 +53,16 @@ public class AlbumListItemController {
         this.errorLogger = errorLogger;
         this.updateStats = updateStats;
         this.imageHandler = imageHandler;
+
         start();
     }
 
     private void start() {
+
         this.lbListens.setText("69");
+
         this.lbTitle.setText(this.album.getTitle());
+
         fillTracks();
     }
 
@@ -73,20 +76,27 @@ public class AlbumListItemController {
 
             for (Track track :
                     album.getTracks()) {
+
                 Label lbName = new Label(track.getTitle());
                 lbName.setTextFill(Paint.valueOf("white"));
+
                 AnchorPane pane = new AnchorPane(lbName);
+
                 pane.setOnMouseClicked( event -> updateStats.accept(track.getID()));
                 lvTracks.getItems().add(pane);
             }
+
             this.albumPane.setPrefHeight(lbTitle.getPrefHeight() + (album.getTracks().size() * 50 + 2) + 20);
+
             lvTracks.setPrefHeight(album.getTracks().size() * 50 + 2);
         }
         try {
             ivArt.setImage(imageHandler.getImage(album.getCoverFile()));
         }
         catch (IllegalArgumentException e) {
+
             messageLogger.accept("Could not connect to the file managing server.");
+
             errorLogger.accept(e);
         }
 

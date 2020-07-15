@@ -55,7 +55,7 @@ public class StatsController extends  Controller{
     }
 
 
-    private void setStatsService() { //TODO : generic able
+    private void setStatsService() {
         statsService = new StatsService(getContext().getSession(), this.cbSpan.valueProperty());
         statsService.setOnSucceeded(e -> {
             Response<?> stats = (Response<?>) e.getSource().getValue();

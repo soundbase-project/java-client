@@ -85,7 +85,9 @@ public class LoginController extends Controller {
             switch (response.getStatus()) {
                 case SUCCESS:
                     getContext().getRouter().issueMessage(String.format("Logged in as %s", getContext().getSession().getUsername()));
+
                     getContext().getSession().setUserInfos();
+
                     getContext().getRouter().goTo("Stats", controller -> controller.setContextAndStart(getContext()));
                     break;
 
@@ -95,10 +97,15 @@ public class LoginController extends Controller {
 
                 case UNAUTHENTICATED:
                     if (autoLogin) {
+
                         getContext().getRouter().issueMessage("Could not login Automatically.");
+
                     } else {
+
                         getContext().getRouter().issueMessage("Wrong password or username.");
+
                     }
+
                     getContext().getSession().destroySession();
                     break;
 

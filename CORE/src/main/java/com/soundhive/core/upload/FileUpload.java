@@ -13,8 +13,12 @@ public class FileUpload {
 
     public FileUpload(final File file) throws IOException {
         this.file = file;
+
         String contentType = Files.probeContentType(file.toPath());
+
         this.MIMEType = ContentType.create(contentType);
+
+
     }
 
     public ContentType getMIMEType() {

@@ -34,7 +34,7 @@ public class MainController {
 
     @FXML private Label lbSession;
 
-    @FXML private ImageView ivSession;// TODO implement profile pic
+    @FXML private ImageView ivSession;
 
     @FXML private AnchorPane appContent;
 

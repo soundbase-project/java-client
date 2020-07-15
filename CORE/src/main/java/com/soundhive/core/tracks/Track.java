@@ -12,8 +12,6 @@ public class Track {
 
     private final String ID;
 
-    //TODO add artwork
-
     public Track(JSONObject jsonTrack) {
         this.title = jsonTrack.getString("title");
         this.description = jsonTrack.getString("description");

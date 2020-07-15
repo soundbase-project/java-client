@@ -19,7 +19,7 @@ public class UploadService extends Service<Response<Void>> {
 
     public UploadService(final SessionHandler session, final StringProperty title, final StringProperty description, final File coverFile, final List<TrackUpload> tracks)  throws InvalidUploadException {
         if (tracks == null || tracks.size() < 1) {
-            throw new InvalidUploadException();
+            throw new InvalidUploadException("There are no track in this album.");
         }
         this.session = session;
         this.albumUpload = new AlbumUpload(title.getValue(), description.getValue(), coverFile);

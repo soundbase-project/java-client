@@ -25,7 +25,7 @@ public class TracksHandler {
                 session.getToken(),
                 node -> {
                     List<Track> tracks = new ArrayList<>();
-                    JSONArray array = node.getArray();
+                    JSONArray array = node.getObject().getJSONArray("items");
                     int length = array.length();
                     for (int i = 0; i < length; i++) {
                         tracks.add(new Track(array.getJSONObject(i)));

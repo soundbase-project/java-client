@@ -37,22 +37,27 @@ public class UploadController extends Controller {
     private UploadService uploadService;
     private File coverFile;
     @FXML
-    private void initialize() { // TODO use special new component
+    private void initialize() {
         this.trackControllers = new ArrayList<>();
     }
 
     private void setAlbumUploadService() {
-        // TODO : cant use map because of exception. figure out whay
         try {
+
             List<TrackUpload> tracks = new ArrayList<>();
+
             for (TrackUploadController controller :
                     this.trackControllers) {
+
                 tracks.add(controller.getTrack());
+
             }
             this.uploadService = new UploadService(getContext().getSession(), tfTitle.textProperty(), taDescription.textProperty(), this.coverFile, tracks );
 
             uploadService.setOnSucceeded(e -> {
+
                 Response<?> stats = (Response<?>) e.getSource().getValue();
+
                 switch (stats.getStatus()) {
                     case SUCCESS:
                         getContext().getRouter().issueDialog("Upload succeeded!");

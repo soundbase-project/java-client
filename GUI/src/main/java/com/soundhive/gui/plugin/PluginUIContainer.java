@@ -8,7 +8,7 @@ import java.net.URLClassLoader;
 public class PluginUIContainer {
     private final PluginController plugin;
     private final FXMLLoader view;
-    private final boolean isValid; // TODO
+    private final boolean isValid;
 
     private final File jarArchive;
 

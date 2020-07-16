@@ -10,16 +10,9 @@ import java.util.List;
 
 import static com.soundhive.core.response.Response.Status.*;
 
-public class TracksHandler {
+public class TracksQueries {
 
-    private final SessionHandler session;
-
-    public TracksHandler(final SessionHandler session) {
-        this.session = session;
-
-    }
-
-    private Response<List<Track>> queryTracks(Album album) {
+    private static Response<List<Track>> queryTracks(SessionHandler session, Album album) {
         String request = String.format("albums/%s/tracks", album.getID());
         return Response.queryResponse(request,
                 session.getToken(),
@@ -34,7 +27,7 @@ public class TracksHandler {
                 });
     }
 
-    public Response<List<Album>> queryAlbums() {
+    public static Response<List<Album>> queryAlbums(SessionHandler session) {
         String request = String.format("users/%s/albums", session.getUsername());
         return Response.queryResponse(request,
                 session.getToken(),
@@ -45,7 +38,7 @@ public class TracksHandler {
 
                     for (int i = 0; i < length; i++) {
                         Album album = new Album(array.getJSONObject(i));
-                        Response<List<Track>> tracks = queryTracks(album);
+                        Response<List<Track>> tracks = queryTracks(session, album);
                         if ( tracks.getStatus() != SUCCESS) {
                             throw new InternalRequestError( tracks.getException(), tracks);
                         }

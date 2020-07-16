@@ -3,7 +3,8 @@ package com.soundhive.gui.stats;
 import com.soundhive.core.authentication.SessionHandler;
 import com.soundhive.core.response.Response;
 import com.soundhive.core.stats.Stats;
-import com.soundhive.core.stats.StatsHandler;
+import com.soundhive.core.stats.StatsQueries;
+import com.soundhive.core.Enums.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.concurrent.Service;
 
@@ -37,7 +38,7 @@ public class StatsService extends Service<Response<Stats>> {
 
 
 
-    StatsHandler.Scope scope;
+    Scope scope;
 
     /**
      * Get stats for a user
@@ -47,7 +48,7 @@ public class StatsService extends Service<Response<Stats>> {
     public StatsService(final SessionHandler session, final ObjectProperty<SpanOption> cbSpan) {
         this.cbSpan = cbSpan;
         this.session = session;
-        this.scope = StatsHandler.Scope.USER;
+        this.scope = Scope.USER;
         this.target = session.getUsername();
     }
 
@@ -60,34 +61,32 @@ public class StatsService extends Service<Response<Stats>> {
     public StatsService(final SessionHandler session, final ObjectProperty<SpanOption> cbSpan, String track) {
         this.cbSpan = cbSpan;
         this.session = session;
-        this.scope = StatsHandler.Scope.TRACKS;
+        this.scope = Scope.TRACKS;
         this.target = track;
     }
 
     protected StatsTask createTask() {
         SpanOption chosen = cbSpan.getValue();
-        StatsHandler stats = null;
         switch (chosen) {
             case LAST_YEAR:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 12, scope, this.target);
-                break;
-            case LAST_6_MONTHS:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.MONTH, 6,scope, this.target);
-                break;
-            case LAST_TWO_MONTHS:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.WEEK, 9, scope, this.target);
-                break;
-            case LAST_WEEK:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.DAY, 7, scope, this.target);
-                break;
-            case LAST_48_HOURS:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 48, scope, this.target);
-                break;
-            case LAST_DAY:
-                stats = new StatsHandler(this.session, StatsHandler.Timespan.HOUR, 24, scope, this.target);
-                break;
-        }
+                return new StatsTask(this.session, Timespan.MONTH, 12, scope, this.target);
 
-        return new StatsTask(stats);
+            case LAST_6_MONTHS:
+                return new StatsTask(this.session, Timespan.MONTH, 6,scope, this.target);
+
+            case LAST_TWO_MONTHS:
+                return new StatsTask(this.session, Timespan.WEEK, 9, scope, this.target);
+
+            case LAST_WEEK:
+                return new StatsTask(this.session, Timespan.DAY, 7, scope, this.target);
+
+            case LAST_48_HOURS:
+                return new StatsTask(this.session, Timespan.HOUR, 48, scope, this.target);
+
+            case LAST_DAY:
+                return new StatsTask(this.session, Timespan.HOUR, 24, scope, this.target);
+
+        }
+        return null;
     }
 }

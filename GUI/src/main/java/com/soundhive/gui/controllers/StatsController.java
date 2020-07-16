@@ -4,14 +4,11 @@ import com.jfoenix.controls.JFXComboBox;
 import com.soundhive.core.response.Response;
 import com.soundhive.core.stats.Stats;
 import com.soundhive.gui.stats.StatsService;
-import com.soundhive.core.stats.StatsHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-
-import java.util.stream.Collectors;
 
 import static com.soundhive.gui.stats.StatsUtils.generateListenSeries;
 

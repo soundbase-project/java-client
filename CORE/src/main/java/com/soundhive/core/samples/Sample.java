@@ -1,6 +1,6 @@
 package com.soundhive.core.samples;
 
-import com.soundhive.core.GenericDeclarations;
+import com.soundhive.core.Enums;
 import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
 
@@ -10,7 +10,7 @@ public class Sample {
 
     private final String description;
 
-    private final GenericDeclarations.Visibility visibility;
+    private final Enums.Visibility visibility;
 
     public Sample(final JSONObject sample) throws JSONException {
 
@@ -18,7 +18,7 @@ public class Sample {
 
         this.description = sample.getString("description");
 
-        this.visibility = GenericDeclarations.Visibility.valueOf(sample.getString("visibility"));
+        this.visibility = Enums.Visibility.valueOf(sample.getString("visibility"));
 
     }
 
@@ -30,7 +30,7 @@ public class Sample {
         return title;
     }
 
-    public GenericDeclarations.Visibility getVisibility() {
+    public Enums.Visibility getVisibility() {
         return visibility;
     }
 

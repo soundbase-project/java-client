@@ -1,6 +1,6 @@
 package com.soundhive.core.upload;
 
-import com.soundhive.core.GenericDeclarations.License;
+import com.soundhive.core.Enums.License;
 
 import java.io.File;
 

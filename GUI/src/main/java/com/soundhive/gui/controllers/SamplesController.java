@@ -1,9 +1,8 @@
 package com.soundhive.gui.controllers;
 
 import com.jfoenix.controls.*;
-import com.soundhive.core.GenericDeclarations;
+import com.soundhive.core.Enums;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class SamplesController extends Controller {
@@ -17,9 +16,9 @@ public class SamplesController extends Controller {
     @FXML
     private JFXTextArea taDescription;
 
-    @FXML JFXComboBox<GenericDeclarations.License> cbLicense;
+    @FXML JFXComboBox<Enums.License> cbLicense;
 
-    @FXML JFXComboBox<GenericDeclarations.Visibility> cbVisibility;
+    @FXML JFXComboBox<Enums.Visibility> cbVisibility;
 
     @FXML JFXButton btFile;
 

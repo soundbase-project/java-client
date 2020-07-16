@@ -7,17 +7,9 @@ import org.javatuples.Pair;
 
 import java.util.HashMap;
 
-public class UploadHandler {
+public class UploadQueries {
 
-    private final  SessionHandler session;
-    private final AlbumUpload album;
-
-    public UploadHandler(final SessionHandler session, final AlbumUpload album) {
-        this.session = session;
-        this.album = album;
-    }
-
-    public Response<Void> postAlbum() {
+    public static Response<Void>  postAlbum(final SessionHandler session, final AlbumUpload album) {
 
         return Response.postResponse(
                 "albums",
@@ -32,8 +24,8 @@ public class UploadHandler {
                 ,
                 node -> {
                     for (TrackUpload track :
-                            this.album.getTracks()) {
-                        Response<?> res = postTrack(node.getObject().getString("id"), track);
+                            album.getTracks()) {
+                        Response<?> res = postTrack(session, node.getObject().getString("id"), track);
                         if (!res.getStatus().equals(Response.Status.SUCCESS)){
                             throw new InternalRequestError("Could not upload track : " + track.getTitle(), res);
                         }
@@ -43,7 +35,7 @@ public class UploadHandler {
         );
     }
 
-    private Response<Void> postTrack(String albumID, TrackUpload track) {
+    private static Response<Void> postTrack(SessionHandler session, String albumID, TrackUpload track) {
         return Response.postResponse(
                 "tracks",
                 session.getToken(),

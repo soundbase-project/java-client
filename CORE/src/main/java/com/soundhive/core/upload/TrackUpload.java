@@ -1,22 +1,10 @@
 package com.soundhive.core.upload;
 
+import com.soundhive.core.GenericDeclarations.License;
+
 import java.io.File;
 
 public class TrackUpload {
-    public enum License{
-        ALL_RIGHTS_RESERVED("All right reserved"),
-        CC("Creative Common");
-
-        final private String label;
-
-        License(String label) {
-            this.label = label;
-        }
-
-        public String toString() {
-            return label;
-        }
-    }
 
     private final String title;
     private final String description;

@@ -43,7 +43,7 @@ public class UploadHandler {
         );
     }
 
-    public Response<Void> postTrack(String albumID, TrackUpload track) {
+    private Response<Void> postTrack(String albumID, TrackUpload track) {
         return Response.postResponse(
                 "tracks",
                 session.getToken(),

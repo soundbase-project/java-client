@@ -8,4 +8,6 @@ module CORE {
     exports com.soundhive.core.generic;
     exports com.soundhive.core.tracks;
     exports com.soundhive.core.upload;
+    exports com.soundhive.core;
+    exports com.soundhive.core.samples;
 }

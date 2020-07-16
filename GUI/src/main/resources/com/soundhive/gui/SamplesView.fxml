@@ -12,11 +12,12 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <JFXListView fx:id="lvSamples" layoutX="23.0" layoutY="74.0" prefHeight="497.0" prefWidth="460.0" style="-fx-background-color: #343a40;" />
+      <JFXListView fx:id="lvSamples" layoutX="23.0" layoutY="74.0" maxHeight="500.0" maxWidth="460.0" minHeight="500.0" minWidth="460.0" prefHeight="500.0" prefWidth="460.0" style="-fx-background-color: #343a40;" />
       <JFXTextField fx:id="tfTitle" layoutX="564.0" layoutY="74.0" promptText="Title" />
       <JFXTextArea fx:id="taDescription" layoutX="564.0" layoutY="123.0" prefHeight="99.0" prefWidth="501.0" promptText="Description" />
       <JFXComboBox fx:id="cbLicense" layoutX="563.0" layoutY="248.0" prefHeight="25.0" prefWidth="501.0" promptText="License" />
       <JFXComboBox fx:id="cbVisibility" layoutX="563.0" layoutY="300.0" prefHeight="25.0" prefWidth="501.0" promptText="Visibility" />
-      <JFXButton fx:id="btFile" layoutX="564.0" layoutY="371.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="501.0" text="Sample file" />
+      <JFXButton fx:id="btFile" layoutX="564.0" layoutY="371.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="501.0" text="Sample file" textFill="WHITE" />
+      <JFXButton fx:id="btUpload" layoutX="564.0" layoutY="528.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="501.0" text="Upload" textFill="WHITE" />
    </children>
 </AnchorPane>

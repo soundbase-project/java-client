@@ -1,6 +1,7 @@
 package com.soundhive.gui.upload;
 
 import com.jfoenix.controls.*;
+import com.soundhive.core.GenericDeclarations;
 import com.soundhive.core.upload.InvalidUploadException;
 import com.soundhive.core.upload.TrackUpload;
 import com.soundhive.gui.Router;
@@ -16,7 +17,7 @@ public class TrackUploadController {
     @FXML private JFXTextField tfGenre;
     @FXML private JFXTextArea  taDescription;
     @FXML private JFXButton btFile;
-    @FXML private JFXComboBox<TrackUpload.License> cbLicense;
+    @FXML private JFXComboBox<GenericDeclarations.License> cbLicense;
     @FXML private JFXCheckBox cbDownloadable;
 
     private File trackFile;
@@ -24,7 +25,7 @@ public class TrackUploadController {
 
 
     @FXML private void initialize() {
-        cbLicense.getItems().setAll(TrackUpload.License.values());
+        cbLicense.getItems().setAll(GenericDeclarations.License.values());
     }
 
     public void setOpenFileDialog(Router router){

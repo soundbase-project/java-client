@@ -18,6 +18,6 @@
     -fx-background-color:  #343a40;
 }
 
-* {
-    -fx-background-color: #343a40;
-}
+/** {*/
+/*    -fx-background-color: #343a40;*/
+/*}*/

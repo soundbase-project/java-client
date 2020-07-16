@@ -18,7 +18,7 @@ public class Sample {
 
         this.description = sample.getString("description");
 
-        this.visibility = Enums.Visibility.valueOf(sample.getString("visibility"));
+        this.visibility = Enums.Visibility.valueOf(sample.getString("visibility").toUpperCase());
 
     }
 

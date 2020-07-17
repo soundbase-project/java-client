@@ -44,7 +44,7 @@ public class Response<T> {
 
     }
 
-    public Response( final Status status, final String message, final Throwable exception) {
+    public Response(final Status status, final String message, final Throwable exception) {
         this.status = status;
         this.exception = exception;
         this.content = null;
@@ -71,7 +71,7 @@ public class Response<T> {
 //        this.status = response.getStatus();
 //        this.message = response.getMessage();
 //        this.exception = response.getException();
-//        if (response.getStatus() == Status.SUCCESS){
+//        if (response.getStatus() == Status.SUCCESS) {
 //            this.content = (T) response.getContent();
 //        }
 //        else {
@@ -163,7 +163,7 @@ public class Response<T> {
             return new Response<>(Status.INTERNAL_ERROR, e.getMessage(), e);
         }
         catch (IOException e) {
-            throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", file.getValue1().getName() ),e);
+            throw new FileUploadError(String.format("There was a problem reading the file \" %s \".", file.getValue1().getName()),e);
         }
         catch (Exception e) {
             return new Response<>(Response.Status.CONNECTION_FAILED, e.getMessage(), e);
@@ -174,7 +174,7 @@ public class Response<T> {
             case 201:
                 try {
 
-                    if (onResult != null){
+                    if (onResult != null) {
                         onResult.accept(res.getBody());
                     }
 

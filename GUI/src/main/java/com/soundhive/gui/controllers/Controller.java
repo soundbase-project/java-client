@@ -10,12 +10,12 @@ import java.util.function.Consumer;
 public abstract class Controller {
     private Context context;
 
-    public void setContextAndStart(Context context){
+    public void setContextAndStart(Context context) {
         this.context = context;
         start();
     }
 
-    protected Context getContext(){
+    protected Context getContext() {
         return this.context;
     }
 

@@ -35,7 +35,7 @@ public class PluginListItemController {
         start();
     }
 
-    public void setDeleteEvent(Consumer<PluginUIContainer> pluginConsumer){
+    public void setDeleteEvent(Consumer<PluginUIContainer> pluginConsumer) {
         this.pluginConsumer = pluginConsumer;
     }
 

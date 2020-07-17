@@ -51,10 +51,10 @@ public class SoundHiveCommand implements Runnable {
     @Override
     public void run() {
         System.out.println("SoundHive Command Line Interface. \n" +
-                "to see commands, use --help." );
+                "to see commands, use --help.");
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
     }
 }

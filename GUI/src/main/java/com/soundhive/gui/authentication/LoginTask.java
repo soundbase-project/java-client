@@ -25,10 +25,10 @@ public class LoginTask extends Task<Response<Void>> {
     }
 
     protected Response<Void> call() {
-        if (session.checkForToken() ) {
+        if (session.checkForToken()) {
             return this.session.loadUserProfile();
         }
-        else if (!autoConnect){
+        else if (!autoConnect) {
             return this.session.openSession(username, password, stayConnected);
         }
         else return new Response<>(Response.Status.UNAUTHENTICATED, "No Token, could not auto-connect.");

@@ -52,7 +52,7 @@ public class UploadController extends Controller {
                 tracks.add(controller.getTrack());
 
             }
-            this.uploadService = new UploadService(getContext().getSession(), tfTitle.textProperty(), taDescription.textProperty(), this.coverFile, tracks );
+            this.uploadService = new UploadService(getContext().getSession(), tfTitle.textProperty(), taDescription.textProperty(), this.coverFile, tracks);
 
             uploadService.setOnSucceeded(e -> {
 
@@ -125,7 +125,7 @@ public class UploadController extends Controller {
 
             setAlbumUploadService();
             uploadService.start();
-        } );
+        });
     }
 
 

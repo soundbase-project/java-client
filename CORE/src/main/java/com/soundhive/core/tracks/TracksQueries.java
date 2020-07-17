@@ -39,8 +39,8 @@ public class TracksQueries {
                     for (int i = 0; i < length; i++) {
                         Album album = new Album(array.getJSONObject(i));
                         Response<List<Track>> tracks = queryTracks(session, album);
-                        if ( tracks.getStatus() != SUCCESS) {
-                            throw new InternalRequestError( tracks.getException(), tracks);
+                        if (tracks.getStatus() != SUCCESS) {
+                            throw new InternalRequestError(tracks.getException(), tracks);
                         }
                         album.setTracks(tracks.getContent());
                         albums.add(album);

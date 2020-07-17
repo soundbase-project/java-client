@@ -46,7 +46,7 @@ public class MainController {
         context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
     }
 
-    private void initContext(){
+    private void initContext() {
 
         try {
             this.context = new Context(new Router(this.appContent, this.mainContainer, this.stageRef), this::setUserInfos, this::displayPlugins);
@@ -56,7 +56,7 @@ public class MainController {
             issueNotWorkingNotice(e.getMessage());
             e.printStackTrace();
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             issueNotWorkingNotice("Unable to load plugins.");
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class MainController {
     }
 
     //pichandler has not been initialized yet at this moment
-    private void setUserInfos(String username, Image picture){
+    private void setUserInfos(String username, Image picture) {
         this.lbSession.setText(username);
 
         this.ivSession.setImage(picture);

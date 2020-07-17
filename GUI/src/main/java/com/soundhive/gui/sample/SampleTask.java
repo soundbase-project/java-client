@@ -14,7 +14,7 @@ public class SampleTask extends Task<Response<List<Sample>>> {
     final SessionHandler session;
 
 
-    public SampleTask(final SessionHandler session){
+    public SampleTask(final SessionHandler session) {
         this.session = session;
     }
 

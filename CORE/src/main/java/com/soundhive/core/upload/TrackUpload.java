@@ -16,23 +16,23 @@ public class TrackUpload {
     public TrackUpload(final String title, final String description,
                        final String genre, final File trackFile,
                        final License license, final boolean downloadable) throws InvalidUploadException{
-        if (title.isEmpty()){
+        if (title.isEmpty()) {
             throw new InvalidUploadException("No title provided for a track.");
         }
 
-        if (genre.isEmpty()){
+        if (genre.isEmpty()) {
             throw new InvalidUploadException("No genre provided for the track : " + title);
         }
 
-        if (description.isEmpty()){
+        if (description.isEmpty()) {
             throw new InvalidUploadException("No description provided for the track : " + title);
         }
 
-        if (license.toString().isEmpty()){
+        if (license.toString().isEmpty()) {
             throw new InvalidUploadException("No license provided for the track : " + title);
         }
 
-        if (trackFile == null){
+        if (trackFile == null) {
             throw new InvalidUploadException("No file provided for the track : " + title);
         }
         this.title = title;

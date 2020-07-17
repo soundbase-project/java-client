@@ -25,7 +25,7 @@ public class Stats {
         this.keyframes = new ArrayList<>();
         JSONArray array = obj.getJSONArray("keyframes");
 
-        for (int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             this.keyframes.add(new Keyframe(array.getJSONObject(i)));
         }
 

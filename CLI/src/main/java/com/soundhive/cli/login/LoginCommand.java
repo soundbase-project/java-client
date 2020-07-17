@@ -24,7 +24,7 @@ public class LoginCommand implements Runnable {
     @Override
     public void run()  {
         Response<?> result = SoundHiveCommand.getContext().getSession().openSession(this.username, this.password, this.stayConnected);
-        switch (result.getStatus()){
+        switch (result.getStatus()) {
             case SUCCESS:
                 System.out.println(String.format("Successfully logged in as %s!", SoundHiveCommand.getContext().getSession().getUsername()));
                 break;
@@ -37,7 +37,7 @@ public class LoginCommand implements Runnable {
             default:
                 System.out.println("An error occurred.");
                 SoundHiveCommand.getContext().log(result.getMessage());
-                if (result.getException() != null){
+                if (result.getException() != null) {
                     SoundHiveCommand.getContext().logException(result.getException());
                 }
 

@@ -39,7 +39,7 @@ public class AlbumListItemController {
 
 
     @FXML
-    private void initialize(){
+    private void initialize() {
     }
 
 
@@ -72,7 +72,7 @@ public class AlbumListItemController {
         if (this.album.getTracks().size() == 1) {
             this.lvTracks.setPrefHeight(0);
 
-        } else if (this.album.getTracks().size() > 1){
+        } else if (this.album.getTracks().size() > 1) {
 
             for (Track track :
                     album.getTracks()) {
@@ -82,7 +82,7 @@ public class AlbumListItemController {
 
                 AnchorPane pane = new AnchorPane(lbName);
 
-                pane.setOnMouseClicked( event -> updateStats.accept(track.getID()));
+                pane.setOnMouseClicked(event -> updateStats.accept(track.getID()));
                 lvTracks.getItems().add(pane);
             }
 

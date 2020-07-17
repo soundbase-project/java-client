@@ -88,7 +88,7 @@ public class PluginUiHandler{
         } catch (NoSuchMethodException | SecurityException e) {
 
             this.messageLogger.accept(String.format("Error on plugin \"%s\" : method \"%s\" is missing.\n\n",
-                    pluginPath.getName(), methodName ));
+                    pluginPath.getName(), methodName));
             this.exceptionLogger.accept(e);
 
         }

@@ -56,14 +56,14 @@ public class Router {
     }
 
 
-    public void issueMessage(String message){
+    public void issueMessage(String message) {
         JFXSnackbar bar = new JFXSnackbar(this.dialogContainer);
         Label lab = new Label(message);
         lab.setTextFill(Paint.valueOf("white"));
         bar.enqueue(new JFXSnackbar.SnackbarEvent(lab));
     }
 
-    public void issueDialog(String message){
+    public void issueDialog(String message) {
         JFXDialog dialog = new JFXDialog();
         dialog.setContent(new Label(message));
         dialog.show(this.dialogContainer);

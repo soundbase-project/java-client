@@ -69,7 +69,7 @@ public class Context {
                     this.verbose = VerboseLevel.SOFT;
                     this.router.issueDialog("Given verbose level is incorrect. Please set verbose as \"quiet\", \"soft\", or \"hard\".\n Verbose automatically set to \"soft\"");
             }
-        } catch (MissingParamException e){
+        } catch (MissingParamException e) {
             //default
             this.verbose = VerboseLevel.SOFT;
         }

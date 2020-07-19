@@ -17,7 +17,7 @@ Soundhive's GUI is powered by javaFX.
 
 It is ready for the use of plugins. 
 
-[Read more about it here]()
+[Read more about it here](https://github.com/soundhive/java-client/tree/master/GUI)
 
 # CORE
 `CLI` and `GUI` both rely on the `CORE` package.

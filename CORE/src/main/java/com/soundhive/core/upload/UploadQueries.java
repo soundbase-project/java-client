@@ -55,4 +55,21 @@ public class UploadQueries {
         );
 
     }
+
+    public static Response<Void> postSample(SessionHandler session, SampleUpload sampleUpload){
+        return Response.postResponse(
+                "samples",
+                session.getToken(),
+                new HashMap<>(){
+                    {
+                        put("title", sampleUpload.getTitle());
+                        put("description", sampleUpload.getDescription());
+                        put("visibility", sampleUpload.getVisibility().toString());
+                        put("license", sampleUpload.getLicense().toString());
+                    }
+                },
+                new Pair<>("sample_file", sampleUpload.getSampleFile()),
+                null
+        );
+    }
 }

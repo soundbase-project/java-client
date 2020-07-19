@@ -5,46 +5,36 @@ import javafx.scene.control.Label;
 
 
 public class Controller extends PluginController {
+    //Thanks to the annotations, the following fields are instantiated automatically before the call of initialize()
     @FXML
     Label label;
 
     @FXML
     JFXButton button;
 
-    public Controller() {
-        System.out.println("went through controller");
-
-    }
-
+    //This method is called when the host app calls "FXMLloader.load();"
     @FXML
     private void initialize() {
-        System.out.println("this is a test plugin");
-        label.setText("This is SPARTAAAAAAAAAAAAAAAAA");
+        this.label.setText("Press the below button.");
+        //getContext() == null;
+    }
+
+    //this is called just after context has been added.
+    @Override
+    protected void start() {
         button.setOnAction(e -> {
-            System.out.println("you clicked the plugin button LOL");
+            getContext().getRouter().issueDialog("You clicked the button!");
         });
     }
 
     @Override
-    protected void start() {
-
-    }
-
-    @Override
     public String getViewName() {
-        return "TestView.fxml";
+        return "View.fxml";
     }
 
     @Override
     public String getName() {
-        return "second run time plugin";
+        return "Hello world Plugin";
     }
 
-//    public FXMLLoader getFxml() {
-//        final var fxmlLoader = new FXMLLoader(this.getClass().getResource("/com/soundhive/TestView.fxml"));
-//        final Parent view = fxmlLoader.load();
-//        controllerConsumer.accept(fxmlLoader.getController());
-//
-//        return view;
-//    }
 }

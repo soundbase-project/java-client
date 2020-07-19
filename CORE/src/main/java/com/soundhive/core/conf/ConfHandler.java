@@ -8,26 +8,27 @@ import java.util.Hashtable;
 
 public class ConfHandler {
 
-    public enum VerboseLevel{
+    public enum VerboseLevel {
         QUIET,
         SOFT,
         HARD
     }
+
     Dictionary<String, String> parameters;
 
 
-    public ConfHandler() throws  ConfigFileException{
+    public ConfHandler() throws ConfigFileException {
         this.parameters = new Hashtable<>();
         File confFile = new File("conf/soundhive.conf");
         try {
-                if (!confFile.exists()) {
-                    if ((confFile.getParentFile().mkdirs() || confFile.getParentFile().exists())
-                            && confFile.createNewFile()) {
-                        writeDefaultConfFile(confFile);
-                    } else {
-                        throw  new ConfigFileException("Could not create configuration file.");
-                    }
+            if (!confFile.exists()) {
+                if ((confFile.getParentFile().mkdirs() || confFile.getParentFile().exists())
+                        && confFile.createNewFile()) {
+                    writeDefaultConfFile(confFile);
+                } else {
+                    throw new ConfigFileException("Could not create configuration file.");
                 }
+            }
         } catch (IOException e) {
             throw new ConfigFileException("System error while creating configuration file. Please check that you have access to this directory.", e);
         }
@@ -36,28 +37,23 @@ public class ConfHandler {
         Unirest.config().defaultBaseUrl(this.parameters.get("api_base_url"));
     }
 
-    private void readConfFile(File file) throws ConfigFileException{
+    private void readConfFile(File file) throws ConfigFileException {
         try {
 
             FileReader reader = new FileReader(file);
-
             char[] buffer = new char[1000];
 
-            if (reader.read(buffer) > 0){
-
+            if (reader.read(buffer) > 0) {
                 String rawConf = new String(buffer);
-
                 String[] conf = rawConf.split("\n");
-
                 for (String line :
                         conf) {
 
                     String filteredLine = line.split("#")[0];
-
-                    for (String entry:
+                    for (String entry :
                             filteredLine.split(";")) {
 
-                        if (!entry.isBlank() && !entry.equals("\n")){
+                        if (!entry.isBlank() && !entry.equals("\n")) {
 
                             String[] keyValue = entry.split("=");
 
@@ -71,23 +67,20 @@ public class ConfHandler {
             }
 
             reader.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
             throw new ConfigFileException("Something went wrong with the Config file.", e);
 
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
 
             throw new ConfigFileException("Config file is not valid.", e);
 
         }
 
 
-
     }
 
-    private void writeDefaultConfFile(File file) throws IOException{
+    private void writeDefaultConfFile(File file) throws IOException {
         FileWriter writer = new FileWriter(file);
         writer.write("#This configuration file for SoundHive have been generated automatically. \n" +
                 "#Please write one value per line. syntax is the following : key=value;" +
@@ -100,17 +93,14 @@ public class ConfHandler {
         writer.close();
     }
 
-    public String getParam(String paramName) throws  MissingParamException{
+    public String getParam(String paramName) throws MissingParamException {
         String res = this.parameters.get(paramName);
         if (res != null) {
             return res;
-        }
-        else {
+        } else {
             throw new MissingParamException("The Configuration file does not contain the property : \"" + paramName + "\".");
         }
     }
-
-
 
 
 }

@@ -57,7 +57,7 @@ public class MainController {
             e.printStackTrace();
         }
         catch ( Exception e ) {
-            issueNotWorkingNotice("Unable to load plugins.");
+            issueNotWorkingNotice("An error occurred while launching the app.");
             e.printStackTrace();
         }
 
@@ -132,6 +132,7 @@ public class MainController {
     }
 
     private  void displayPlugins(List<PluginUIContainer> plugins) {
+        lvPluginNavBar.getItems().clear();
         for (PluginUIContainer plugin :
                 plugins) {
             if (!plugin.isValid()) {

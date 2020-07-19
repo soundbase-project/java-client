@@ -37,7 +37,7 @@ public class PluginUiHandler{
         if (!(pluginDir.exists() || pluginDir.mkdirs())) {
             throw new IOException("Unable to access or create Plugins directory.");
         }
-        return new File(this.uiPluginDir).listFiles((f, n) -> n.endsWith(".jar"));
+        return new File(this.uiPluginDir).listFiles((file, name) -> name.endsWith(".jar"));
     }
 
     private void loadPlugins() throws Exception{

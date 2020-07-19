@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="label" layoutX="351.0" layoutY="240.0" text="POGPOGPOGPOG" />
-      <JFXButton fx:id="button" layoutX="568.0" layoutY="294.0" mnemonicParsing="false" text="Button" />
+      <Label fx:id="label" layoutX="433.0" layoutY="225.0" text="Press the button to issue a message." textFill="WHITE" />
+      <JFXButton fx:id="button" layoutX="512.0" layoutY="300.0" mnemonicParsing="false" text="PRESS ME" textFill="WHITE" />
    </children>
 </AnchorPane>

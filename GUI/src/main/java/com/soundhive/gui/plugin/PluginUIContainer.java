@@ -13,10 +13,15 @@ public class PluginUIContainer {
     private final File jarArchive;
 
     public PluginUIContainer(PluginController plugin, URLClassLoader classLoader, File jarArchive, boolean isValid) {
+
         this.plugin = plugin;
+
         this.isValid = isValid;
+
         view = new FXMLLoader(classLoader.getResource(plugin.getViewName()));
+
         view.setController(plugin);
+
         this.jarArchive = jarArchive;
     }
 

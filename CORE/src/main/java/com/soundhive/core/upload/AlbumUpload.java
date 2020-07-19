@@ -15,7 +15,7 @@ public class AlbumUpload {
             throw new InvalidUploadException("The album must have a title.");
         }
 
-        if ( description.isEmpty() || description.isBlank()) {
+        if (description.isEmpty() || description.isBlank()) {
             throw new InvalidUploadException("The album must have a description.");
         }
 

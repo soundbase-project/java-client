@@ -116,7 +116,7 @@ public class TracksController extends Controller{
     }
 
     private void setStatsService(String track_id) {
-        statsService = new StatsService(getContext().getSession(), cbSpan.valueProperty(), track_id );
+        statsService = new StatsService(getContext().getSession(), cbSpan.valueProperty(), track_id);
         statsService.setOnSucceeded(e -> {
             Response<?> stats = (Response<?>) e.getSource().getValue();
             switch (stats.getStatus()) {

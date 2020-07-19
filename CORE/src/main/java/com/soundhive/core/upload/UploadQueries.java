@@ -26,7 +26,7 @@ public class UploadQueries {
                     for (TrackUpload track :
                             album.getTracks()) {
                         Response<?> res = postTrack(session, node.getObject().getString("id"), track);
-                        if (!res.getStatus().equals(Response.Status.SUCCESS)){
+                        if (!res.getStatus().equals(Response.Status.SUCCESS)) {
                             throw new InternalRequestError("Could not upload track : " + track.getTitle(), res);
                         }
 

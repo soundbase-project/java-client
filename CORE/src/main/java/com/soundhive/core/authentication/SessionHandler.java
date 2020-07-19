@@ -66,7 +66,7 @@ public class SessionHandler {
         File target = new File(tokenDir);
         try {
             if (target.getParentFile().mkdirs()) {
-                if (!(target.exists() || new File(tokenDir).createNewFile())){
+                if (!(target.exists() || new File(tokenDir).createNewFile())) {
                     System.err.println("Could not create token file.");
                 }
             }
@@ -102,7 +102,7 @@ public class SessionHandler {
     }
 
     public Response<Void> loadUserProfile() {
-        if (this.token == null || this.token.isBlank()){
+        if (this.token == null || this.token.isBlank()) {
             return new Response<>(Status.UNAUTHENTICATED , "No usable token to request profile.");
         }
 
@@ -136,9 +136,9 @@ public class SessionHandler {
         this.name = "";
     }
 
-    private void deleteToken()throws IllegalStateException{
+    private void deleteToken()throws IllegalStateException {
         File tokenFile = new File(tokenDir);
-        if (tokenFile.exists() && !tokenFile.delete()){
+        if (tokenFile.exists() && !tokenFile.delete()) {
             throw new IllegalStateException("Could not delete session token.");
         }
     }
@@ -148,7 +148,7 @@ public class SessionHandler {
         return !(this.token == null  || this.token.isBlank());
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
 
@@ -164,8 +164,8 @@ public class SessionHandler {
 //        return email;
 //    }
 
-    public void setUserInfos(){
-        if (this.profileLoader != null ){
+    public void setUserInfos() {
+        if (this.profileLoader != null) {
             this.profileLoader.accept(this.username, this.profilePic);
         }
 

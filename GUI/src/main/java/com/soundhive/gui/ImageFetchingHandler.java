@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 public class ImageFetchingHandler {
     private final String baseURL;
 
-    public ImageFetchingHandler(final String baseURL){
+    public ImageFetchingHandler(final String baseURL) {
         this.baseURL = baseURL;
     }
 

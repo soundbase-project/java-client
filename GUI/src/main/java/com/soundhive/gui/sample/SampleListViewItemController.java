@@ -23,7 +23,7 @@ public class SampleListViewItemController {
     }
 
     public void setContextAndSample(Context context, Sample sample) {
-        this.lbTitle.setText( sample.getTitle());
+        this.lbTitle.setText(sample.getTitle());
 
         this.lbDescription.setText(sample.getDescription());
 

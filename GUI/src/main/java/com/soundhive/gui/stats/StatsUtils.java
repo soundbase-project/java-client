@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class StatsUtils {
-    public static XYChart.Series<String, Number> generateListenSeries(List<Keyframe> keyframes){
+    public static XYChart.Series<String, Number> generateListenSeries(List<Keyframe> keyframes) {
         XYChart.Series<String, Number> listenSeries = new XYChart.Series<>();
         listenSeries.setName("Listens");
 

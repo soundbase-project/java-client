@@ -28,7 +28,7 @@ public class TrackUploadController {
         cbLicense.getItems().setAll(Enums.License.values());
     }
 
-    public void setOpenFileDialog(Router router){
+    public void setOpenFileDialog(Router router) {
         btFile.setOnAction(e -> this.trackFile = router.issueFileDialog("Audio files (.wav, .mp3)", "*.wav", "*.mp3"));
     }
 

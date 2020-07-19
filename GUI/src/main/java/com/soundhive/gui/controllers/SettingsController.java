@@ -22,7 +22,7 @@ public class SettingsController extends Controller {
     private JFXButton btLoadPlugin;
 
     @FXML
-    private void  initialize(){
+    private void  initialize() {
         this.btLoadPlugin.setOnAction(a ->{
             File source = getContext().getRouter().issueFileDialog("Jar file (.jar)", "*.jar");
             try {

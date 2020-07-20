@@ -38,12 +38,16 @@ public class MainController {
 
     @FXML private AnchorPane appContent;
 
+    @FXML private JFXButton btExit;
+
     @FXML public void initialize() {
         initContext();
 
         displayPlugins(this.context.getPluginHandler().getPlugins());
 
         context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
+
+        btExit.setOnAction(e -> System.exit(0));
     }
 
     private void initContext() {

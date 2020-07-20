@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane maxHeight="50.0" maxWidth="400.0" minHeight="50.0" minWidth="400.0" prefHeight="50.0" prefWidth="450.0" style="-fx-background-color: #343a40;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.tracks.TrackListItemController">
+   <children>
+      <Label fx:id="lbTitle" layoutX="14.0" layoutY="9.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbListens" layoutX="327.0" layoutY="12.0" text="Label" textFill="#000dff">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

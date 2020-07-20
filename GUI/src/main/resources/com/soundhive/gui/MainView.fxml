@@ -30,9 +30,9 @@
                               <Label fx:id="lbSession" text="Disconected" textFill="WHITE" />
                            </children>
                         </VBox>
-                        <JFXButton layoutX="14.0" layoutY="30.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="128.0" text="Exit" textFill="WHITE">
+                        <JFXButton fx:id="btExit" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="100.0" text="Exit" textFill="WHITE">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="21.0" />
                            </font></JFXButton>
                      </children>
                   </AnchorPane>

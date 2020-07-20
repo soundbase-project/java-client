@@ -33,7 +33,7 @@ public class TracksQueries {
                 session.getToken(),
                 node -> {
                     List<Album> albums = new ArrayList<>();
-                    JSONArray array = node.getArray();
+                    JSONArray array = node.getObject().getJSONArray("items");
                     int length = array.length();
 
                     for (int i = 0; i < length; i++) {

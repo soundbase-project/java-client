@@ -16,10 +16,10 @@
       <JFXListView fx:id="lvTracks" layoutX="34.0" layoutY="71.0" prefHeight="520.0" prefWidth="470.0" style="-fx-background-color: #343a40;" />
       <AreaChart fx:id="acStats" layoutX="540.0" layoutY="126.0" prefHeight="266.0" prefWidth="518.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="yAxis" side="LEFT" />
         </yAxis>
       </AreaChart>
       <Label layoutX="540.0" layoutY="14.0" text="Stats" textFill="WHITE">

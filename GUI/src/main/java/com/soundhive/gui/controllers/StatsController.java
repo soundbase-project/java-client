@@ -2,13 +2,14 @@ package com.soundhive.gui.controllers;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.soundhive.core.response.Response;
+import com.soundhive.core.stats.Keyframe;
 import com.soundhive.core.stats.Stats;
 import com.soundhive.gui.stats.StatsService;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
+
+import java.util.stream.Collectors;
 
 import static com.soundhive.gui.stats.StatsUtils.generateListenSeries;
 
@@ -29,6 +30,8 @@ public class StatsController extends  Controller{
 
     @FXML
     public void initialize() {
+        xAxis.setTickLabelsVisible(false);
+        xAxis.setTickMarkVisible(false);
         cbSpan.setOnAction(event -> {
             setStatsService();
             statsService.start();
@@ -57,12 +60,12 @@ public class StatsController extends  Controller{
         statsService.setOnSucceeded(e -> {
             Response<?> stats = (Response<?>) e.getSource().getValue();
             switch (stats.getStatus()) {
-
                 case SUCCESS:
-                    this.acStats.getData().clear();
-                    XYChart.Series<String, Number> series = generateListenSeries(((Stats)stats.getContent()).getKeyframes());
-                    this.acStats.getData().add(0, series);
 
+                    Stats formattedStats = (Stats) stats.getContent();
+                    XYChart.Series<String, Number> series = generateListenSeries(formattedStats.getKeyframes());
+                    //xAxis.setCategories(FXCollections.observableList(formattedStats.getKeyframes().stream().map(Keyframe::getPeriod).collect(Collectors.toList()));
+                    acStats.getData().setAll(series);
 
                     break;
 

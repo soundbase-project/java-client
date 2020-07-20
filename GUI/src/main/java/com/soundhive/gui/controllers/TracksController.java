@@ -10,6 +10,7 @@ import com.soundhive.gui.tracks.TracksService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
@@ -35,8 +36,12 @@ public class TracksController extends Controller{
     @FXML
     private JFXComboBox<StatsService.SpanOption> cbSpan;
 
+    @FXML CategoryAxis xAxis;
+
     @FXML
     private void initialize() {
+        xAxis.setTickLabelsVisible(false);
+        xAxis.setTickMarkVisible(false);
         this.populateSpans();
     }
 
@@ -93,8 +98,6 @@ public class TracksController extends Controller{
             Album album = (Album) rawAlbum;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/soundhive/gui/templates/AlbumListViewItem.fxml"));
             try {
-
-
                 AnchorPane pane  = loader.load();
                 AlbumListItemController controller = loader.getController();
                 controller.prepareAndStart(getContext(),

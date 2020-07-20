@@ -12,11 +12,14 @@ public class Track {
 
     private final String ID;
 
+    private final int listens;
+
     public Track(JSONObject jsonTrack) {
         this.title = jsonTrack.getString("title");
         this.description = jsonTrack.getString("description");
         this.genre = jsonTrack.getString("genre");
         this.ID = jsonTrack.getString("id");
+        this.listens = jsonTrack.getInt("listeningCount");
     }
 
     public String getDescription() {
@@ -33,5 +36,9 @@ public class Track {
 
     public String getID() {
         return ID;
+    }
+
+    public int getListens() {
+        return listens;
     }
 }

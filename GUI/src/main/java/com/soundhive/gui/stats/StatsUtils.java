@@ -13,7 +13,7 @@ public class StatsUtils {
 
         for (Keyframe frame :
                 keyframes) {
-            listenSeries.getData().add(new XYChart.Data<>(new SimpleDateFormat("dd/MM/yyyy \n hh:mm aa").format(frame.getPeriod()), frame.getPlays()));
+            listenSeries.getData().add(new XYChart.Data<>(frame.getPeriodAsStr(), frame.getPlays()));
         }
 
         return listenSeries;

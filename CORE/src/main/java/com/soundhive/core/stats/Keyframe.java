@@ -37,4 +37,8 @@ public class Keyframe {
     public Date getPeriod() {
         return period;
     }
+
+    public String getPeriodAsStr() {
+        return new SimpleDateFormat("dd/MM/yyyy \n hh:mm aa").format(this.period);
+    }
 }

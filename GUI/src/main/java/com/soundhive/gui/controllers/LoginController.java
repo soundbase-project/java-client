@@ -93,6 +93,7 @@ public class LoginController extends Controller {
 
                 case CONNECTION_FAILED:
                     getContext().getRouter().issueDialog("Server unreachable. Please check your internet connection.");
+                    getContext().logException(response.getException());
                     break;
 
                 case UNAUTHENTICATED:

@@ -61,7 +61,7 @@ public class StatsController extends  Controller{
             Response<?> stats = (Response<?>) e.getSource().getValue();
             switch (stats.getStatus()) {
                 case SUCCESS:
-
+                    acStats.getData().clear();
                     Stats formattedStats = (Stats) stats.getContent();
                     XYChart.Series<String, Number> series = generateListenSeries(formattedStats.getKeyframes());
                     //xAxis.setCategories(FXCollections.observableList(formattedStats.getKeyframes().stream().map(Keyframe::getPeriod).collect(Collectors.toList()));

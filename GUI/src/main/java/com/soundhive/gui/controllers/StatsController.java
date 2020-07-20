@@ -8,6 +8,7 @@ import com.soundhive.gui.stats.StatsService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
+import javafx.scene.control.Label;
 
 import java.util.stream.Collectors;
 
@@ -22,6 +23,8 @@ public class StatsController extends  Controller{
     @FXML private NumberAxis yAxis;
 
     @FXML private CategoryAxis xAxis;
+
+    @FXML private Label lbListens;
 
 
 
@@ -66,6 +69,8 @@ public class StatsController extends  Controller{
                     XYChart.Series<String, Number> series = generateListenSeries(formattedStats.getKeyframes());
                     //xAxis.setCategories(FXCollections.observableList(formattedStats.getKeyframes().stream().map(Keyframe::getPeriod).collect(Collectors.toList()));
                     acStats.getData().setAll(series);
+
+                    this.lbListens.setText(String.valueOf(formattedStats.getListenings()));
 
                     break;
 

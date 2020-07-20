@@ -17,37 +17,37 @@
         </yAxis>
       </AreaChart>
       <JFXComboBox fx:id="cbSpan" focusColor="WHITE" layoutX="46.0" layoutY="38.0" prefHeight="28.0" prefWidth="206.0" />
-      <Label layoutX="46.0" layoutY="134.0" text="300" textFill="#85a1ff">
+      <Label fx:id="lbListens" layoutX="46.0" layoutY="134.0" text="0" textFill="#85a1ff">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="47.0" layoutY="238.0" text="300" textFill="#85a1ff">
+      <Label layoutX="47.0" layoutY="238.0" text="0" textFill="#85a1ff">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="332.0" text="300" textFill="#85a1ff">
+      <Label layoutX="46.0" layoutY="332.0" text="0" textFill="#85a1ff">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="437.0" text="300" textFill="#85a1ff">
+      <Label layoutX="46.0" layoutY="437.0" text="0" textFill="#85a1ff">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="544.0" text="300" textFill="#85a1ff">
+      <Label layoutX="46.0" layoutY="544.0" text="0" textFill="#85a1ff">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="566.0" layoutY="544.0" text="300" textFill="#85a1ff">
+      <Label layoutX="566.0" layoutY="544.0" text="0" textFill="#85a1ff">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="41.0" layoutY="92.0" text="Plays" textFill="WHITE">
+      <Label layoutX="41.0" layoutY="92.0" text="Listens" textFill="WHITE">
          <font>
             <Font size="30.0" />
          </font>

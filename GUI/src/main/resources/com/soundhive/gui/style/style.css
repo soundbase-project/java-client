@@ -51,3 +51,7 @@
     -jfx-focus-color: white;
     -fx-text-fill: white;
 }
+
+.list-cell {
+    -fx-padding: 0px;
+}

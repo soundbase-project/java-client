@@ -53,7 +53,7 @@ public class UploadController extends Controller {
 
             }
             this.uploadService = new UploadService(getContext().getSession(), tfTitle.textProperty(), taDescription.textProperty(), this.coverFile, tracks);
-
+            btUpload.setDisable(true);
             uploadService.setOnSucceeded(e -> {
 
                 Response<?> stats = (Response<?>) e.getSource().getValue();
@@ -77,16 +77,19 @@ public class UploadController extends Controller {
                         break;
                 }
                 getContext().log("Upload post request : " + stats.getMessage());
+                btUpload.setDisable(false);
             });
             uploadService.setOnFailed(e -> {
                 getContext().logException(e.getSource().getException());
                 getContext().log(e.getSource().getException().getMessage());
+                btUpload.setDisable(false);
             });
 
         } catch (InvalidUploadException e) {
             getContext().getRouter().issueDialog("Cannot upload album : " + e.getMessage());
             getContext().log(e.getMessage());
             getContext().logException(e);
+            btUpload.setDisable(false);
         }
     }
 
@@ -111,6 +114,7 @@ public class UploadController extends Controller {
             if (this.trackControllers.size() > 0) {
                 this.lvTracks.getItems().remove(this.lvTracks.getItems().size() - 1);
                 this.trackControllers.remove(this.trackControllers.size() - 1);
+
             }
 
         });

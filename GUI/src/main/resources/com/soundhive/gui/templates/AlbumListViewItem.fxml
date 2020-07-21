@@ -4,11 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="albumPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="450.0" style="-fx-background-color: #343a40; -fx-padding: 0;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soundhive.gui.tracks.AlbumListItemController">
    <children>
       <ImageView fx:id="ivArt" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lbTitle" layoutX="128.0" layoutY="10.0" prefHeight="80.0" prefWidth="194.0" text="Error" textFill="WHITE" />
+      <Label fx:id="lbTitle" layoutX="128.0" layoutY="10.0" prefHeight="80.0" prefWidth="310.0" text="Error" textFill="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
       <JFXListView fx:id="lvTracks" layoutY="100.0" prefHeight="0.0" prefWidth="450.0" style="-fx-background-color: #343a40;" />
    </children>
 </AnchorPane>

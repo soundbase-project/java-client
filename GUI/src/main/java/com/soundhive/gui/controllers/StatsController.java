@@ -20,11 +20,11 @@ public class StatsController extends  Controller{
     @FXML
     AreaChart<String, Number> acStats;
 
-    @FXML private NumberAxis yAxis;
+    @FXML public NumberAxis yAxis;
 
-    @FXML private CategoryAxis xAxis;
+    @FXML public CategoryAxis xAxis;
 
-    @FXML private Label lbListens;
+    @FXML public Label lbListens;
 
 
 

@@ -13,12 +13,12 @@ public class TrackUploadController {
 
 
 
-    @FXML private JFXTextField tfTitle;
-    @FXML private JFXTextField tfGenre;
-    @FXML private JFXTextArea  taDescription;
-    @FXML private JFXButton btFile;
-    @FXML private JFXComboBox<Enums.License> cbLicense;
-    @FXML private JFXCheckBox cbDownloadable;
+    @FXML public JFXTextField tfTitle;
+    @FXML public JFXTextField tfGenre;
+    @FXML public JFXTextArea  taDescription;
+    @FXML public JFXButton btFile;
+    @FXML public JFXComboBox<Enums.License> cbLicense;
+    @FXML public JFXCheckBox cbDownloadable;
 
     private File trackFile;
 

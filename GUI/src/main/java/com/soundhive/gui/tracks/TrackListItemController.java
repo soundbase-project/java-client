@@ -9,10 +9,10 @@ public class TrackListItemController {
     private Track track;
 
     @FXML
-    private Label lbTitle;
+    public Label lbTitle;
 
     @FXML
-    private  Label lbListens;
+    public  Label lbListens;
 
 
     public void setTrack(final Track track) {

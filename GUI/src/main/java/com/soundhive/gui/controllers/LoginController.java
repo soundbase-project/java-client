@@ -14,19 +14,19 @@ import java.security.Provider;
 public class LoginController extends Controller {
 
     @FXML
-    private JFXTextField tfUsername;
+    public JFXTextField tfUsername;
 
     @FXML
-    private JFXPasswordField tfPassword;
+    public JFXPasswordField tfPassword;
 
     @FXML
-    private Button btLogin;
+    public Button btLogin;
 
     @FXML
-    private ProgressBar pbConnecting;
+    public ProgressBar pbConnecting;
 
     @FXML
-    private CheckBox cbStayConnected;
+    public CheckBox cbStayConnected;
 
 
     private LoginService loginService;

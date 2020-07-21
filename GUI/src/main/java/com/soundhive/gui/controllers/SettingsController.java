@@ -16,10 +16,10 @@ import java.lang.reflect.InvocationTargetException;
 
 public class SettingsController extends Controller {
     @FXML
-    private JFXListView<Pane> lvPlugins;
+    public JFXListView<Pane> lvPlugins;
 
     @FXML
-    private JFXButton btLoadPlugin;
+    public JFXButton btLoadPlugin;
 
     @FXML
     private void  initialize() {

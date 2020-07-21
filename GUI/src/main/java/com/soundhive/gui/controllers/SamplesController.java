@@ -23,26 +23,26 @@ import java.util.List;
 public class SamplesController extends Controller {
 
     @FXML
-    private JFXListView<AnchorPane> lvSamples;
+    public JFXListView<AnchorPane> lvSamples;
 
     @FXML
-    private JFXTextField tfTitle;
+    public JFXTextField tfTitle;
 
     @FXML
-    private JFXTextArea taDescription;
+    public JFXTextArea taDescription;
 
     @FXML
-    private JFXComboBox<Enums.License> cbLicense;
+    public JFXComboBox<Enums.License> cbLicense;
 
     @FXML
-    private JFXComboBox<Enums.Visibility> cbVisibility;
+    public JFXComboBox<Enums.Visibility> cbVisibility;
 
     @FXML
-    private JFXButton btFile;
-    private File sampleFile;
+    public JFXButton btFile;
+    public File sampleFile;
 
     @FXML
-    private JFXButton btUpload;
+    public JFXButton btUpload;
 
     private SampleService sampleService;
 

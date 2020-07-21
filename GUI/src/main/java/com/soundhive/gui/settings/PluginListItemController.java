@@ -12,10 +12,10 @@ public class PluginListItemController {
     private PluginUIContainer plugin;
 
     @FXML
-    private Label lbPluginName;
+    public Label lbPluginName;
 
     @FXML
-    private JFXButton btDelete;
+    public JFXButton btDelete;
 
     private Consumer<PluginUIContainer> pluginConsumer;
 
@@ -24,7 +24,7 @@ public class PluginListItemController {
     private Consumer<Throwable> exceptionLogger;
 
     @FXML
-    private void initialize() {
+    public void initialize() {
 
     }
 

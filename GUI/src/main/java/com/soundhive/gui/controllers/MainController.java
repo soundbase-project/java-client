@@ -26,21 +26,21 @@ public class MainController {
     private Stage stageRef;
 
     @FXML
-    private JFXListView<AnchorPane> lvPluginNavBar;
+    public JFXListView<AnchorPane> lvPluginNavBar;
 
     @FXML
-    private StackPane mainContainer;
+    public StackPane mainContainer;
 
 
-    @FXML private Label lbSession;
+    @FXML public Label lbSession;
 
-    @FXML private ImageView ivSession;
+    @FXML public ImageView ivSession;
 
-    @FXML private AnchorPane appContent;
+    @FXML public AnchorPane appContent;
 
-    @FXML private JFXButton btExit;
+    @FXML public JFXButton btExit;
 
-    @FXML private JFXButton btLogout;
+    @FXML public JFXButton btLogout;
 
     @FXML public void initialize() {
         initContext();

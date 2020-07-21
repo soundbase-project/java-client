@@ -27,22 +27,22 @@ public class AlbumListItemController {
 
 
     @FXML
-    private Label lbTitle;
+    public Label lbTitle;
 
 
 
     @FXML
-    private ImageView ivArt;
+    public ImageView ivArt;
 
     @FXML
-    private JFXListView<AnchorPane> lvTracks;
+    public JFXListView<AnchorPane> lvTracks;
 
     @FXML
-    private AnchorPane albumPane;
+    public AnchorPane albumPane;
 
 
     @FXML
-    private void initialize() {
+    public void initialize() {
     }
 
 

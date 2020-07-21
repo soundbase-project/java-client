@@ -5,6 +5,7 @@ import com.soundhive.core.response.Response;
 import com.soundhive.core.stats.Stats;
 import com.soundhive.core.tracks.Album;
 import com.soundhive.gui.stats.StatsService;
+import com.soundhive.gui.stats.StatsService.SpanOption;
 import com.soundhive.gui.tracks.AlbumListItemController;
 import com.soundhive.gui.tracks.TracksService;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import static com.soundhive.gui.stats.StatsUtils.generateListenSeries;
 
 public class TracksController extends Controller{
     @FXML
-    private ListView<AnchorPane> lvTracks;
+    public ListView<AnchorPane> lvTracks;
 
     // @FXML private ListView<AnchorPane> lvAlbums;
 
@@ -31,15 +32,15 @@ public class TracksController extends Controller{
     private StatsService statsService;
 
     @FXML
-    private AreaChart<String, Number> acStats;
+    public AreaChart<String, Number> acStats;
 
     @FXML
-    private JFXComboBox<StatsService.SpanOption> cbSpan;
+    public JFXComboBox<SpanOption> cbSpan;
 
     @FXML CategoryAxis xAxis;
 
     @FXML
-    private void initialize() {
+    public void initialize() {
         xAxis.setTickLabelsVisible(false);
         xAxis.setTickMarkVisible(false);
         this.populateSpans();
@@ -150,7 +151,7 @@ public class TracksController extends Controller{
     }
 
     private void populateSpans() {
-        cbSpan.getItems().setAll(StatsService.SpanOption.values());
-        cbSpan.setValue(StatsService.SpanOption.LAST_WEEK);
+        cbSpan.getItems().setAll(SpanOption.values());
+        cbSpan.setValue(SpanOption.LAST_WEEK);
     }
 }

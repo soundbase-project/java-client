@@ -24,15 +24,15 @@ import java.util.List;
 public class UploadController extends Controller {
 
 
-    @FXML private JFXTextField tfTitle;
-    @FXML private JFXListView<AnchorPane> lvTracks;
-    @FXML private List<TrackUploadController>  trackControllers;
-    @FXML private JFXButton btAddTrack;
-    @FXML private JFXButton btRemoveTrack;
-    @FXML private JFXButton btCoverFile;
-    @FXML private JFXButton btUpload;
-    @FXML private JFXTextArea taDescription;
-    @FXML private ImageView ivCover;
+    @FXML public JFXTextField tfTitle;
+    @FXML public JFXListView<AnchorPane> lvTracks;
+    @FXML public List<TrackUploadController>  trackControllers;
+    @FXML public JFXButton btAddTrack;
+    @FXML public JFXButton btRemoveTrack;
+    @FXML public JFXButton btCoverFile;
+    @FXML public JFXButton btUpload;
+    @FXML public JFXTextArea taDescription;
+    @FXML public ImageView ivCover;
 
     private UploadService uploadService;
     private File coverFile;

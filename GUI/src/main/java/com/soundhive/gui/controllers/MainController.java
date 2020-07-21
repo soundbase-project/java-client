@@ -40,6 +40,8 @@ public class MainController {
 
     @FXML private JFXButton btExit;
 
+    @FXML private JFXButton btLogout;
+
     @FXML public void initialize() {
         initContext();
 
@@ -48,6 +50,13 @@ public class MainController {
         context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
 
         btExit.setOnAction(e -> System.exit(0));
+
+        btLogout.setOnAction(e -> {
+            context.getSession().destroySession();
+            ivSession.setImage(null);
+            lbSession.setText("disconnected");
+            context.getRouter().goTo("Login", controller -> controller.setContextAndStart(this.context));
+        });
     }
 
     private void initContext() {

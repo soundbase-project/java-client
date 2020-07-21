@@ -84,11 +84,11 @@ public class ConfHandler {
         writer.write("#This configuration file for SoundHive have been generated automatically. \n"
                 + "#Please write one value per line. syntax is the following : key=value;"
                 + "#You can set comments using hashtag.\n"
-                + "api_base_url=http://localhost:3000/; #URL to access the API \n"
+                + "api_base_url=https://api.soundhive.stream/; #URL to access the API \n"
                 + "token_directory=./auth/token; #Directory where the JWT file is stored \n"
                 + "plugin_ui_dir=./UIPlugins; #Directory where plugins jars are to be found \n"
                 + "verbose=soft; # quiet = no logging ; soft = messages logging ; hard = print exceptions stack traces. \n"
-                + "minio_url=localhost:9000/soundhive/ #url to the minio server for file management.");
+                + "minio_url=https://s3.soundhive.stream/soundhive/; #url to the minio server for file management.");
         writer.close();
     }
 

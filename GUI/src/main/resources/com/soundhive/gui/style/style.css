@@ -26,7 +26,7 @@
 
 .combo-box .list-cell:filled:selected .text,
 .choice-box .list-cell:filled:selected .text {
-    -fx-fill: lightblue;
+    -fx-fill: #85a1ff;
 }
 
 .jfx-combo-box  .arrow {
@@ -35,7 +35,8 @@
 
 .jfx-combo-box {
     -fx-font-size: 12px;
-    -fx-prompt-text-fill: lightblue;
+    -fx-prompt-text-fill: #85a1ff
+;
     -fx-text-fill: white;
     -fx-background-color: transparent;
     /*-fx-text-inner-color: white;*/

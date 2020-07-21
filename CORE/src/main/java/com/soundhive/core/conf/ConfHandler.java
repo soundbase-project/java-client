@@ -1,21 +1,21 @@
 package com.soundhive.core.conf;
 
-import kong.unirest.Unirest;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
+
+import kong.unirest.Unirest;
 
 public class ConfHandler {
 
     public enum VerboseLevel {
-        QUIET,
-        SOFT,
-        HARD
+        QUIET, SOFT, HARD
     }
 
     Dictionary<String, String> parameters;
-
 
     public ConfHandler() throws ConfigFileException {
         this.parameters = new Hashtable<>();
@@ -30,7 +30,9 @@ public class ConfHandler {
                 }
             }
         } catch (IOException e) {
-            throw new ConfigFileException("System error while creating configuration file. Please check that you have access to this directory.", e);
+            throw new ConfigFileException(
+                    "System error while creating configuration file. Please check that you have access to this directory.",
+                    e);
         }
         readConfFile(confFile);
 
@@ -46,19 +48,17 @@ public class ConfHandler {
             if (reader.read(buffer) > 0) {
                 String rawConf = new String(buffer);
                 String[] conf = rawConf.split("\n");
-                for (String line :
-                        conf) {
+                for (String line : conf) {
 
                     String filteredLine = line.split("#")[0];
-                    for (String entry :
-                            filteredLine.split(";")) {
+                    for (String entry : filteredLine.split(";")) {
 
                         if (!entry.isBlank() && !entry.equals("\n")) {
 
                             String[] keyValue = entry.split("=");
-
-
-                            parameters.put(keyValue[0].trim(), keyValue[1].trim());
+                            if (keyValue.length == 2) {
+                                parameters.put(keyValue[0].trim(), keyValue[1].trim());
+                            }
 
                         }
                     }
@@ -77,19 +77,18 @@ public class ConfHandler {
 
         }
 
-
     }
 
     private void writeDefaultConfFile(File file) throws IOException {
         FileWriter writer = new FileWriter(file);
-        writer.write("#This configuration file for SoundHive have been generated automatically. \n" +
-                "#Please write one value per line. syntax is the following : key=value;" +
-                "#You can set comments using hashtag.\n" +
-                "api_base_url=http://localhost:3000/; #URL to access the API \n" +
-                "token_directory=./auth/token; #Directory where the JWT file is stored \n" +
-                "plugin_ui_dir=./UIPlugins; #Directory where plugins jars are to be found \n" +
-                "verbose=soft; # quiet = no logging ; soft = messages logging ; hard = print exceptions stack traces. \n" +
-                "minio_url=localhost:9000/soundhive/ #url to the minio server for file management.");
+        writer.write("#This configuration file for SoundHive have been generated automatically. \n"
+                + "#Please write one value per line. syntax is the following : key=value;"
+                + "#You can set comments using hashtag.\n"
+                + "api_base_url=http://localhost:3000/; #URL to access the API \n"
+                + "token_directory=./auth/token; #Directory where the JWT file is stored \n"
+                + "plugin_ui_dir=./UIPlugins; #Directory where plugins jars are to be found \n"
+                + "verbose=soft; # quiet = no logging ; soft = messages logging ; hard = print exceptions stack traces. \n"
+                + "minio_url=localhost:9000/soundhive/ #url to the minio server for file management.");
         writer.close();
     }
 
@@ -98,9 +97,9 @@ public class ConfHandler {
         if (res != null) {
             return res;
         } else {
-            throw new MissingParamException("The Configuration file does not contain the property : \"" + paramName + "\".");
+            throw new MissingParamException(
+                    "The Configuration file does not contain the property : \"" + paramName + "\".");
         }
     }
-
 
 }

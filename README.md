@@ -1,3 +1,4 @@
+[![time tracker](https://wakatime.com/badge/github/soundhive/java-client.svg)](https://wakatime.com/badge/github/soundhive/java-client)
 # SoundHive local client
 SoundHive's Java client is an app that allows creators to upload their tracks to 
 soundHive. It also allows them to see their stats in many ways.
